@@ -56,7 +56,7 @@ const Login = () => {
         const strPassword = password;
         const currUsername = Number(username);
         const currPassword = Number(password);
-        var proceed = await apiCall(currUsername, currPassword);
+        var proceed = await apiCall(currUsername, currPassword); // apiCall function requires numbers, not strings
         if (proceed === 1) {
             history.push({
                 pathname: '/dashboard',
