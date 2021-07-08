@@ -41,7 +41,7 @@ const Login = () => {
 
     function apiCall(u, p) {
         return new Promise(resolve => {
-          fetch('/coldata')
+          fetch('/api/coldata')
           .then(res => res.json())
           .then(data => JSON.parse(data.cab))
           .then(jsonObj => checkObj(jsonObj, u, p))
