@@ -171,7 +171,7 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
                                 </Container>
                                 <Container className="custom-col-2">
                                     <p className="col-title-text">Tree Requests</p>
-                                    <h2 className="center">{totalRequests}</h2>
+                                    <h2 className="center">{numTreesReq}</h2>
                                     <p className="center">total requests received</p>
                                     <p>Progress to Goal of {treeGoal} Trees</p>
                                     <Chart treeGoalPercent={goalPercent}/>
