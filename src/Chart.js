@@ -48,7 +48,7 @@ class Chart extends Component {
     }
     
     render() {
-        const percentage = this.state.data2;
+        const percentage = this.props.treeGoalPercent;
         return (
             <div className="chart">
                 <div className="progressbar">
