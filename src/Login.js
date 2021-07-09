@@ -50,6 +50,12 @@ const Login = () => {
           });
         });
       }
+      
+    const handleKeyPress = e => {
+        if (e.key === "Enter") {
+            handleClick();
+        }
+    }
 
     async function handleClick() {
         const strUsername = username;
@@ -118,6 +124,7 @@ const Login = () => {
                                                         onFocus={e => setPasswordFocused(true)}
                                                         onBlur = {e => setPasswordFocused(false)}
                                                         onChange = {e => setPassword(e.target.value)}
+                                                        onKeyPress = {handleKeyPress}
                                                     />
                                                 </InputGroup>
                                                 </FormGroup>
