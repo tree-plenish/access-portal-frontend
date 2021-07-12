@@ -1,6 +1,5 @@
 import React, { useState, useRef} from 'react';
 import {Button} from 'react-bootstrap';
-import { volunteerData } from './Data';
 import { CSVLink } from 'react-csv';
 import {Container} from "reactstrap";
 
@@ -11,6 +10,14 @@ const ExportDataButton = () => {
         csvLink.current.link.click()
     }
 
+    var headers = [
+        { label: "Team ID", key: "teamid" },
+        { label: "Name", key: "name" },
+        { label: "Email", key: "email" },
+        { label: "Phone", key: "phone" },
+        { label: "Driver's License", key: "drivers_license" }
+    ];
+
     return (
         <div>
             <Container className="btn-center">
@@ -19,7 +26,8 @@ const ExportDataButton = () => {
                 size = "lg"
                 onClick={clickLink}>Download as Excel Sheet</Button>
             <CSVLink
-                data={volunteerData}
+                data={props.volData}
+                headers={headers}
                 filename='volunteerData.csv'
                 className='hidden'
                 ref={csvLink}

@@ -24,6 +24,12 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
     const [treeGoal, setTreeGoal] = useState();
     const [numTreesReq, setNumTreesReq] = useState();
     const [goalPercent, setGoalPercent] = useState();
+    var [volTable, setVolTable] = useState();
+    var [volProps, setVolProps] = useState([
+      { name: "Place", email: "iFeelGodInThisChilis@tn" },
+      { name: "Holder", email: "catchYou@theFlipityFlip" }
+    ]); // satisfy react-csv variable type before array is updated with actual data
+    var volArr = [];
 
     function traverseSchoolName(objName, schoolidnum) {
         for (const prop in objName) {
@@ -47,6 +53,18 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
             return objName[prop]['trees_requested'];
           }
         }
+      }
+
+      function traverseVolunteers(objName, schoolidnum) {
+        for (const prop in objName) {
+          if (objName[prop]['schoolid'] === schoolidnum) {
+            volArr.push(objName[prop]);
+          }
+        }
+        volArr.sort((a, b) => parseFloat(a.teamid) - parseFloat(b.teamid)); // sort by teamid in ascending order
+        setVolProps(volArr);
+        setVolTable(volArr.map(renderVolunteers)); // method to make sure the table renders with updated data
+        return volArr;
       }
 
     function toTitleCase(str) { // function to capitalize first letter of each word; e.g. 'still woozy' becomes 'Still Woozy'
@@ -96,6 +114,18 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
         });
       }
 
+      function getVolunteers(u) {
+        return new Promise(resolve => {
+          fetch('/api/volunteers')
+          .then(res => res.json())
+          .then(data => JSON.parse(data.vol))
+          .then(jsonObj => traverseVolunteers(jsonObj, u))
+          .then(x => {
+            resolve(x);
+          });
+        });
+      }
+
       function calculateGoalPercentage(numReqParam, goalParam) {
         var numerator = Number(numReqParam);
         var denominator = Number(goalParam);
@@ -108,14 +138,17 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
         getTreeGoal(numUsername);
         getTreesRequested(numUsername);
         calculateGoalPercentage(numTreesReq, treeGoal);
+        getVolunteers(numUsername);
       }, [numTreesReq, treeGoal]);
 
     const renderVolunteers = (volunteer, index) => {
         return(
             <tr key={{index}}>
+                <td>{volunteer.teamid}</td>
                 <td>{volunteer.name}</td>
                 <td>{volunteer.email}</td>
-                <td>{volunteer.age}</td>
+                <td>{volunteer.phone.toString()}</td>
+                <td>{volunteer.drivers_license.toString()}</td>
             </tr>
         )
     }
@@ -158,16 +191,18 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
                                     <ReactBootStrap.Table className="table">
                                         <thead>
                                         <tr>
+                                            <th>Team ID</th>
                                             <th>Name</th>
                                             <th>Email</th>
-                                            <th>Age</th>
+                                            <th>Phone</th>
+                                            <th>Driver's License</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        {volunteerData.map(renderVolunteers)}
+                                        {volTable}
                                         </tbody>
                                     </ReactBootStrap.Table>
-                                    <ExportDataButton />
+                                    <ExportDataButton volData={volProps}/>
                                 </Container>
                                 <Container className="custom-col-2">
                                     <p className="col-title-text">Tree Requests</p>
