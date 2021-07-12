@@ -3,7 +3,7 @@ import {Button} from 'react-bootstrap';
 import { CSVLink } from 'react-csv';
 import {Container} from "reactstrap";
 
-const ExportDataButton = () => {
+const ExportDataButton = (props) => {
     const csvLink = useRef() // setup the ref that we'll use for the hidden CsvLink click once we've updated the data
 
     const clickLink = async () => {
