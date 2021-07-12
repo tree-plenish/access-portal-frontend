@@ -28,7 +28,7 @@ const ExportDataButton = (props) => {
             <CSVLink
                 data={props.volData}
                 headers={headers}
-                filename='volunteerData.csv'
+                filename='tree-plenish-volunteers.csv'
                 className='hidden'
                 ref={csvLink}
                 target='_blank'

@@ -232,10 +232,6 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
                                         <li>Total Free Trees You Can Give Out to Residents: {numFreeTrees}</li>
                                     </ul>
                                     <br></br>
-                                    <h2>Developer Info</h2>
-                                    <p className="login-text">Username: {username}</p>
-                                    <p className="login-text">Password: {password}</p>
-                                    <p className="login-text">Request name: {requestName}</p>
                                 </Container>
                             </div>
                             <div className="footer">

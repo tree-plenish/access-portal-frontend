@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import {Container} from "reactstrap";
 import Announcements from './Announcements';
@@ -9,8 +9,42 @@ import Chart from "./Chart";
 const StageOne = ( prevInfo ) => {
 
     const [username, setUsername] = useState(prevInfo.prevUsername); // username is a STRING
+    const numUsername = Number(username);
     const [password, setPassword] = useState(prevInfo.prevPassword); // password is a STRING
-    console.log(username);
+    const [schoolName, setSchoolName] = useState();
+
+    function traverseSchoolName(objName, schoolidnum) {
+        for (const prop in objName) {
+          if (objName[prop]['schoolid'] === schoolidnum) {
+            return objName[prop]['name'];
+          }
+        }
+      }
+
+      function toTitleCase(str) { // function to capitalize first letter of each word; e.g. 'still woozy' becomes 'Still Woozy'
+        var text = str.toLowerCase()
+        .split(' ')
+        .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+        .join(' ');
+        return text;
+    }
+
+    function getSchoolName(u) {
+        return new Promise(resolve => {
+          fetch('/api/schoolname')
+          .then(res => res.json())
+          .then(data => JSON.parse(data.name))
+          .then(jsonObj => traverseSchoolName(jsonObj, u))
+          .then(x => {
+            resolve(x);
+            setSchoolName(toTitleCase(x)); // assuming 'name' in the table 'school' is lowercase
+          });
+        });
+      }
+
+      useEffect(() => {
+        getSchoolName(numUsername);
+      }, []);
 
     const renderSponsors = (sponsor, index) => {
         return(
@@ -27,7 +61,7 @@ const StageOne = ( prevInfo ) => {
                 <div className={"bg-light-green view-entire"}>
                     <div className="w-500 h-500 d-flex align-items-center justify-content-between flex-column">
                         <div className="title">
-                            <h3>Welcome, Pinnacle High School!</h3>
+                            <h3>Welcome, {schoolName} High School!</h3>
                         </div>
                         <div className="flex-container w-100">
                             <Container className="custom-col-1">

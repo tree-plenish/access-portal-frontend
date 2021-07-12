@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { sponsorshipData } from './Data';
 import {Container} from "reactstrap";
@@ -10,8 +10,98 @@ import ExportTreeRequestsButton from './ExportTreeRequestsButton';
 const StageTwo = ( prevInfo ) => {
 
     const username = prevInfo.prevUsername;
+    const numUsername = Number(username);
     const password = prevInfo.prevPassword;
-    console.log(username);
+
+    const [schoolName, setSchoolName] = useState();
+    const [treeGoal, setTreeGoal] = useState();
+    const [numTreesReq, setNumTreesReq] = useState();
+    const [goalPercent, setGoalPercent] = useState();
+
+    function traverseSchoolName(objName, schoolidnum) {
+        for (const prop in objName) {
+          if (objName[prop]['schoolid'] === schoolidnum) {
+            return objName[prop]['name'];
+          }
+        }
+      }
+
+      function traverseTreeGoal(objName, schoolidnum) {
+        for (const prop in objName) {
+          if (objName[prop]['schoolid'] === schoolidnum) {
+            return objName[prop]['tree_goal'];
+          }
+        }
+      }
+
+      function traverseTreesRequested(objName, schoolidnum) {
+        for (const prop in objName) {
+          if (objName[prop]['schoolid'] === schoolidnum) {
+            return objName[prop]['trees_requested'];
+          }
+        }
+      }
+
+      function toTitleCase(str) { // function to capitalize first letter of each word; e.g. 'still woozy' becomes 'Still Woozy'
+        var text = str.toLowerCase()
+        .split(' ')
+        .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+        .join(' ');
+        return text;
+    }
+
+    function getSchoolName(u) {
+        return new Promise(resolve => {
+          fetch('/api/schoolname')
+          .then(res => res.json())
+          .then(data => JSON.parse(data.name))
+          .then(jsonObj => traverseSchoolName(jsonObj, u))
+          .then(x => {
+            resolve(x);
+            setSchoolName(toTitleCase(x)); // assuming 'name' in the table 'school' is lowercase
+          });
+        });
+      }
+
+      function getTreeGoal(u) {
+        return new Promise(resolve => {
+          fetch('/api/treegoal')
+          .then(res => res.json())
+          .then(data => JSON.parse(data.goal))
+          .then(jsonObj => traverseTreeGoal(jsonObj, u))
+          .then(x => {
+            resolve(x);
+            setTreeGoal(x);
+          });
+        });
+      }
+
+      function getTreesRequested(u) {
+        return new Promise(resolve => {
+          fetch('/api/numtreesrequested')
+          .then(res => res.json())
+          .then(data => JSON.parse(data.reqnum))
+          .then(jsonObj => traverseTreesRequested(jsonObj, u))
+          .then(x => {
+            resolve(x);
+            setNumTreesReq(x);
+          });
+        });
+      }
+
+      function calculateGoalPercentage(numReqParam, goalParam) {
+        var numerator = Number(numReqParam);
+        var denominator = Number(goalParam);
+        var percent = Math.round(numerator/denominator*100);
+        setGoalPercent(percent);
+      }
+
+    useEffect(() => {
+        getSchoolName(numUsername);
+        getTreeGoal(numUsername);
+        getTreesRequested(numUsername);
+        calculateGoalPercentage(numTreesReq, treeGoal);
+      }, [numTreesReq, treeGoal]);
 
     const renderSponsors = (sponsor, index) => {
         return(
@@ -23,7 +113,6 @@ const StageTwo = ( prevInfo ) => {
     }
 
     const numFreeTrees = 150;
-    const totalRequests = 5000;
 
     return (
         <div className="page-container">
@@ -31,7 +120,7 @@ const StageTwo = ( prevInfo ) => {
                 <div className={"bg-light-green view-entire"}>
                     <div className="w-500 h-500 d-flex align-items-center justify-content-between flex-column">
                         <div className="title">
-                            <h3>Welcome, Pinnacle High School!</h3>
+                            <h3>Welcome, {schoolName} High School!</h3>
                         </div>
                         <div className="flex-container w-100">
                             <Container className="custom-col-1">
@@ -40,10 +129,10 @@ const StageTwo = ( prevInfo ) => {
                             </Container>
                             <Container className="custom-col-2">
                                 <p className="col-title-text">Tree Requests</p>
-                                <h2 className="center">{totalRequests}</h2>
+                                <h2 className="center">{numTreesReq}</h2>
                                 <p className="center">total requests received!</p>
-                                <p>Progress to Goal</p>
-                                <Chart />
+                                <p>Progress to Goal of {treeGoal} Trees</p>
+                                <Chart treeGoalPercent={goalPercent}/>
                                 <ExportTreeRequestsButton />
                             </Container>
                             <Container className="custom-col-3">
