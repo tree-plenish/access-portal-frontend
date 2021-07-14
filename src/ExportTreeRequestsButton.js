@@ -1,6 +1,5 @@
 import React, { useState, useRef} from 'react';
 import {Button} from 'react-bootstrap';
-import { treeRequestData } from './Data';
 import { CSVLink } from 'react-csv';
 import {Container} from "reactstrap";
 
@@ -20,7 +19,7 @@ const ExportTreeRequestsButton = (props) => {
                     onClick={clickLink}>Download as Excel Sheet</Button>
                 <CSVLink
                     data={props.specData}
-                    filename='treeRequestData.csv'
+                    filename='tree-plenish-tree-requests.csv'
                     className='hidden'
                     ref={csvLink}
                     target='_blank'

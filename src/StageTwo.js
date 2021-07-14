@@ -17,6 +17,12 @@ const StageTwo = ( prevInfo ) => {
     const [treeGoal, setTreeGoal] = useState();
     const [numTreesReq, setNumTreesReq] = useState();
     const [goalPercent, setGoalPercent] = useState();
+    var [specProps, setSpecProps] = useState([
+      { name: "Species", email: "iFeelGodInThisChilis@tn" },
+      { name: "Placeholder", email: "catchYou@theFlipityFlip" }
+    ]);
+    var [speciesNames, setSpeciesNames] = useState(["Place","Holder"]);
+    var [speciesVals, setSpeciesVals] = useState([105,204]);
 
     function traverseSchoolName(objName, schoolidnum) {
         for (const prop in objName) {
@@ -89,6 +95,21 @@ const StageTwo = ( prevInfo ) => {
         });
       }
 
+      function getSpecies(u) {
+        return new Promise(resolve => {
+          fetch(`/api/species/${u}`)
+          .then(res => res.json())
+          .then(data => JSON.parse(data.species))
+          .then(x => {
+            resolve(x); // this is a json object with the format {'species1':100, 'species2':200, 'key':value}
+            setSpeciesNames(Object.keys(x)); // the species names are the keys
+            setSpeciesVals(Object.values(x)); // the request numbers are the values
+            const arrayFormat = Object.keys(x).map(key => ({[key]: x[key]})); // this is an array
+            setSpecProps(arrayFormat); // array needed for export to CSV button
+          });
+        });
+      }
+
       function calculateGoalPercentage(numReqParam, goalParam) {
         var numerator = Number(numReqParam);
         var denominator = Number(goalParam);
@@ -101,6 +122,7 @@ const StageTwo = ( prevInfo ) => {
         getTreeGoal(numUsername);
         getTreesRequested(numUsername);
         calculateGoalPercentage(numTreesReq, treeGoal);
+        getSpecies(numUsername);
       }, [numTreesReq, treeGoal]);
 
     const renderSponsors = (sponsor, index) => {
@@ -132,8 +154,8 @@ const StageTwo = ( prevInfo ) => {
                                 <h2 className="center">{numTreesReq}</h2>
                                 <p className="center">total requests received!</p>
                                 <p>Progress to Goal of {treeGoal} Trees</p>
-                                <Chart treeGoalPercent={goalPercent}/>
-                                <ExportTreeRequestsButton />
+                                <Chart treeGoalPercent={goalPercent} specNames={speciesNames} specValues={speciesVals}/>
+                                <ExportTreeRequestsButton specData = {specProps}/>
                             </Container>
                             <Container className="custom-col-3">
                                 <p className="col-title-text">Sponsorships</p>
@@ -151,10 +173,6 @@ const StageTwo = ( prevInfo ) => {
                                 <ul>
                                     <li>Total Free Trees You Can Give Out to Residents: {numFreeTrees}</li>
                                 </ul>
-                                <br></br>
-                                <h2>Developer Info</h2>
-                                <p className="login-text">Username: {username}</p>
-                                    <p className="login-text">Password: {password}</p>
                             </Container>
                         </div>
                         <div className="footer">

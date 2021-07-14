@@ -87,9 +87,6 @@ const StageOne = ( prevInfo ) => {
                                     <li><a href="https://www.tree-plenish.org">Tree Plenish Website</a></li>
                                     <li><a href="https://www.wikihow.com/Plant-a-Tree">How to Plant a Tree</a></li>
                                 </ul>
-                                <h2>Developer Info</h2>
-                                <p className="login-text">Username: {username}</p>
-                                    <p className="login-text">Password: {password}</p>
                             </Container>
                         </div>
                         <div className="footer">
