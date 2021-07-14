@@ -160,6 +160,7 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
         getTreesRequested(numUsername);
         calculateGoalPercentage(numTreesReq, treeGoal);
         getVolunteers(numUsername);
+        getSpecies(numUsername);
       }, [numTreesReq, treeGoal]);
 
     const renderVolunteers = (volunteer, index) => {
