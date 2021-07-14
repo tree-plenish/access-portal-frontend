@@ -27,6 +27,9 @@ const Login = () => {
     const [password, setPassword] = useState(null);
     const [passwordFocused, setPasswordFocused] = useState(null);
 
+    let apiU = 'admin';
+    let apiP = 'preeTlenish1#';
+
     function checkObj(objName, schoolidnum, currentPass) {
         for (const prop in objName) {
           if (objName[prop]['schoolid'] === schoolidnum) {
@@ -41,7 +44,12 @@ const Login = () => {
 
     function apiCall(u, p) {
         return new Promise(resolve => {
-          fetch('/api/login')
+          fetch('/api/login', {
+            headers: new Headers({
+              'Authorization': 'Basic '+btoa(apiU + ":" + apiP),
+              'Content-Type': 'application/x-www-form-urlencoded'
+            })
+          })
           .then(res => res.json())
           .then(data => JSON.parse(data.pass))
           .then(jsonObj => checkObj(jsonObj, u, p))

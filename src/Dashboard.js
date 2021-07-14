@@ -19,6 +19,9 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
 
     const numUsername = Number(username);
 
+    let apiU = 'admin';
+    let apiP = 'preeTlenish1#';
+
     const requestName = `TREE REQUESTS FORM ${username}`; // use ` instead of ' for dynamic strings
     const [schoolName, setSchoolName] = useState();
     const [treeGoal, setTreeGoal] = useState();
@@ -83,7 +86,12 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
 
     function getSchoolName(u) {
         return new Promise(resolve => {
-          fetch('/api/schoolname')
+          fetch('/api/schoolname', {
+            headers: new Headers({
+              'Authorization': 'Basic '+btoa(apiU + ":" + apiP),
+              'Content-Type': 'application/x-www-form-urlencoded'
+            })
+          })
           .then(res => res.json())
           .then(data => JSON.parse(data.name))
           .then(jsonObj => traverseSchoolName(jsonObj, u))
@@ -96,7 +104,12 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
 
       function getTreeGoal(u) {
         return new Promise(resolve => {
-          fetch('/api/treegoal')
+          fetch('/api/treegoal', {
+            headers: new Headers({
+              'Authorization': 'Basic '+btoa(apiU + ":" + apiP),
+              'Content-Type': 'application/x-www-form-urlencoded'
+            })
+          })
           .then(res => res.json())
           .then(data => JSON.parse(data.goal))
           .then(jsonObj => traverseTreeGoal(jsonObj, u))
@@ -109,7 +122,12 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
 
       function getTreesRequested(u) {
         return new Promise(resolve => {
-          fetch('/api/numtreesrequested')
+          fetch('/api/numtreesrequested', {
+            headers: new Headers({
+              'Authorization': 'Basic '+btoa(apiU + ":" + apiP),
+              'Content-Type': 'application/x-www-form-urlencoded'
+            })
+          })
           .then(res => res.json())
           .then(data => JSON.parse(data.reqnum))
           .then(jsonObj => traverseTreesRequested(jsonObj, u))
@@ -122,7 +140,12 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
 
       function getVolunteers(u) {
         return new Promise(resolve => {
-          fetch('/api/volunteers')
+          fetch('/api/volunteers', {
+            headers: new Headers({
+              'Authorization': 'Basic '+btoa(apiU + ":" + apiP),
+              'Content-Type': 'application/x-www-form-urlencoded'
+            })
+          })
           .then(res => res.json())
           .then(data => JSON.parse(data.vol))
           .then(jsonObj => traverseVolunteers(jsonObj, u))
@@ -134,7 +157,12 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
 
       function getSpecies(u) {
         return new Promise(resolve => {
-          fetch(`/api/species/${u}`)
+          fetch(`/api/species/${u}`, {
+            headers: new Headers({
+              'Authorization': 'Basic '+btoa(apiU + ":" + apiP),
+              'Content-Type': 'application/x-www-form-urlencoded'
+            })
+          })
           .then(res => res.json())
           .then(data => JSON.parse(data.species))
           .then(x => {

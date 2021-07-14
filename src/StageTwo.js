@@ -13,6 +13,9 @@ const StageTwo = ( prevInfo ) => {
     const numUsername = Number(username);
     const password = prevInfo.prevPassword;
 
+    let apiU = 'admin';
+    let apiP = 'preeTlenish1#';
+
     const [schoolName, setSchoolName] = useState();
     const [treeGoal, setTreeGoal] = useState();
     const [numTreesReq, setNumTreesReq] = useState();
@@ -58,7 +61,12 @@ const StageTwo = ( prevInfo ) => {
 
     function getSchoolName(u) {
         return new Promise(resolve => {
-          fetch('/api/schoolname')
+          fetch('/api/schoolname', {
+            headers: new Headers({
+              'Authorization': 'Basic '+btoa(apiU + ":" + apiP),
+              'Content-Type': 'application/x-www-form-urlencoded'
+            })
+          })
           .then(res => res.json())
           .then(data => JSON.parse(data.name))
           .then(jsonObj => traverseSchoolName(jsonObj, u))
@@ -71,7 +79,12 @@ const StageTwo = ( prevInfo ) => {
 
       function getTreeGoal(u) {
         return new Promise(resolve => {
-          fetch('/api/treegoal')
+          fetch('/api/treegoal', {
+            headers: new Headers({
+              'Authorization': 'Basic '+btoa(apiU + ":" + apiP),
+              'Content-Type': 'application/x-www-form-urlencoded'
+            })
+          })
           .then(res => res.json())
           .then(data => JSON.parse(data.goal))
           .then(jsonObj => traverseTreeGoal(jsonObj, u))
@@ -84,7 +97,12 @@ const StageTwo = ( prevInfo ) => {
 
       function getTreesRequested(u) {
         return new Promise(resolve => {
-          fetch('/api/numtreesrequested')
+          fetch('/api/numtreesrequested', {
+            headers: new Headers({
+              'Authorization': 'Basic '+btoa(apiU + ":" + apiP),
+              'Content-Type': 'application/x-www-form-urlencoded'
+            })
+          })
           .then(res => res.json())
           .then(data => JSON.parse(data.reqnum))
           .then(jsonObj => traverseTreesRequested(jsonObj, u))
@@ -97,7 +115,12 @@ const StageTwo = ( prevInfo ) => {
 
       function getSpecies(u) {
         return new Promise(resolve => {
-          fetch(`/api/species/${u}`)
+          fetch(`/api/species/${u}`, {
+            headers: new Headers({
+              'Authorization': 'Basic '+btoa(apiU + ":" + apiP),
+              'Content-Type': 'application/x-www-form-urlencoded'
+            })
+          })
           .then(res => res.json())
           .then(data => JSON.parse(data.species))
           .then(x => {

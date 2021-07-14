@@ -13,6 +13,9 @@ const StageOne = ( prevInfo ) => {
     const [password, setPassword] = useState(prevInfo.prevPassword); // password is a STRING
     const [schoolName, setSchoolName] = useState();
 
+    let apiU = 'admin';
+    let apiP = 'preeTlenish1#';
+
     function traverseSchoolName(objName, schoolidnum) {
         for (const prop in objName) {
           if (objName[prop]['schoolid'] === schoolidnum) {
@@ -31,7 +34,12 @@ const StageOne = ( prevInfo ) => {
 
     function getSchoolName(u) {
         return new Promise(resolve => {
-          fetch('/api/schoolname')
+          fetch('/api/schoolname', {
+            headers: new Headers({
+              'Authorization': 'Basic '+btoa(apiU + ":" + apiP),
+              'Content-Type': 'application/x-www-form-urlencoded'
+            })
+          })
           .then(res => res.json())
           .then(data => JSON.parse(data.name))
           .then(jsonObj => traverseSchoolName(jsonObj, u))
