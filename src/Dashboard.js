@@ -30,6 +30,12 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
       { name: "Holder", email: "catchYou@theFlipityFlip" }
     ]); // satisfy react-csv variable type before array is updated with actual data
     var volArr = [];
+    var [specProps, setSpecProps] = useState([
+      { name: "Species", email: "iFeelGodInThisChilis@tn" },
+      { name: "Placeholder", email: "catchYou@theFlipityFlip" }
+    ]);
+    var [speciesNames, setSpeciesNames] = useState(["Place","Holder"]);
+    var [speciesVals, setSpeciesVals] = useState([105,204]);
 
     function traverseSchoolName(objName, schoolidnum) {
         for (const prop in objName) {
@@ -126,6 +132,21 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
         });
       }
 
+      function getSpecies(u) {
+        return new Promise(resolve => {
+          fetch(`/api/species/${u}`)
+          .then(res => res.json())
+          .then(data => JSON.parse(data.species))
+          .then(x => {
+            resolve(x); // this is a json object with the format {'species1':100, 'species2':200, 'key':value}
+            setSpeciesNames(Object.keys(x)); // the species names are the keys
+            setSpeciesVals(Object.values(x)); // the request numbers are the values
+            const arrayFormat = Object.keys(x).map(key => ({[key]: x[key]})); // this is an array
+            setSpecProps(arrayFormat); // array needed for export to CSV button
+          });
+        });
+      }
+
       function calculateGoalPercentage(numReqParam, goalParam) {
         var numerator = Number(numReqParam);
         var denominator = Number(goalParam);
@@ -209,8 +230,8 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
                                     <h2 className="center">{numTreesReq}</h2>
                                     <p className="center">total requests received</p>
                                     <p>Progress to Goal of {treeGoal} Trees</p>
-                                    <Chart treeGoalPercent={goalPercent}/>
-                                    <ExportTreeRequestsButton />
+                                    <Chart treeGoalPercent={goalPercent} specNames={speciesNames} specValues={speciesVals}/>
+                                    <ExportTreeRequestsButton specData = {specProps}/>
                                 </Container>
                                 <Container className="custom-col-3">
                                     <p className="col-title-text">Announcements</p>

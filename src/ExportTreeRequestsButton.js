@@ -4,7 +4,7 @@ import { treeRequestData } from './Data';
 import { CSVLink } from 'react-csv';
 import {Container} from "reactstrap";
 
-const ExportTreeRequestsButton = () => {
+const ExportTreeRequestsButton = (props) => {
     const csvLink = useRef() // setup the ref that we'll use for the hidden CsvLink click once we've updated the data
 
     const clickLink = async () => {
@@ -19,7 +19,7 @@ const ExportTreeRequestsButton = () => {
                     size = "lg"
                     onClick={clickLink}>Download as Excel Sheet</Button>
                 <CSVLink
-                    data={treeRequestData}
+                    data={props.specData}
                     filename='treeRequestData.csv'
                     className='hidden'
                     ref={csvLink}
