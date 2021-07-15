@@ -131,8 +131,11 @@ a:active {
   padding-bottom: 19rem; }
 
 .table {
+  display: block;
   font-size: 1.5em;
   text-align: center;
+  white-space: nowrap;
+  overflow: auto;
 }
 
 .login-text {
@@ -474,4 +477,90 @@ a:active {
 
 .center {
   text-align: center;
+}
+
+.annOut {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins',sans-serif;
+}
+
+.annBody {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 70vh;
+}
+
+.annContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.annBox {
+  position: relative;
+  width: 320px;
+  background: #e9f7e9;
+  padding: 100px 40px 40px 40px;
+  margin: 25px;
+  box-shadow: 0 15px 45px rgba(0,0,0,0.1);
+}
+
+.annBox:before {
+  position: absolute;
+  content: '';
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #009e60;
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.5s;
+}
+
+.annBox:hover:before {
+  transform: scaleY(1);
+  transform-origin: bottom;
+  transition: transform 0.5s;
+}
+
+.annBox h2 {
+  position: absolute;
+  left: 39px;
+  top: 25px;
+  font-size: 3em;
+  font-weight: 800;
+  z-index: 1;
+  opacity: 0.5;
+  transition: 0.5s;
+}
+
+.annBox:hover h2 {
+  opacity: 1;
+  color: #fff;
+  transform: translateY(-15px);
+}
+
+.annBox h3 {
+  position: relative;
+  font-size: 1.5em;
+  z-index: 2;
+  color: #333;
+  transition: 0.5s;
+}
+
+.annBox p {
+  position: relative;
+  z-index: 2;
+  color: #555;
+  transition: 0.5s;
+}
+
+.annBox:hover h3,
+.annBox:hover p {
+  color: #fff;
 }

@@ -26,7 +26,7 @@ const Login = () => {
     const [usernameFocused, setUsernameFocused] = useState(null);
     const [password, setPassword] = useState(null);
     const [passwordFocused, setPasswordFocused] = useState(null);
-    var [loading, setLoading] = useState();
+    var [message, setMessage] = useState('Your dashboard awaits.');
 
     let apiU = 'admin';
     let apiP = 'preeTlenish1#';
@@ -71,7 +71,7 @@ const Login = () => {
         const strPassword = password;
         const currUsername = Number(username);
         const currPassword = Number(password);
-        setLoading('Loading... May take up to 20 seconds.');
+        setMessage('Loading... May take up to 30 seconds.');
         var proceed = await apiCall(currUsername, currPassword); // apiCall function requires numbers, not strings
         if (proceed === 1) {
             history.push({
@@ -102,7 +102,7 @@ const Login = () => {
                                                 style={{ width: "180px", padding: '1em' }}
                                             />
                                             <h4 className = "lead-example text-white">
-                                                Your dashboard awaits.
+                                                {message}
                                             </h4>
                                             <div className = "mt-5">
                                                 <FormGroup
@@ -148,7 +148,6 @@ const Login = () => {
                                                 </Button>{" "}
                                                 </div>
                                             </div>
-                                            <h4 className = "lead-example text-white">{loading}</h4>
                                         </Col>
                                     </Row>
                                 </div>
