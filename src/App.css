@@ -564,3 +564,25 @@ a:active {
 .annBox:hover p {
   color: #fff;
 }
+
+p a {
+  text-decoration: none;
+}
+
+p a:hover {
+  color: #fff;
+  transition: .4s;
+}
+
+.link-anim::after {
+  content:'';
+  display: block;
+  width: 0;
+  height: 2px;
+  background: #90ee90;
+  transition: width .5s;
+}
+
+.link-anim:hover::after {
+  width: 50%;
+}

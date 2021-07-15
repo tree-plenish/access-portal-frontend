@@ -19,8 +19,8 @@ const Announcements = () => {
                         </div>
                         <div className="annBox">
                             <h2>Helpful Links</h2>
-                            <p><a href="https://www.tree-plenish.org">Tree Plenish Website</a></p>
-                            <p><a href="https://www.wikihow.com/Plant-a-Tree">How to Plant a Tree</a></p>
+                            <p><a className="link-anim" href="https://www.tree-plenish.org">Tree Plenish Website</a></p>
+                            <p><a className="link-anim" href="https://www.wikihow.com/Plant-a-Tree">How to Plant a Tree</a></p>
                         </div>
                     </div>
                 </div>
