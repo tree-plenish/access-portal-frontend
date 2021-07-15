@@ -62,7 +62,7 @@ const Chart = (props) => {
                 data={data}
                 options={{
                     title:{
-                        display:true,
+                        display:false,
                         text:'Tree Requests by Species',
                         fontSize: 18
                     },
