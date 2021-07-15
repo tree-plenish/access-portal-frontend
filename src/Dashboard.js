@@ -2,7 +2,6 @@ import React, { useState, Component, useEffect, useRef} from "react";
 import './App.css';
 import Chart from './Chart';
 import Announcements from './Announcements';
-import { volunteerData } from './Data';
 import { sponsorshipData } from './Data';
 import * as ReactBootStrap from 'react-bootstrap';
 import ExportTreeRequestsButton from './ExportTreeRequestsButton';
