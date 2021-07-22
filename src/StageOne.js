@@ -90,11 +90,18 @@ const StageOne = ( prevInfo ) => {
                                     </ReactBootStrap.Table>
                             </Container>
                             <Container className="custom-col-3">
-                                <p className="col-title-text">Helpful Links</p>
-                                <ul>
-                                    <li><a href="https://www.tree-plenish.org">Tree Plenish Website</a></li>
-                                    <li><a href="https://www.wikihow.com/Plant-a-Tree">How to Plant a Tree</a></li>
-                                </ul>
+                                <p className="col-title-text">Our Impact</p>
+                                <div className="rot-wrapper">
+                                    <div className="static-txt">Trees</div>
+                                    <ul className="dynamic-txts">
+                                        <li className="dynamic-txt-ele">help us breathe.</li>
+                                        <li className="dynamic-txt-ele">reduce climate change.</li>
+                                        <li className="dynamic-txt-ele">save money.</li>
+                                        <li className="dynamic-txt-ele">save energy.</li>
+                                    </ul>
+                                </div>
+                                <img src={impactPic} />
+                                <p className="text-right">As Of 2020</p>
                             </Container>
                         </div>
                         <div className="footer">
