@@ -61,7 +61,7 @@ const Skeleton = ({ location }) => {
         const themonth = thedate.getMonth(); // Jan is 0, Feb is 1, ..., Dec is 11
 
         if (themonth === 6 || themonth === 7 || themonth === 8 || themonth === 9 || themonth === 10) { // stage 1 is July - November
-            return <Skeleton
+            return <StageOne
                 prevUsername={formValues.username}
                 prevPassword={formValues.password}
                 onDone={( username, password ) => {
