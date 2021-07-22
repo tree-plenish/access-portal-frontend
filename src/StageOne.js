@@ -62,6 +62,8 @@ const StageOne = ( prevInfo ) => {
         )
     }
 
+    var numFreeTrees = 150;
+
     return (
         <div className="page-container">
             <div className="content-wrap">
@@ -86,7 +88,10 @@ const StageOne = ( prevInfo ) => {
                                         <tbody>
                                         {sponsorshipData.map(renderSponsors)}
                                         </tbody>
-                                    </ReactBootStrap.Table>
+                                </ReactBootStrap.Table>
+                                <ul>
+                                  <li>Total Free Trees You Can Give Out to Residents: {numFreeTrees}</li>
+                                </ul>
                             </Container>
                             <Container className="custom-col-3">
                                 <p className="col-title-text">Our Impact</p>
