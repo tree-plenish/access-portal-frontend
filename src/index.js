@@ -8,6 +8,10 @@ import reportWebVitals from './reportWebVitals';
 import Landing from "./Landing.js";
 import Skeleton from "./Skeleton.js";
 
+import ReactGA from 'react-ga';
+ReactGA.initialize('UA-191521171-2'); // add your tracking id here.
+ReactGA.pageview(window.location.pathname + window.location.search);
+
 ReactDOM.render(
     <BrowserRouter>
         <Switch>
