@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
 import {Container} from "reactstrap";
 import Announcements from './Announcements';
 import { sponsorshipData } from './Data';
 import * as ReactBootStrap from "react-bootstrap";
-import Chart from "./Chart";
+import impactPic from './assets/impact-2020.png';
 
 const StageOne = ( prevInfo ) => {
 
