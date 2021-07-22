@@ -12,13 +12,13 @@ The webpage following the login page is conditionally rendered based on variable
 The assumption is that all schools are at the same stage on a given date.
 
 Stage 3:
-![Image of Dashboard](/public/dashboard.png)
+![Image of Dashboard](/public/dashboard-Jul-22.png)
 
 Stage 1:
-![Image of StageOne](/public/stageone.png)
+![Image of StageOne](/public/stageone-Jul-22.png)
 
 Stage 2:
-![Image of StageTwo](/public/stagetwo.png)
+![Image of StageTwo](/public/stagetwo-Jul-22.png)
 
 ## Available Scripts
 
