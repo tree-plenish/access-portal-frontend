@@ -141,7 +141,7 @@ const Login = () => {
                                                 <div style={{ padding: '1em'}}>
                                                 <Button
                                                     className = "btn-login btn-trans"
-                                                    size = "lg"
+                                                    size = "lg-login"
                                                     onClick={handleClick}
                                                 >
                                                     <span className="btn-inner--text">Log In</span>

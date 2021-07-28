@@ -191,6 +191,25 @@ a:active {
   margin: 0px;
 }
 
+@media only screen and (max-width: 600px) {
+  .flex-container {
+    flex-flow: column nowrap;
+    height: 100vh;
+  }
+  .custom-col-1 {
+    height: 100vh;
+    width: 100%;
+  }
+  .custom-col-2 {
+    height: 100vh;
+    width: 100%;
+  }
+  .custom-col-3 {
+    height: 100vh;
+    width: 100%;
+  }
+}
+
 .px-0 {
   padding-right: 0 !important; }
 
@@ -310,6 +329,15 @@ a:active {
   color: white;
 }
 
+@media only screen and (max-device-width: 600px) {
+  .title {
+    padding: 0.2em;
+  }
+  .title h3 {
+    font-size: 0.8rem;
+  }
+}
+
 .footer {
   position: absolute;
   bottom: 0;
@@ -320,6 +348,12 @@ a:active {
   padding: 1em;
   background-color: #2f5e62;
   color: #fff;
+}
+
+@media only screen and (max-device-width: 600px) {
+  .footer {
+    display: none;
+  }
 }
 
 .page-container {
@@ -413,6 +447,20 @@ a:active {
   font-size: 1.2rem;
   position: relative;
   top: 2px; }
+
+.btn-lg-login {
+  padding: 0.475rem 1rem;
+  font-size: 1.5rem;
+  line-height: 1.5;
+  border-radius: 0.3rem; }
+  
+@media only screen and (max-device-width: 600px) {
+  .btn-lg {
+    width: 60%;
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+}
 
 .ct-example-container-fluid {
   max-width: none; }
