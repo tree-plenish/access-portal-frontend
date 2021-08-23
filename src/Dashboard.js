@@ -32,6 +32,12 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
       { name: "Holder", email: "catchYou@theFlipityFlip" }
     ]); // satisfy react-csv variable type before array is updated with actual data
     var volArr = [];
+    var [sponTable, setSponTable] = useState();
+    var [sponProps, setSponProps] = useState([
+      { name: "Place", email: "iFeelGodInThisChilis@tn" },
+      { name: "Holder", email: "catchYou@theFlipityFlip" }
+    ]);
+    var sponArr = [];
     var [specProps, setSpecProps] = useState([
       { name: "Species", email: "iFeelGodInThisChilis@tn" },
       { name: "Placeholder", email: "catchYou@theFlipityFlip" }
@@ -73,6 +79,17 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
         setVolProps(volArr);
         setVolTable(volArr.map(renderVolunteers)); // method to make sure the table renders with updated data
         return volArr;
+      }
+
+      function traverseSponsors(objName, schoolidnum) {
+        for (const prop in objName) {
+          if (objName[prop]['schoolid'] === schoolidnum) {
+            sponArr.push(objName[prop]);
+          }
+        }
+        setSponProps(sponArr);
+        setSponTable(sponArr.map(renderSponsors)); // method to make sure the table renders with updated data
+        return sponArr;
       }
 
     function toTitleCase(str) { // function to capitalize first letter of each word; e.g. 'still woozy' becomes 'Still Woozy'
@@ -154,6 +171,18 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
         });
       }
 
+      function getSponsors(u) {
+        return new Promise(resolve => {
+          fetch('/spon')
+          .then(res => res.json())
+          .then(data => JSON.parse(data.spon))
+          .then(jsonObj => traverseSponsors(jsonObj, u))
+          .then(x => {
+            resolve(x);
+          });
+        });
+      }
+
       function getSpecies(u) {
         return new Promise(resolve => {
           fetch(`/api/species/${u}`, {
@@ -188,6 +217,7 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
         calculateGoalPercentage(numTreesReq, treeGoal);
         getVolunteers(numUsername);
         getSpecies(numUsername);
+        getSponsors(numUsername);
       }, [numTreesReq, treeGoal]);
 
     const renderVolunteers = (volunteer, index) => {
@@ -205,8 +235,9 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
     const renderSponsors = (sponsor, index) => {
         return(
             <tr key={{index}}>
-                <td>{sponsor.name}</td>
-                <td>{sponsor.amount}</td>
+                <td>{sponsor.sponsorid}</td>
+                <td>{sponsor.level_pledged}</td>
+                <td>{sponsor.anon.toString()}</td>
             </tr>
         )
     }
@@ -269,12 +300,13 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
                                     <ReactBootStrap.Table className="table">
                                         <thead>
                                         <tr>
-                                            <th>Name</th>
-                                            <th>Amount</th>
+                                            <th>Sponsor ID</th>
+                                            <th>Level Pledged</th>
+                                            <th>Anonymous Donation</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        {sponsorshipData.map(renderSponsors)}
+                                        {sponTable}
                                         </tbody>
                                     </ReactBootStrap.Table>
                                     <ul>
