@@ -38,6 +38,13 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
       { name: "Holder", email: "catchYou@theFlipityFlip" }
     ]);
     var sponArr = [];
+    var sponIdArr = [];
+    var sponIdTableArr = [];
+    var [sponIdTable, setSponIdTable] = useState();
+    var [sponIdProps, setSponIdProps] = useState([
+      { name: "Place", email: "iFeelGodInThisChilis@tn" },
+      { name: "Holder", email: "catchYou@theFlipityFlip" }
+    ]);
     var [specProps, setSpecProps] = useState([
       { name: "Species", email: "iFeelGodInThisChilis@tn" },
       { name: "Placeholder", email: "catchYou@theFlipityFlip" }
@@ -85,11 +92,25 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
         for (const prop in objName) {
           if (objName[prop]['schoolid'] === schoolidnum) {
             sponArr.push(objName[prop]);
+            sponIdArr.push(objName[prop]['sponsorid']);
           }
         }
         setSponProps(sponArr);
         setSponTable(sponArr.map(renderSponsors)); // method to make sure the table renders with updated data
         return sponArr;
+      }
+
+      function traverseSponNames(objName) {
+        for (const prop in objName) {
+          for (var i = 0; i < sponIdArr.length; i++) {
+            if (objName[prop]['sponsorid'] === sponIdArr[i]) {
+              sponIdTableArr.push(objName[prop]);
+            }
+          }
+        }
+        setSponIdProps(sponIdTableArr);
+        setSponIdTable(sponIdTableArr.map(renderSponNames));
+        return sponIdTableArr;
       }
 
     function toTitleCase(str) { // function to capitalize first letter of each word; e.g. 'still woozy' becomes 'Still Woozy'
@@ -171,9 +192,31 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
         });
       }
 
+      function getSponsorNames() {
+        return new Promise(resolve => {
+          fetch('/api/sponinfo', {
+            headers: new Headers({
+              'Authorization': 'Basic '+btoa(apiU + ":" + apiP),
+              'Content-Type': 'application/x-www-form-urlencoded'
+            })
+          })
+          .then(res => res.json())
+          .then(data => JSON.parse(data.sponinfo))
+          .then(jsonObj => traverseSponNames(jsonObj)) // no need to traverse using schoolid
+          .then(x => {
+            resolve(x);
+          });
+        });
+      }
+
       function getSponsors(u) {
         return new Promise(resolve => {
-          fetch('/spon')
+          fetch('/api/spon', {
+            headers: new Headers({
+              'Authorization': 'Basic '+btoa(apiU + ":" + apiP),
+              'Content-Type': 'application/x-www-form-urlencoded'
+            })
+          })
           .then(res => res.json())
           .then(data => JSON.parse(data.spon))
           .then(jsonObj => traverseSponsors(jsonObj, u))
@@ -218,6 +261,7 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
         getVolunteers(numUsername);
         getSpecies(numUsername);
         getSponsors(numUsername);
+        getSponsorNames();
       }, [numTreesReq, treeGoal]);
 
     const renderVolunteers = (volunteer, index) => {
@@ -240,6 +284,15 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
                 <td>{sponsor.anon.toString()}</td>
             </tr>
         )
+    }
+
+    const renderSponNames = (sponName, index) => {
+      return(
+          <tr key={{index}}>
+              <td>{sponName.name}</td>
+              <td>{sponName.sponsorid}</td>
+          </tr>
+      )
     }
 
     const numFreeTrees = 150;
@@ -307,6 +360,17 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
                                         </thead>
                                         <tbody>
                                         {sponTable}
+                                        </tbody>
+                                    </ReactBootStrap.Table>
+                                    <ReactBootStrap.Table className="table">
+                                        <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Sponsor ID</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {sponIdTable}
                                         </tbody>
                                     </ReactBootStrap.Table>
                                     <ul>
