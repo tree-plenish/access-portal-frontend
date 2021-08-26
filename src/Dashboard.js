@@ -32,6 +32,8 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
       { name: "Holder", email: "catchYou@theFlipityFlip" }
     ]); // satisfy react-csv variable type before array is updated with actual data
     var volArr = [];
+    var donationArr = [];
+    const [numFreeTrees, setNumFreeTrees] = useState();
     var [sponTable, setSponTable] = useState();
     var [sponProps, setSponProps] = useState([
       { name: "Place", email: "iFeelGodInThisChilis@tn" },
@@ -93,8 +95,11 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
           if (objName[prop]['schoolid'] === schoolidnum) {
             sponArr.push(objName[prop]);
             sponIdArr.push(objName[prop]['sponsorid']);
+            donationArr.push(objName[prop]['level_pledged']);
           }
         }
+        var sumDonations = donationArr.reduce((partial_sum, a) => partial_sum + a, 0);
+        setNumFreeTrees(Math.floor(sumDonations / 5));
         setSponProps(sponArr);
         setSponTable(sponArr.map(renderSponsors)); // method to make sure the table renders with updated data
         return sponArr;
@@ -262,7 +267,7 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
         getSpecies(numUsername);
         getSponsors(numUsername);
         getSponsorNames();
-      }, [numTreesReq, treeGoal]);
+      }, [numTreesReq, treeGoal, numFreeTrees]);
 
     const renderVolunteers = (volunteer, index) => {
         return(
