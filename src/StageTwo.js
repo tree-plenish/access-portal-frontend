@@ -27,6 +27,22 @@ const StageTwo = ( prevInfo ) => {
     var [speciesNames, setSpeciesNames] = useState(["Place","Holder"]);
     var [speciesVals, setSpeciesVals] = useState([105,204]);
 
+    var donationArr = [];
+    const [numFreeTrees, setNumFreeTrees] = useState();
+    var sponArr = [];
+    var [sponTable, setSponTable] = useState();
+    var [sponProps, setSponProps] = useState([
+      { name: "Place", email: "iFeelGodInThisChilis@tn" },
+      { name: "Holder", email: "catchYou@theFlipityFlip" }
+    ]);
+    var sponIdArr = [];
+    var sponIdTableArr = [];
+    var [sponIdTable, setSponIdTable] = useState();
+    var [sponIdProps, setSponIdProps] = useState([
+      { name: "Place", email: "iFeelGodInThisChilis@tn" },
+      { name: "Holder", email: "catchYou@theFlipityFlip" }
+    ]);
+
     function traverseSchoolName(objName, schoolidnum) {
         for (const prop in objName) {
           if (objName[prop]['schoolid'] === schoolidnum) {
@@ -49,6 +65,34 @@ const StageTwo = ( prevInfo ) => {
             return objName[prop]['trees_requested'];
           }
         }
+      }
+
+      function traverseSponsors(objName, schoolidnum) {
+        for (const prop in objName) {
+          if (objName[prop]['schoolid'] === schoolidnum) {
+            sponArr.push(objName[prop]);
+            sponIdArr.push(objName[prop]['sponsorid']);
+            donationArr.push(objName[prop]['level_pledged']);
+          }
+        }
+        var sumDonations = donationArr.reduce((partial_sum, a) => partial_sum + a, 0); // find sum of array
+        setNumFreeTrees(Math.floor(sumDonations / 5));
+        setSponProps(sponArr);
+        setSponTable(sponArr.map(renderSponsors)); // method to make sure the table renders with updated data
+        return sponArr;
+      }
+  
+      function traverseSponNames(objName) {
+        for (const prop in objName) {
+          for (var i = 0; i < sponIdArr.length; i++) {
+            if (objName[prop]['sponsorid'] === sponIdArr[i]) {
+              sponIdTableArr.push(objName[prop]);
+            }
+          }
+        }
+        setSponIdProps(sponIdTableArr);
+        setSponIdTable(sponIdTableArr.map(renderSponNames));
+        return sponIdTableArr;
       }
 
       function toTitleCase(str) { // function to capitalize first letter of each word; e.g. 'still woozy' becomes 'Still Woozy'
@@ -133,6 +177,40 @@ const StageTwo = ( prevInfo ) => {
         });
       }
 
+      function getSponsorNames() {
+        return new Promise(resolve => {
+          fetch('/api/sponinfo', {
+            headers: new Headers({
+              'Authorization': 'Basic '+btoa(apiU + ":" + apiP),
+              'Content-Type': 'application/x-www-form-urlencoded'
+            })
+          })
+          .then(res => res.json())
+          .then(data => JSON.parse(data.sponinfo))
+          .then(jsonObj => traverseSponNames(jsonObj)) // no need to traverse using schoolid
+          .then(x => {
+            resolve(x);
+          });
+        });
+      }
+
+      function getSponsors(u) {
+        return new Promise(resolve => {
+          fetch('/api/spon', {
+            headers: new Headers({
+              'Authorization': 'Basic '+btoa(apiU + ":" + apiP),
+              'Content-Type': 'application/x-www-form-urlencoded'
+            })
+          })
+          .then(res => res.json())
+          .then(data => JSON.parse(data.spon))
+          .then(jsonObj => traverseSponsors(jsonObj, u))
+          .then(x => {
+            resolve(x);
+          });
+        });
+      }
+
       function calculateGoalPercentage(numReqParam, goalParam) {
         var numerator = Number(numReqParam);
         var denominator = Number(goalParam);
@@ -146,15 +224,27 @@ const StageTwo = ( prevInfo ) => {
         getTreesRequested(numUsername);
         calculateGoalPercentage(numTreesReq, treeGoal);
         getSpecies(numUsername);
+        getSponsors(numUsername);
+        getSponsorNames();
       }, [numTreesReq, treeGoal]);
 
     const renderSponsors = (sponsor, index) => {
         return(
             <tr key={{index}}>
-                <td>{sponsor.name}</td>
-                <td>{sponsor.amount}</td>
+                <td>{sponsor.sponsorid}</td>
+                <td>{sponsor.level_pledged}</td>
+                <td>{sponsor.anon.toString()}</td>
             </tr>
         )
+    }
+
+    const renderSponNames = (sponName, index) => {
+      return(
+          <tr key={{index}}>
+              <td>{sponName.name}</td>
+              <td>{sponName.sponsorid}</td>
+          </tr>
+      )
     }
 
     const numFreeTrees = 150;
@@ -183,16 +273,28 @@ const StageTwo = ( prevInfo ) => {
                             <Container className="custom-col-3">
                                 <p className="col-title-text">Sponsorships</p>
                                 <ReactBootStrap.Table className="table">
-                                    <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Amount</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {sponsorshipData.map(renderSponsors)}
-                                    </tbody>
-                                </ReactBootStrap.Table>
+                                        <thead>
+                                        <tr>
+                                            <th>Sponsor ID</th>
+                                            <th>Level Pledged</th>
+                                            <th>Anonymous Donation</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {sponTable}
+                                        </tbody>
+                                    </ReactBootStrap.Table>
+                                    <ReactBootStrap.Table className="table">
+                                        <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Sponsor ID</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {sponIdTable}
+                                        </tbody>
+                                    </ReactBootStrap.Table>
                                 <ul>
                                     <li>Total Free Trees You Can Give Out to Residents: {numFreeTrees}</li>
                                 </ul>
