@@ -300,8 +300,6 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
       )
     }
 
-    const numFreeTrees = 150;
-
     // attempt to write a function to convert regular json format into array format for chart data
     /*const speciesArray = [];
     const requestsArray = [];
