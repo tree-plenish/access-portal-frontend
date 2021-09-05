@@ -247,8 +247,6 @@ const StageTwo = ( prevInfo ) => {
       )
     }
 
-    const numFreeTrees = 150;
-
     return (
         <div className="page-container">
             <div className="content-wrap">
