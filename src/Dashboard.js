@@ -32,7 +32,8 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
       { name: "Holder", email: "catchYou@theFlipityFlip" }
     ]); // satisfy react-csv variable type before array is updated with actual data
     var volArr = [];
-    var donationArr = [];
+    var donationArr = []; // raw donation levels (a, b, c, d)
+    var donationNumArr = []; // corresponding numbers (1000, 500, 200, 50)
     const [numFreeTrees, setNumFreeTrees] = useState();
     var [sponTable, setSponTable] = useState();
     var [sponProps, setSponProps] = useState([
@@ -98,7 +99,23 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
             donationArr.push(objName[prop]['level_pledged']);
           }
         }
-        var sumDonations = donationArr.reduce((partial_sum, a) => partial_sum + a, 0);
+        for (var i = 0; i < donationArr.length; i++) {
+          switch (donationArr[i]) {
+            case 'a':
+              donationNumArr.push(1000);
+              break;
+            case 'b':
+              donationNumArr.push(500);
+              break;
+            case 'c':
+              donationNumArr.push(200);
+              break;
+            case 'd':
+              donationNumArr.push(50);
+              break;
+          }
+        }
+        var sumDonations = donationNumArr.reduce((partial_sum, a) => partial_sum + a, 0);
         setNumFreeTrees(Math.floor(sumDonations / 5));
         setSponProps(sponArr);
         setSponTable(sponArr.map(renderSponsors)); // method to make sure the table renders with updated data
@@ -267,7 +284,7 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
         getSpecies(numUsername);
         getSponsors(numUsername);
         getSponsorNames();
-      }, [numTreesReq, treeGoal, numFreeTrees]);
+      }, [numTreesReq, treeGoal]);
 
     const renderVolunteers = (volunteer, index) => {
         return(
@@ -299,19 +316,6 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
           </tr>
       )
     }
-
-    // attempt to write a function to convert regular json format into array format for chart data
-    /*const speciesArray = [];
-    const requestsArray = [];
-    function convertDataToChartFormat() {
-        var i;
-        for (i = 0; i < data.length; i++) {
-            speciesArray.push(data(i).species);
-            requestsArray.push(data(i).requests);
-        }
-    }
-
-    const newChartData = {convertDataToChartFormat(treeRequestData)};*/
 
     return (
             <div className="page-container">

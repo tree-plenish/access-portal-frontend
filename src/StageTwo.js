@@ -27,7 +27,8 @@ const StageTwo = ( prevInfo ) => {
     var [speciesNames, setSpeciesNames] = useState(["Place","Holder"]);
     var [speciesVals, setSpeciesVals] = useState([105,204]);
 
-    var donationArr = [];
+    var donationArr = []; // raw donation levels (a, b, c, d)
+    var donationNumArr = []; // corresponding numbers (1000, 500, 200, 50)var donationArr = [];
     const [numFreeTrees, setNumFreeTrees] = useState();
     var sponArr = [];
     var [sponTable, setSponTable] = useState();
@@ -75,7 +76,23 @@ const StageTwo = ( prevInfo ) => {
             donationArr.push(objName[prop]['level_pledged']);
           }
         }
-        var sumDonations = donationArr.reduce((partial_sum, a) => partial_sum + a, 0); // find sum of array
+        for (var i = 0; i < donationArr.length; i++) {
+          switch (donationArr[i]) {
+            case 'a':
+              donationNumArr.push(1000);
+              break;
+            case 'b':
+              donationNumArr.push(500);
+              break;
+            case 'c':
+              donationNumArr.push(200);
+              break;
+            case 'd':
+              donationNumArr.push(50);
+              break;
+          }
+        }
+        var sumDonations = donationNumArr.reduce((partial_sum, a) => partial_sum + a, 0); // find sum of array
         setNumFreeTrees(Math.floor(sumDonations / 5));
         setSponProps(sponArr);
         setSponTable(sponArr.map(renderSponsors)); // method to make sure the table renders with updated data
