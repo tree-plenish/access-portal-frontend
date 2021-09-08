@@ -94,9 +94,26 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
       function traverseSponsors(objName, schoolidnum) {
         for (const prop in objName) {
           if (objName[prop]['schoolid'] === schoolidnum) {
-            sponArr.push(objName[prop]);
-            sponIdArr.push(objName[prop]['sponsorid']);
-            donationArr.push(objName[prop]['level_pledged']);
+            donationArr.push(objName[prop]['level_pledged']); // all donations are calculated, whether anonymous or not
+            // only non-anonymous donations are displayed along with sponsor names
+            if (objName[prop]['anon'] === false) { 
+              switch (objName[prop]['level_pledged']) { // display level name instead of a, b, c, and d
+                case 'a':
+                  objName[prop]['level_pledged'] = 'Redwood';
+                  break;
+                case 'b':
+                  objName[prop]['level_pledged'] = 'Maple';
+                  break;
+                case 'c':
+                  objName[prop]['level_pledged'] = 'Seedling';
+                  break;
+                case 'd':
+                  objName[prop]['level_pledged'] = 'Individual';
+                  break;
+              }
+              sponArr.push(objName[prop]);
+              sponIdArr.push(objName[prop]['sponsorid'])
+            }
           }
         }
         for (var i = 0; i < donationArr.length; i++) {
@@ -303,7 +320,6 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
             <tr key={{index}}>
                 <td>{sponsor.sponsorid}</td>
                 <td>{sponsor.level_pledged}</td>
-                <td>{sponsor.anon.toString()}</td>
             </tr>
         )
     }
@@ -362,7 +378,6 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
                                         <tr>
                                             <th>Sponsor ID</th>
                                             <th>Level Pledged</th>
-                                            <th>Anonymous Donation</th>
                                         </tr>
                                         </thead>
                                         <tbody>
