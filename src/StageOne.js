@@ -195,6 +195,7 @@ const StageOne = ( prevInfo ) => {
                         </div>
                         <div className="flex-container w-100">
                             <Container className="custom-col-1">
+                            <p className="col-title-text">Announcements</p>
                             <Announcements />
                             </Container>
                             <Container className="custom-col-2">
