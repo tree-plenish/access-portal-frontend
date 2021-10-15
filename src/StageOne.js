@@ -191,7 +191,7 @@ const StageOne = ( prevInfo ) => {
                 <div className={"bg-light-green view-entire"}>
                     <div className="w-500 h-500 d-flex align-items-center justify-content-between flex-column">
                         <div className="title">
-                            <h3>Welcome, {schoolName} High School!</h3>
+                            <h3>Welcome, {schoolName}!</h3>
                         </div>
                         <div className="flex-container w-100">
                             <Container className="custom-col-1">

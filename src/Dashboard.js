@@ -339,7 +339,7 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
                     <div className={"bg-light-green view-entire"}>
                         <div className="w-500 h-500 d-flex align-items-center justify-content-between flex-column">
                             <div className="title">
-                                Welcome, {schoolName} High School!
+                                Welcome, {schoolName}!
                             </div>
                             <div className="flex-container w-100">
                                 <Container className="custom-col-1">
