@@ -237,7 +237,7 @@ const StageOne = ( prevInfo ) => {
                                         <li className="dynamic-txt-ele">save energy.</li>
                                     </ul>
                                 </div>
-                                <img src={impactPic} />
+                                <img className="impact-pic" src={impactPic} />
                                 <p className="text-right">As Of 2020</p>
                             </Container>
                         </div>

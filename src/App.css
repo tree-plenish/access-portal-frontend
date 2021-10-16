@@ -725,6 +725,14 @@ p a {
   margin: 0;
 }
 
+.impact-pic {
+  height: 38vh;
+  width: calc(75vh - 10rem);
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 @-webkit-keyframes opacity {
   0%, 100% {opacity:0;}
   50% {opacity:1;}
