@@ -655,7 +655,8 @@ a:active {
   transition: 0.5s;
 }
 
-.annBox p {
+.annBox p,
+.annBox p a {
   position: relative;
   z-index: 2;
   color: #555;
@@ -663,17 +664,13 @@ a:active {
 }
 
 .annBox:hover h3,
-.annBox:hover p {
+.annBox:hover p,
+.annBox:hover p a {
   color: #fff;
 }
 
 p a {
   text-decoration: none;
-}
-
-p a:hover {
-  color: #fff;
-  transition: .4s;
 }
 
 .link-anim::after {
