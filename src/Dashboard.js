@@ -97,17 +97,17 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
             donationArr.push(objName[prop]['level_pledged']); // all donations are calculated, whether anonymous or not
             // only non-anonymous donations are displayed along with sponsor names
             if (objName[prop]['anon'] === false) { 
-              switch (objName[prop]['level_pledged']) { // display level name instead of a, b, c, and d
-                case 'a':
+              switch (objName[prop]['level_pledged']) { // capitalize level name
+                case 'redwood':
                   objName[prop]['level_pledged'] = 'Redwood';
                   break;
-                case 'b':
+                case 'maple':
                   objName[prop]['level_pledged'] = 'Maple';
                   break;
-                case 'c':
+                case 'seedling':
                   objName[prop]['level_pledged'] = 'Seedling';
                   break;
-                case 'd':
+                case 'individual':
                   objName[prop]['level_pledged'] = 'Individual';
                   break;
               }
@@ -118,16 +118,16 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
         }
         for (var i = 0; i < donationArr.length; i++) {
           switch (donationArr[i]) {
-            case 'a':
+            case 'redwood':
               donationNumArr.push(1000);
               break;
-            case 'b':
+            case 'maple':
               donationNumArr.push(500);
               break;
-            case 'c':
+            case 'seedling':
               donationNumArr.push(200);
               break;
-            case 'd':
+            case 'individual':
               donationNumArr.push(50);
               break;
           }
