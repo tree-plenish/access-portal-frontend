@@ -96,7 +96,7 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
           if (objName[prop]['schoolid'] === schoolidnum) {
             donationArr.push(objName[prop]['level_pledged']); // all donations are calculated, whether anonymous or not
             // only non-anonymous donations are displayed along with sponsor names
-            if (objName[prop]['anon'] === false) { 
+            //if (objName[prop]['anon'] === false) { 
               switch (objName[prop]['level_pledged']) { // capitalize level name
                 case 'redwood':
                   objName[prop]['level_pledged'] = 'Redwood';
@@ -113,7 +113,7 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
               }
               sponArr.push(objName[prop]);
               sponIdArr.push(objName[prop]['sponsorid'])
-            }
+            //}
           }
         }
         for (var i = 0; i < donationArr.length; i++) {
@@ -143,6 +143,7 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
         for (const prop in objName) {
           for (var i = 0; i < sponIdArr.length; i++) {
             if (objName[prop]['sponsorid'] === sponIdArr[i]) {
+              objName[prop]['name'] = toTitleCase(objName[prop]['name']);
               sponIdTableArr.push(objName[prop]);
             }
           }
