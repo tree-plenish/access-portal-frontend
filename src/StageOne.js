@@ -216,8 +216,9 @@ const StageOne = ( prevInfo ) => {
                                   </ReactBootStrap.Table>
                                   <p>{message}</p>
                                 <ul>
-                                  <li>Total Free Trees You Can Give Out to Residents: {numFreeTrees}</li>
+                                  <li>Total Free Trees You Can Give Out to Residents: {numFreeTrees}*</li>
                                 </ul>
+                                <p className="text-right">*Less for California schools... TBA</p>
                             </Container>
                             <Container className="custom-col-3">
                                 <p className="col-title-text">Our 2020 Impact</p>
