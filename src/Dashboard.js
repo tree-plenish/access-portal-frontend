@@ -2,7 +2,6 @@ import React, { useState, Component, useEffect, useRef} from "react";
 import './App.css';
 import Chart from './Chart';
 import Announcements from './Announcements';
-import { sponsorshipData } from './Data';
 import * as ReactBootStrap from 'react-bootstrap';
 import ExportTreeRequestsButton from './ExportTreeRequestsButton';
 import ExportDataButton from './ExportDataButton';
@@ -55,6 +54,11 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
     var [speciesNames, setSpeciesNames] = useState(["Place","Holder"]);
     var [speciesVals, setSpeciesVals] = useState([105,204]);
 
+    // Note: at each index, these 2 arrays line up with each other
+    var donationStringArr = []; // array with donations as strings
+    var sponNamesArr = []; // array with sponsor names
+    var [newSponTable, setNewSponTable] = useState();
+
     function traverseSchoolName(objName, schoolidnum) {
         for (const prop in objName) {
           if (objName[prop]['schoolid'] === schoolidnum) {
@@ -99,20 +103,21 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
             //if (objName[prop]['anon'] === false) { 
               switch (objName[prop]['level_pledged']) { // capitalize level name
                 case 'redwood':
-                  objName[prop]['level_pledged'] = 'Redwood';
+                  objName[prop]['level_pledged'] = '1,000';
                   break;
                 case 'maple':
-                  objName[prop]['level_pledged'] = 'Maple';
+                  objName[prop]['level_pledged'] = '500';
                   break;
                 case 'seedling':
-                  objName[prop]['level_pledged'] = 'Seedling';
+                  objName[prop]['level_pledged'] = '200';
                   break;
                 case 'individual':
-                  objName[prop]['level_pledged'] = 'Individual';
+                  objName[prop]['level_pledged'] = '50';
                   break;
               }
               sponArr.push(objName[prop]);
               sponIdArr.push(objName[prop]['sponsorid'])
+              donationStringArr.push(objName[prop]['level_pledged']);
             //}
           }
         }
@@ -135,7 +140,6 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
         var sumDonations = donationNumArr.reduce((partial_sum, a) => partial_sum + a, 0);
         setNumFreeTrees(Math.floor(sumDonations / 5));
         setSponProps(sponArr);
-        setSponTable(sponArr.map(renderSponsors)); // method to make sure the table renders with updated data
         return sponArr;
       }
 
@@ -145,11 +149,12 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
             if (objName[prop]['sponsorid'] === sponIdArr[i]) {
               objName[prop]['name'] = toTitleCase(objName[prop]['name']);
               sponIdTableArr.push(objName[prop]);
+              sponNamesArr.push(objName[prop]['name']);
             }
           }
         }
         setSponIdProps(sponIdTableArr);
-        setSponIdTable(sponIdTableArr.map(renderSponNames));
+        setNewSponTable(sponNamesArr.map(renderNewSponTable));
         return sponIdTableArr;
       }
 
@@ -316,21 +321,12 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
         )
     }
 
-    const renderSponsors = (sponsor, index) => {
-        return(
-            <tr key={{index}}>
-                <td>{sponsor.sponsorid}</td>
-                <td>{sponsor.level_pledged}</td>
-            </tr>
-        )
-    }
-
-    const renderSponNames = (sponName, index) => {
-      return(
-          <tr key={{index}}>
-              <td>{sponName.name}</td>
-              <td>{sponName.sponsorid}</td>
-          </tr>
+    const renderNewSponTable = (item, idx) => {
+      return (
+        <tr>
+          <td>{sponNamesArr[idx]}</td>
+          <td>{donationStringArr[idx]}</td>
+        </tr>
       )
     }
 
@@ -377,23 +373,12 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
                                     <ReactBootStrap.Table className="table">
                                         <thead>
                                         <tr>
-                                            <th>Sponsor ID</th>
-                                            <th>Level Pledged</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        {sponTable}
-                                        </tbody>
-                                    </ReactBootStrap.Table>
-                                    <ReactBootStrap.Table className="table">
-                                        <thead>
-                                        <tr>
                                             <th>Name</th>
-                                            <th>Sponsor ID</th>
+                                            <th>Donation Amount ($)</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        {sponIdTable}
+                                        {newSponTable}
                                         </tbody>
                                     </ReactBootStrap.Table>
                                     <ul>

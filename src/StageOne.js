@@ -29,6 +29,11 @@ const StageOne = ( prevInfo ) => {
       { name: "Holder", email: "catchYou@theFlipityFlip" }
     ]);
 
+    // Note: at each index, these 2 arrays line up with each other
+    var donationStringArr = []; // array with donations as strings
+    var sponNamesArr = []; // array with sponsor names
+    var [newSponTable, setNewSponTable] = useState();
+
     let apiU = 'admin';
     let apiP = 'preeTlenish1#';
 
@@ -48,20 +53,21 @@ const StageOne = ( prevInfo ) => {
             //if (objName[prop]['anon'] === false) { 
               switch (objName[prop]['level_pledged']) { // capitalize level name
                 case 'redwood':
-                  objName[prop]['level_pledged'] = 'Redwood';
+                  objName[prop]['level_pledged'] = '1,000';
                   break;
                 case 'maple':
-                  objName[prop]['level_pledged'] = 'Maple';
+                  objName[prop]['level_pledged'] = '500';
                   break;
                 case 'seedling':
-                  objName[prop]['level_pledged'] = 'Seedling';
+                  objName[prop]['level_pledged'] = '200';
                   break;
                 case 'individual':
-                  objName[prop]['level_pledged'] = 'Individual';
+                  objName[prop]['level_pledged'] = '50';
                   break;
               }
               sponArr.push(objName[prop]);
-              sponIdArr.push(objName[prop]['sponsorid'])
+              sponIdArr.push(objName[prop]['sponsorid']);
+              donationStringArr.push(objName[prop]['level_pledged']);
             //}
           }
         }
@@ -84,7 +90,6 @@ const StageOne = ( prevInfo ) => {
         var sumDonations = donationNumArr.reduce((partial_sum, a) => partial_sum + a, 0); // find sum of array
         setNumFreeTrees(Math.floor(sumDonations / 5));
         setSponProps(sponArr);
-        setSponTable(sponArr.map(renderSponsors)); // method to make sure the table renders with updated data
         return sponArr;
       }
   
@@ -94,11 +99,12 @@ const StageOne = ( prevInfo ) => {
             if (objName[prop]['sponsorid'] === sponIdArr[i]) {
               objName[prop]['name'] = toTitleCase(objName[prop]['name']);
               sponIdTableArr.push(objName[prop]);
+              sponNamesArr.push(objName[prop]['name']);
             }
           }
         }
         setSponIdProps(sponIdTableArr);
-        setSponIdTable(sponIdTableArr.map(renderSponNames));
+        setNewSponTable(sponNamesArr.map(renderNewSponTable));
         return sponIdTableArr;
       }
 
@@ -168,23 +174,14 @@ const StageOne = ( prevInfo ) => {
         getSponsorNames();
       }, []);
 
-    const renderSponsors = (sponsor, index) => {
-        return(
-            <tr key={{index}}>
-                <td>{sponsor.sponsorid}</td>
-                <td>{sponsor.level_pledged}</td>
-            </tr>
-        )
-    }
-
-    const renderSponNames = (sponName, index) => {
-      return(
-          <tr key={{index}}>
-              <td>{sponName.name}</td>
-              <td>{sponName.sponsorid}</td>
+      const renderNewSponTable = (item, idx) => {
+        return (
+          <tr>
+            <td>{sponNamesArr[idx]}</td>
+            <td>{donationStringArr[idx]}</td>
           </tr>
-      )
-    }
+        )
+      }
 
     return (
         <div className="page-container">
@@ -201,34 +198,23 @@ const StageOne = ( prevInfo ) => {
                             </Container>
                             <Container className="custom-col-2">
                                 <p className="col-title-text">Sponsorships</p>
-                                <ReactBootStrap.Table className="table">
-                                        <thead>
-                                        <tr>
-                                            <th>Sponsor ID</th>
-                                            <th>Level Pledged</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        {sponTable}
-                                        </tbody>
-                                    </ReactBootStrap.Table>
-                                    <ReactBootStrap.Table className="table">
+                                  <ReactBootStrap.Table className="table">
                                         <thead>
                                         <tr>
                                             <th>Name</th>
-                                            <th>Sponsor ID</th>
+                                            <th>Donation Amount ($)</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        {sponIdTable}
+                                        {newSponTable}
                                         </tbody>
-                                    </ReactBootStrap.Table>
+                                  </ReactBootStrap.Table>
                                 <ul>
                                   <li>Total Free Trees You Can Give Out to Residents: {numFreeTrees}</li>
                                 </ul>
                             </Container>
                             <Container className="custom-col-3">
-                                <p className="col-title-text">Our Impact</p>
+                                <p className="col-title-text">Our 2020 Impact</p>
                                 <div className="rot-wrapper">
                                     <div className="static-txt">Trees</div>
                                     <ul className="dynamic-txts">
@@ -239,7 +225,6 @@ const StageOne = ( prevInfo ) => {
                                     </ul>
                                 </div>
                                 <img className="impact-pic" src={impactPic} />
-                                <p className="text-right">As Of 2020</p>
                             </Container>
                         </div>
                         <div className="footer">
