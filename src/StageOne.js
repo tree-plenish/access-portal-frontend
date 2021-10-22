@@ -14,6 +14,7 @@ const StageOne = ( prevInfo ) => {
 
     var donationArr = []; // raw donation levels (a, b, c, d)
     var donationNumArr = []; // corresponding numbers (1000, 500, 200, 50)
+    const [totalDonations, setTotalDonations] = useState();
     const [numFreeTrees, setNumFreeTrees] = useState();
     var sponArr = [];
     var [sponTable, setSponTable] = useState();
@@ -33,6 +34,7 @@ const StageOne = ( prevInfo ) => {
     var donationStringArr = []; // array with donations as strings
     var sponNamesArr = []; // array with sponsor names
     var [newSponTable, setNewSponTable] = useState();
+    const [thereAreSponsors, setThereAreSponsors] = useState(true);
 
     var [message, setMessage] = useState('');
 
@@ -109,6 +111,7 @@ const StageOne = ( prevInfo ) => {
         setNewSponTable(sponNamesArr.map(renderNewSponTable));
         if (sponNamesArr.length == 0) {
           setMessage('Sponsors will appear here once they submit their donations.');
+          setThereAreSponsors(false);
         }
         return sponIdTableArr;
       }
@@ -203,7 +206,10 @@ const StageOne = ( prevInfo ) => {
                             </Container>
                             <Container className="custom-col-2">
                                 <p className="col-title-text">Sponsorships</p>
-                                  <ReactBootStrap.Table className="table">
+                                <h2 className="total-donations">Total Amount Raised: ${totalDonations}</h2>
+                                <h3>List of Sponsors</h3>
+                                <div>
+                                  {thereAreSponsors && <ReactBootStrap.Table className="table">
                                         <thead>
                                         <tr>
                                             <th>Name</th>
@@ -213,12 +219,13 @@ const StageOne = ( prevInfo ) => {
                                         <tbody>
                                         {newSponTable}
                                         </tbody>
-                                  </ReactBootStrap.Table>
+                                  </ReactBootStrap.Table>}
+                                </div>
                                   <p>{message}</p>
                                 <ul>
                                   <li>Total Free Trees You Can Give Out to Residents: {numFreeTrees}*</li>
                                 </ul>
-                                <p className="text-right">*Less for California schools... TBA</p>
+                                <p className="text-right">*Divide this by 2 for California schools.</p>
                             </Container>
                             <Container className="custom-col-3">
                                 <p className="col-title-text">Our 2020 Impact</p>

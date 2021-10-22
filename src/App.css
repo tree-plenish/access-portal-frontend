@@ -733,6 +733,11 @@ p a {
   margin-right: auto;
 }
 
+.total-donations {
+  text-align: center;
+  font-weight: bold;
+}
+
 @-webkit-keyframes opacity {
   0%, 100% {opacity:0;}
   50% {opacity:1;}

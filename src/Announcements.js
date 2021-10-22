@@ -9,17 +9,17 @@ const Announcements = () => {
                     <div className="annContainer">
                         <div className="annBox">
                             <h2>Deadlines</h2>
-                            <p>Complete mentorship online course.</p>
-                            <p>Complete paperwork.</p>
+                            <p>The sponsorship period ends on Dec. 10th. Make sure you get started early!</p>
                         </div>
                         <div className="annBox">
                             <h2>Reminders</h2>
-                            <p>Research your school's annual paper usage.</p>
-                            <p>Set a goal for number of trees to plant!</p>
+                            <p>Please submit your sapling goal and event date if you have not already.</p>
                         </div>
                         <div className="annBox">
-                            <h2>Helpful Links</h2>
-                            <p><a className="link-anim" href="https://www.tree-plenish.org">Tree Plenish Website</a></p>
+                        <h2>Questions?</h2>
+                            <p>Text (774) 224-9972 for quick questions.</p>
+                            <p>Sign up for Office Hours (link below) for 1:1 support.</p>
+                            <p><a className="link-anim in-line" href="https://calendly.com/treeplenish/tree-plenish-office-hours">Click here!</a></p>
                         </div>
                     </div>
                 </div>
