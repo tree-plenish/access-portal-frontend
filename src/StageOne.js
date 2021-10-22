@@ -92,6 +92,7 @@ const StageOne = ( prevInfo ) => {
           }
         }
         var sumDonations = donationNumArr.reduce((partial_sum, a) => partial_sum + a, 0); // find sum of array
+        setTotalDonations(sumDonations);
         setNumFreeTrees(Math.floor(sumDonations / 5));
         setSponProps(sponArr);
         return sponArr;
