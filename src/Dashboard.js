@@ -146,8 +146,8 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
       }
 
       function traverseSponNames(objName) {
-        for (const prop in objName) {
-          for (var i = 0; i < sponIdArr.length; i++) {
+        for (var i = 0; i < sponIdArr.length; i++) {
+          for (const prop in objName) {
             if (objName[prop]['sponsorid'] === sponIdArr[i]) {
               objName[prop]['name'] = toTitleCase(objName[prop]['name']);
               sponIdTableArr.push(objName[prop]);
