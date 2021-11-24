@@ -81,7 +81,7 @@ const Login = () => {
         } else if (proceed === 0) {
             window.confirm('Incorrect password. Try again.');
         } else {
-            window.confirm('Username & password must be a number. Try again.');
+            window.confirm('Incorrect username & password. Try again.');
         }
     }
 
