@@ -48,6 +48,7 @@ const StageTwo = ( prevInfo ) => {
     var donationStringArr = []; // array with donations as strings
     var sponNamesArr = []; // array with sponsor names
     var [newSponTable, setNewSponTable] = useState();
+    const [thereAreSponsors, setThereAreSponsors] = useState(true);
 
     var [message, setMessage] = useState('');
 
@@ -137,6 +138,7 @@ const StageTwo = ( prevInfo ) => {
         setNewSponTable(sponNamesArr.map(renderNewSponTable));
         if (sponNamesArr.length == 0) {
           setMessage('Sponsors will appear here once they submit their donations.');
+          setThereAreSponsors(false);
         }
         return sponIdTableArr;
       }
@@ -306,7 +308,7 @@ const StageTwo = ( prevInfo ) => {
                             </Container>
                             <Container className="custom-col-3">
                                 <p className="col-title-text">Sponsorships</p>
-                                    <ReactBootStrap.Table className="table">
+                                  {thereAreSponsors && <ReactBootStrap.Table className="table">
                                         <thead>
                                         <tr>
                                             <th>Name</th>
@@ -316,7 +318,7 @@ const StageTwo = ( prevInfo ) => {
                                         <tbody>
                                         {newSponTable}
                                         </tbody>
-                                    </ReactBootStrap.Table>
+                                    </ReactBootStrap.Table>}
                                     <p>{message}</p>
                                 <ul>
                                     <li>Total Free Trees You Can Give Out to Residents: {numFreeTrees}</li>
