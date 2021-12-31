@@ -52,7 +52,7 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
       { name: "Placeholder", email: "catchYou@theFlipityFlip" }
     ]);
     var [speciesNames, setSpeciesNames] = useState(["Place","Holder"]);
-    var [speciesVals, setSpeciesVals] = useState([105,204]);
+    var [speciesVals, setSpeciesVals] = useState([0,0]);
 
     // Note: at each index, these 2 arrays line up with each other
     var donationStringArr = []; // array with donations as strings

@@ -25,7 +25,7 @@ const StageTwo = ( prevInfo ) => {
       { name: "Placeholder", email: "catchYou@theFlipityFlip" }
     ]);
     var [speciesNames, setSpeciesNames] = useState(["Place","Holder"]);
-    var [speciesVals, setSpeciesVals] = useState([105,204]);
+    var [speciesVals, setSpeciesVals] = useState([0,0]);
 
     var donationArr = []; // raw donation levels (a, b, c, d)
     var donationNumArr = []; // corresponding numbers (1000, 500, 200, 50)var donationArr = [];
