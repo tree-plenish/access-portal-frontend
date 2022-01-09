@@ -9,7 +9,7 @@ const Announcements = () => {
                     <div className="annContainer">
                         <div className="annBox">
                             <h2>Deadlines</h2>
-                            <p>Please submit your event webpage information by 12/23.</p>
+                            <p>Please submit your event webpage information as soon as possible.</p>
                         </div>
                         <div className="annBox">
                             <h2>Reminders</h2>

@@ -102,9 +102,9 @@ const StageOne = ( prevInfo ) => {
         for (var i = 0; i < sponIdArr.length; i++) {
           for (const prop in objName) {
             if (objName[prop]['sponsorid'] === sponIdArr[i]) {
-              objName[prop]['name'] = toTitleCase(objName[prop]['name']);
+              //objName[prop]['name'] = toTitleCase(objName[prop]['name']);
               sponIdTableArr.push(objName[prop]);
-              sponNamesArr.push(objName[prop]['name']);
+              sponNamesArr.push(toTitleCase(objName[prop]['name']));
             }
           }
         }
@@ -224,7 +224,7 @@ const StageOne = ( prevInfo ) => {
                                 </div>
                                   <p>{message}</p>
                                 <ul>
-                                  <li>Total Free Trees You Can Give Out to Residents: {numFreeTrees}*</li>
+                                  <li>Free Trees You Can Give to Residents: {numFreeTrees}</li>
                                 </ul>
                                 <p className="text-right">*Divide this by 2 for California schools.</p>
                             </Container>

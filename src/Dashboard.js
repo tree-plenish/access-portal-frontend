@@ -150,9 +150,9 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
         for (var i = 0; i < sponIdArr.length; i++) {
           for (const prop in objName) {
             if (objName[prop]['sponsorid'] === sponIdArr[i]) {
-              objName[prop]['name'] = toTitleCase(objName[prop]['name']);
+              //objName[prop]['name'] = toTitleCase(objName[prop]['name']);
               sponIdTableArr.push(objName[prop]);
-              sponNamesArr.push(objName[prop]['name']);
+              sponNamesArr.push(toTitleCase(objName[prop]['name']));
             }
           }
         }
@@ -390,7 +390,7 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
                                     </ReactBootStrap.Table>}
                                     <p>{message}</p>
                                     <ul>
-                                        <li>Total Free Trees You Can Give Out to Residents: {numFreeTrees}</li>
+                                        <li>Free Trees Left Available: {Math.max((numFreeTrees - numTreesReq), 0)}</li>
                                     </ul>
                                     <br></br>
                                 </Container>
