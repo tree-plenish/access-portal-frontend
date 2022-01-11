@@ -292,8 +292,8 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
             resolve(x); // this is a json object with the format {'species1':100, 'species2':200, 'key':value}
             setSpeciesNames(Object.keys(x)); // the species names are the keys
             setSpeciesVals(Object.values(x)); // the request numbers are the values
-            const arrayFormat = Object.keys(x).map(key => ({[key]: x[key]})); // this is an array
-            setSpecProps(arrayFormat); // array needed for export to CSV button
+            //const arrayFormat = Object.keys(x).map(key => ({[key]: x[key]})); // this is an array
+            //setSpecProps(arrayFormat); // array needed for export to CSV button
           });
         });
       }
@@ -370,7 +370,7 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
                                     <p className="center">total requests received</p>
                                     <p>Progress to Goal of {treeGoal} Trees</p>
                                     <Chart treeGoalPercent={goalPercent} specNames={speciesNames} specValues={speciesVals}/>
-                                    <ExportTreeRequestsButton specData = {specProps}/>
+                                    <ExportTreeRequestsButton user = {numUsername}/>
                                 </Container>
                                 <Container className="custom-col-3">
                                     <p className="col-title-text">Announcements</p>
