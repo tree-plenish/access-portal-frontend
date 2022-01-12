@@ -308,7 +308,7 @@ const StageTwo = ( prevInfo ) => {
                             </Container>
                             <Container className="custom-col-3">
                                 <p className="col-title-text">Sponsorships</p>
-                                  {thereAreSponsors && <ReactBootStrap.Table className="table">
+                                  {/* {thereAreSponsors && <ReactBootStrap.Table className="table">
                                         <thead>
                                         <tr>
                                             <th>Name</th>
@@ -319,9 +319,10 @@ const StageTwo = ( prevInfo ) => {
                                         {newSponTable}
                                         </tbody>
                                     </ReactBootStrap.Table>}
-                                    <p>{message}</p>
+                                    <p>{message}</p> */}
                                 <ul>
                                     <li>Free Trees Left Available: {Math.max((numFreeTrees - numTreesReq), 0)}</li>
+                                    <li>Free Trees You Received: {numFreeTrees}</li>
                                 </ul>
                             </Container>
                         </div>

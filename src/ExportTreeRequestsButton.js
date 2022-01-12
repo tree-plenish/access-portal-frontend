@@ -20,7 +20,17 @@ const ExportTreeRequestsButton = (props) => {
     var [specTwo, setSpecTwo] = useState([]);
     var [specThree, setSpecThree] = useState([]);
     var [submitTime, setSubmitTime] = useState([]);
+    var [address, setAddress] = useState([]);
+    var [pickup, setPickup] = useState([]);
     var [finalArr, setFinalArr] = useState([]);
+
+    function toTitleCase(str) { // function to capitalize first letter of each word; e.g. 'still woozy' becomes 'Still Woozy'
+      var text = str.toLowerCase()
+      .split(' ')
+      .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+      .join(' ');
+      return text;
+    }
 
     function traverseThreeSpecies(objName, schoolidnum) {
         for (const prop in objName) {
@@ -40,6 +50,8 @@ const ExportTreeRequestsButton = (props) => {
         var specTwoTemp = [];
         var specThreeTemp = [];
         var submitTimeTemp = [];
+        var addressTemp = [];
+        var pickupTemp = [];
         for (const prop in objName) {
           if (objName[prop]['schoolid'] === schoolidnum) {
             custNamesTemp.push(objName[prop]['cust_name']);
@@ -65,6 +77,12 @@ const ExportTreeRequestsButton = (props) => {
                   specThreePushed = true;
                 }
                 submitTimeTemp[i] = objName[prop]['submit_time'];
+                addressTemp[i] = toTitleCase(objName[prop]['address']);
+                if (objName[prop]['pickup']) {
+                  pickupTemp[i] = "Yes";
+                } else {
+                  pickupTemp[i] = "No";
+                }
               }
             }
           }
@@ -83,10 +101,12 @@ const ExportTreeRequestsButton = (props) => {
         setSpecTwo(specTwoTemp);
         setSpecThree(specThreeTemp);
         setSubmitTime(submitTimeTemp);
+        setAddress(addressTemp);
+        setPickup(pickupTemp);
         var finalArrTemp = [];
-        finalArrTemp[0] = ["Customer Name"].concat(uniqueSpecies, ["Submit Date"]);
+        finalArrTemp[0] = ["Customer Name"].concat(uniqueSpecies, ["Address"], ["Pickup"], ["Submit Date"]);
         for (var i = 0; i < custNamesTemp.length; i++) {
-          finalArrTemp[i + 1] = [custNamesTemp[i], specOneTemp[i], specTwoTemp[i], specThreeTemp[i], new Date(submitTimeTemp[i]*1000).toString()];
+          finalArrTemp[i + 1] = [custNamesTemp[i], specOneTemp[i], specTwoTemp[i], specThreeTemp[i], addressTemp[i], pickupTemp[i], new Date(submitTimeTemp[i]*1000).toString()];
         }
         setFinalArr(finalArrTemp);
       }
