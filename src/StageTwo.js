@@ -30,6 +30,7 @@ const StageTwo = ( prevInfo ) => {
     var donationArr = []; // raw donation levels (a, b, c, d)
     var donationNumArr = []; // corresponding numbers (1000, 500, 200, 50)var donationArr = [];
     const [numFreeTrees, setNumFreeTrees] = useState();
+    const [remainingTrees, setRemainingTrees] = useState();
     var sponArr = [];
     var [sponTable, setSponTable] = useState();
     var [sponProps, setSponProps] = useState([
@@ -71,6 +72,8 @@ const StageTwo = ( prevInfo ) => {
       function traverseTreesRequested(objName, schoolidnum) {
         for (const prop in objName) {
           if (objName[prop]['schoolid'] === schoolidnum) {
+            setNumFreeTrees(objName[prop]['total_free_trees']);
+            setRemainingTrees(objName[prop]['remaining_free_trees']);
             return objName[prop]['trees_requested'];
           }
         }
@@ -119,7 +122,7 @@ const StageTwo = ( prevInfo ) => {
           }
         }
         var sumDonations = donationNumArr.reduce((partial_sum, a) => partial_sum + a, 0); // find sum of array
-        setNumFreeTrees(Math.floor(sumDonations / 5));
+        //setNumFreeTrees(Math.floor(sumDonations / 5));
         setSponProps(sponArr);
         return sponArr;
       }
@@ -321,8 +324,8 @@ const StageTwo = ( prevInfo ) => {
                                     </ReactBootStrap.Table>}
                                     <p>{message}</p> */}
                                 <ul>
-                                    <li>Free Trees Left Available: {Math.max((numFreeTrees - numTreesReq), 0)}</li>
-                                    <li>Free Trees You Received: {numFreeTrees}</li>
+                                  <li>Free Trees Left Available: {Math.max(remainingTrees, 0)}</li>
+                                  <li>Free Trees You Received: {numFreeTrees}</li>
                                 </ul>
                             </Container>
                         </div>

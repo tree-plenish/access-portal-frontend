@@ -16,6 +16,7 @@ const StageOne = ( prevInfo ) => {
     var donationNumArr = []; // corresponding numbers (1000, 500, 200, 50)
     const [totalDonations, setTotalDonations] = useState();
     const [numFreeTrees, setNumFreeTrees] = useState();
+    const [remainingTrees, setRemainingTrees] = useState();
     var sponArr = [];
     var [sponTable, setSponTable] = useState();
     var [sponProps, setSponProps] = useState([
@@ -45,6 +46,16 @@ const StageOne = ( prevInfo ) => {
         for (const prop in objName) {
           if (objName[prop]['schoolid'] === schoolidnum) {
             return objName[prop]['name'];
+          }
+        }
+      }
+
+      function traverseTreesRequested(objName, schoolidnum) {
+        for (const prop in objName) {
+          if (objName[prop]['schoolid'] === schoolidnum) {
+            setNumFreeTrees(objName[prop]['total_free_trees']);
+            setRemainingTrees(objName[prop]['remaining_free_trees']);
+            return objName[prop]['trees_requested'];
           }
         }
       }
@@ -93,7 +104,7 @@ const StageOne = ( prevInfo ) => {
         }
         var sumDonations = donationNumArr.reduce((partial_sum, a) => partial_sum + a, 0); // find sum of array
         setTotalDonations(sumDonations);
-        setNumFreeTrees(Math.floor(sumDonations / 5));
+        //setNumFreeTrees(Math.floor(sumDonations / 5));
         setSponProps(sponArr);
         return sponArr;
       }
@@ -143,6 +154,19 @@ const StageOne = ( prevInfo ) => {
         });
       }
 
+      function getTreesRequested(u) {
+        return new Promise(resolve => {
+          fetch('/numtreesrequested')
+          .then(res => res.json())
+          .then(data => JSON.parse(data.reqnum))
+          .then(jsonObj => traverseTreesRequested(jsonObj, u))
+          .then(x => {
+            resolve(x);
+            //setNumTreesReq(x);
+          });
+        });
+      }
+
       function getSponsorNames() {
         return new Promise(resolve => {
           fetch('/api/sponinfo', {
@@ -179,6 +203,7 @@ const StageOne = ( prevInfo ) => {
 
       useEffect(() => {
         getSchoolName(numUsername);
+        getTreesRequested(numUsername);
         getSponsors(numUsername);
         getSponsorNames();
       }, []);
@@ -224,9 +249,9 @@ const StageOne = ( prevInfo ) => {
                                 </div>
                                   <p>{message}</p>
                                 <ul>
-                                  <li>Free Trees You Can Give to Residents: {numFreeTrees}</li>
+                                  <li>Free Trees Left Available: {Math.max(remainingTrees, 0)}</li>
+                                  <li>Free Trees You Received: {numFreeTrees}</li>
                                 </ul>
-                                <p className="text-right">*Divide this by 2 for California schools.</p>
                             </Container>
                             <Container className="custom-col-3">
                                 <p className="col-title-text">Our 2020 Impact</p>
