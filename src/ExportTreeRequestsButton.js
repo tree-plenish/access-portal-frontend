@@ -21,6 +21,9 @@ const ExportTreeRequestsButton = (props) => {
     var [specThree, setSpecThree] = useState([]);
     var [submitTime, setSubmitTime] = useState([]);
     var [address, setAddress] = useState([]);
+    var [zip, setZip] = useState([]);
+    var [email, setEmail] = useState([]);
+    var [phone, setPhone] = useState([]);
     var [pickup, setPickup] = useState([]);
     var [finalArr, setFinalArr] = useState([]);
 
@@ -51,6 +54,9 @@ const ExportTreeRequestsButton = (props) => {
         var specThreeTemp = [];
         var submitTimeTemp = [];
         var addressTemp = [];
+        var emailTemp = [];
+        var zipTemp = [];
+        var phoneTemp = [];
         var pickupTemp = [];
         for (const prop in objName) {
           if (objName[prop]['schoolid'] === schoolidnum) {
@@ -78,6 +84,9 @@ const ExportTreeRequestsButton = (props) => {
                 }
                 submitTimeTemp[i] = objName[prop]['submit_time'];
                 addressTemp[i] = toTitleCase(objName[prop]['address']);
+                emailTemp[i] = objName[prop]['cust_email'];
+                zipTemp[i] = objName[prop]['cust_zipcode'];
+                phoneTemp[i] = objName[prop]['cust_phone_num'];
                 if (objName[prop]['pickup']) {
                   pickupTemp[i] = "Yes";
                 } else {
@@ -102,11 +111,14 @@ const ExportTreeRequestsButton = (props) => {
         setSpecThree(specThreeTemp);
         setSubmitTime(submitTimeTemp);
         setAddress(addressTemp);
+        setEmail(emailTemp);
+        setPhone(phoneTemp);
+        setZip(zipTemp);
         setPickup(pickupTemp);
         var finalArrTemp = [];
-        finalArrTemp[0] = ["Customer Name"].concat(uniqueSpecies, ["Address"], ["Pickup"], ["Submit Date"]);
+        finalArrTemp[0] = ["Customer Name"].concat(uniqueSpecies, ["Address"], ["Zip Code"], ["Pickup"], ["Email"], ["Phone Number"], ["Submit Date"]);
         for (var i = 0; i < custNamesTemp.length; i++) {
-          finalArrTemp[i + 1] = [custNamesTemp[i], specOneTemp[i], specTwoTemp[i], specThreeTemp[i], addressTemp[i], pickupTemp[i], new Date(submitTimeTemp[i]*1000).toString()];
+          finalArrTemp[i + 1] = [custNamesTemp[i], specOneTemp[i], specTwoTemp[i], specThreeTemp[i], addressTemp[i], zipTemp[i], pickupTemp[i], emailTemp[i], phoneTemp[i], new Date(submitTimeTemp[i]*1000).toString()];
         }
         setFinalArr(finalArrTemp);
       }
