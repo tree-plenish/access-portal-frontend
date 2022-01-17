@@ -45,7 +45,7 @@ const Login = () => {
 
     function apiCall(u, p) {
         return new Promise(resolve => {
-          fetch('/api/login', {
+          fetch(`/api/login/${u}`, {
             headers: new Headers({
               'Authorization': 'Basic '+btoa(apiU + ":" + apiP),
               'Content-Type': 'application/x-www-form-urlencoded'

@@ -53,35 +53,28 @@ const StageTwo = ( prevInfo ) => {
 
     var [message, setMessage] = useState('');
 
-    function traverseSchoolName(objName, schoolidnum) {
+    function traverseSchoolName(objName) {
         for (const prop in objName) {
-          if (objName[prop]['schoolid'] === schoolidnum) {
-            return objName[prop]['name'];
-          }
+          return objName[prop]['name'];
         }
       }
 
-      function traverseTreeGoal(objName, schoolidnum) {
+      function traverseTreeGoal(objName) {
         for (const prop in objName) {
-          if (objName[prop]['schoolid'] === schoolidnum) {
-            return objName[prop]['tree_goal'];
-          }
+          return objName[prop]['tree_goal'];
         }
       }
 
-      function traverseTreesRequested(objName, schoolidnum) {
+      function traverseTreesRequested(objName) {
         for (const prop in objName) {
-          if (objName[prop]['schoolid'] === schoolidnum) {
             setNumFreeTrees(objName[prop]['total_free_trees']);
             setRemainingTrees(objName[prop]['remaining_free_trees']);
             return objName[prop]['trees_requested'];
-          }
         }
       }
 
-      function traverseSponsors(objName, schoolidnum) {
+      function traverseSponsors(objName) {
         for (const prop in objName) {
-          if (objName[prop]['schoolid'] === schoolidnum) {
             donationArr.push(objName[prop]['level_pledged']); // all donations are calculated, whether anonymous or not
             // only non-anonymous donations are displayed along with sponsor names
             //if (objName[prop]['anon'] === false) { 
@@ -103,7 +96,6 @@ const StageTwo = ( prevInfo ) => {
               sponIdArr.push(objName[prop]['sponsorid'])
               donationStringArr.push(objName[prop]['level_pledged']);
             //}
-          }
         }
         for (var i = 0; i < donationArr.length; i++) {
           switch (donationArr[i]) {
@@ -154,59 +146,23 @@ const StageTwo = ( prevInfo ) => {
         return text;
     }
 
-    function getSchoolName(u) {
-        return new Promise(resolve => {
-          fetch('/api/schoolname', {
-            headers: new Headers({
-              'Authorization': 'Basic '+btoa(apiU + ":" + apiP),
-              'Content-Type': 'application/x-www-form-urlencoded'
-            })
+    function getSchoolNameAndTreesReq(u) {
+      return new Promise(resolve => {
+        fetch(`/api/school/${u}`, {
+          headers: new Headers({
+            'Authorization': 'Basic '+btoa(apiU + ":" + apiP),
+            'Content-Type': 'application/x-www-form-urlencoded'
           })
-          .then(res => res.json())
-          .then(data => JSON.parse(data.name))
-          .then(jsonObj => traverseSchoolName(jsonObj, u))
-          .then(x => {
-            resolve(x);
-            setSchoolName(toTitleCase(x)); // assuming 'name' in the table 'school' is lowercase
-          });
+        })
+        .then(res => res.json())
+        .then(data => {
+          setSchoolName(toTitleCase(traverseSchoolName(JSON.parse(data.name), u)));
+          setNumTreesReq(traverseTreesRequested(JSON.parse(data.numtreesreq), u));
+          setTreeGoal(traverseTreeGoal(JSON.parse(data.treegoal), u));
         });
-      }
+      });
+    }
 
-      function getTreeGoal(u) {
-        return new Promise(resolve => {
-          fetch('/api/treegoal', {
-            headers: new Headers({
-              'Authorization': 'Basic '+btoa(apiU + ":" + apiP),
-              'Content-Type': 'application/x-www-form-urlencoded'
-            })
-          })
-          .then(res => res.json())
-          .then(data => JSON.parse(data.goal))
-          .then(jsonObj => traverseTreeGoal(jsonObj, u))
-          .then(x => {
-            resolve(x);
-            setTreeGoal(x);
-          });
-        });
-      }
-
-      function getTreesRequested(u) {
-        return new Promise(resolve => {
-          fetch('/api/numtreesrequested', {
-            headers: new Headers({
-              'Authorization': 'Basic '+btoa(apiU + ":" + apiP),
-              'Content-Type': 'application/x-www-form-urlencoded'
-            })
-          })
-          .then(res => res.json())
-          .then(data => JSON.parse(data.reqnum))
-          .then(jsonObj => traverseTreesRequested(jsonObj, u))
-          .then(x => {
-            resolve(x);
-            setNumTreesReq(x);
-          });
-        });
-      }
 
       function getSpecies(u) {
         return new Promise(resolve => {
@@ -228,36 +184,18 @@ const StageTwo = ( prevInfo ) => {
         });
       }
 
-      function getSponsorNames() {
-        return new Promise(resolve => {
-          fetch('/api/sponinfo', {
-            headers: new Headers({
-              'Authorization': 'Basic '+btoa(apiU + ":" + apiP),
-              'Content-Type': 'application/x-www-form-urlencoded'
-            })
-          })
-          .then(res => res.json())
-          .then(data => JSON.parse(data.sponinfo))
-          .then(jsonObj => traverseSponNames(jsonObj)) // no need to traverse using schoolid
-          .then(x => {
-            resolve(x);
-          });
-        });
-      }
-
       function getSponsors(u) {
         return new Promise(resolve => {
-          fetch('/api/spon', {
+          fetch(`/api/spon/${u}`, {
             headers: new Headers({
               'Authorization': 'Basic '+btoa(apiU + ":" + apiP),
               'Content-Type': 'application/x-www-form-urlencoded'
             })
           })
           .then(res => res.json())
-          .then(data => JSON.parse(data.spon))
-          .then(jsonObj => traverseSponsors(jsonObj, u))
-          .then(x => {
-            resolve(x);
+          .then(data => {
+            traverseSponsors(JSON.parse(data.spon));
+            traverseSponNames(JSON.parse(data.sponinfo));
           });
         });
       }
@@ -270,13 +208,10 @@ const StageTwo = ( prevInfo ) => {
       }
 
     useEffect(() => {
-        getSchoolName(numUsername);
-        getTreeGoal(numUsername);
-        getTreesRequested(numUsername);
+        getSchoolNameAndTreesReq(numUsername);
         calculateGoalPercentage(numTreesReq, treeGoal);
         getSpecies(numUsername);
         getSponsors(numUsername);
-        getSponsorNames();
       }, [numTreesReq, treeGoal]);
 
       const renderNewSponTable = (item, idx) => {

@@ -37,13 +37,11 @@ const ExportTreeRequestsButton = (props) => {
 
     function traverseThreeSpecies(objName, schoolidnum) {
         for (const prop in objName) {
-          if (objName[prop]['schoolid'] === schoolidnum) {
             var threeSpeciesTemp = ["Place","Holder","Species"];
             threeSpeciesTemp[0] = objName[prop]['species_one'];
             threeSpeciesTemp[1] = objName[prop]['species_two'];
             threeSpeciesTemp[2] = objName[prop]['species_three'];
             setUniqueSpecies(threeSpeciesTemp);
-          }
         }
       }
 
@@ -59,9 +57,7 @@ const ExportTreeRequestsButton = (props) => {
         var phoneTemp = [];
         var pickupTemp = [];
         for (const prop in objName) {
-          if (objName[prop]['schoolid'] === schoolidnum) {
-            custNamesTemp.push(objName[prop]['cust_name']);
-          }
+          custNamesTemp.push(objName[prop]['cust_name']);
         }
         custNamesTemp = Array.from(new Set(custNamesTemp));
         for (var i = 0; i < custNamesTemp.length; i++) {
@@ -70,7 +66,6 @@ const ExportTreeRequestsButton = (props) => {
           var specTwoPushed = false;
           var specThreePushed = false;
           for (const prop in objName) {
-            if (objName[prop]['schoolid'] === schoolidnum) {
               if (person == objName[prop]['cust_name']) {
                 if (objName[prop]['name'] == uniqueSpecies[0]) {
                   specOneTemp.push(objName[prop]['number']);
@@ -93,7 +88,6 @@ const ExportTreeRequestsButton = (props) => {
                   pickupTemp[i] = "No";
                 }
               }
-            }
           }
           if (!specOnePushed) {
             specOneTemp.push(0);
@@ -126,34 +120,16 @@ const ExportTreeRequestsButton = (props) => {
     // new function for excel tree species vars
     function getTreeOrders(u) {
         return new Promise(resolve => {
-          fetch('/api/treeorders', {
+          fetch(`/api/treeorders/${u}`, {
             headers: new Headers({
               'Authorization': 'Basic '+btoa(apiU + ":" + apiP),
               'Content-Type': 'application/x-www-form-urlencoded'
             })
           })
           .then(res => res.json())
-          .then(data => JSON.parse(data.order))
-          .then(jsonObj => traverseTreeOrders(jsonObj, u))
-          .then(x => {
-            resolve(x);
-          });
-        });
-      }
-
-      function getThreeSpecies(u) {
-        return new Promise(resolve => {
-          fetch('/api/threespecies', {
-            headers: new Headers({
-              'Authorization': 'Basic '+btoa(apiU + ":" + apiP),
-              'Content-Type': 'application/x-www-form-urlencoded'
-            })
-          })
-          .then(res => res.json())
-          .then(data => JSON.parse(data.threespecies))
-          .then(jsonObj => traverseThreeSpecies(jsonObj, u))
-          .then(x => {
-            resolve(x);
+          .then(data => {
+            traverseThreeSpecies(JSON.parse(data.threespecies));
+            traverseTreeOrders(JSON.parse(data.order));
           });
         });
       }
@@ -161,7 +137,6 @@ const ExportTreeRequestsButton = (props) => {
     // data used to be {props.specData}
 
     useEffect(() => {
-        getThreeSpecies(props.user);
         getTreeOrders(props.user);
       }, [uniqueSpecies, finalArr]);
 
