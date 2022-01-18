@@ -110,9 +110,11 @@ const ExportTreeRequestsButton = (props) => {
         setZip(zipTemp);
         setPickup(pickupTemp);
         var finalArrTemp = [];
-        finalArrTemp[0] = ["Customer Name"].concat(uniqueSpecies, ["Address"], ["Zip Code"], ["Pickup"], ["Email"], ["Phone Number"], ["Submit Date"]);
+        //finalArrTemp[0] = ["Customer Name"].concat(uniqueSpecies, ["Address"], ["Zip Code"], ["Pickup"], ["Email"], ["Phone Number"], ["Submit Date"]);
+        finalArrTemp[0] = ["Customer Name"].concat(uniqueSpecies, ["Address"], ["Pickup"], ["Submit Date"]);
         for (var i = 0; i < custNamesTemp.length; i++) {
-          finalArrTemp[i + 1] = [custNamesTemp[i], specOneTemp[i], specTwoTemp[i], specThreeTemp[i], addressTemp[i], zipTemp[i], pickupTemp[i], emailTemp[i], phoneTemp[i], new Date(submitTimeTemp[i]*1000).toString()];
+          //finalArrTemp[i + 1] = [custNamesTemp[i], specOneTemp[i], specTwoTemp[i], specThreeTemp[i], addressTemp[i], zipTemp[i], pickupTemp[i], emailTemp[i], phoneTemp[i], new Date(submitTimeTemp[i]*1000).toString()];
+          finalArrTemp[i + 1] = [custNamesTemp[i], specOneTemp[i], specTwoTemp[i], specThreeTemp[i], addressTemp[i], pickupTemp[i], new Date(submitTimeTemp[i]*1000).toString()];
         }
         setFinalArr(finalArrTemp);
       }
