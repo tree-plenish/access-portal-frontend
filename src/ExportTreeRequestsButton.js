@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef} from 'react';
 import {Button} from 'react-bootstrap';
+import * as ReactBootStrap from 'react-bootstrap';
 import { CSVLink } from 'react-csv';
 import {Container} from "reactstrap";
 
@@ -26,6 +27,14 @@ const ExportTreeRequestsButton = (props) => {
     var [phone, setPhone] = useState([]);
     var [pickup, setPickup] = useState([]);
     var [finalArr, setFinalArr] = useState([]);
+
+    // refund table vars
+    var [refTable, setRefTable] = useState();
+    var [refProps, setRefProps] = useState([
+      { name: "Place", email: "iFeelGodInThisChilis@tn", phone: "123-456-7890", price_refunded: "50" },
+      { name: "Holder", email: "catchYou@theFlipityFlip", phone: "123-456-7890", price_refunded: "80" }
+    ]);
+    var refArr = [];
 
     function toTitleCase(str) { // function to capitalize first letter of each word; e.g. 'still woozy' becomes 'Still Woozy'
       var text = str.toLowerCase()
@@ -119,6 +128,26 @@ const ExportTreeRequestsButton = (props) => {
         setFinalArr(finalArrTemp);
       }
 
+      function traverseRefunds(objName) {
+        for (const prop in objName) {
+          refArr.push(objName[prop]);
+        }
+        setRefProps(refArr);
+        setRefTable(refArr.map(renderRefunds)); // method to make sure the table renders with updated data
+        return refArr;
+      }
+  
+      const renderRefunds = (refund, index) => {
+        return(
+            <tr key={{index}}>
+                <td>{refund.name}</td>
+                <td>{refund.email}</td>
+                <td>{refund.phone}</td>
+                <td>{refund.price_refunded.toString()}</td>
+            </tr>
+        )
+      }
+
     // new function for excel tree species vars
     function getTreeOrders(u) {
         return new Promise(resolve => {
@@ -135,8 +164,6 @@ const ExportTreeRequestsButton = (props) => {
           });
         });
       }
-
-    // data used to be {props.specData}
 
     useEffect(() => {
         getTreeOrders(props.user);
@@ -157,6 +184,23 @@ const ExportTreeRequestsButton = (props) => {
                     target='_blank'
                 />
             </Container>
+            {/* <Container className="center">
+              <p className="col-title-text">Tree Refunds</p>
+              <p>Refunds are not accounted for in the above tree orders. Manually subtract the refunds.</p>
+              <ReactBootStrap.Table className="table">
+                  <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Price Refunded</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                    {refTable}
+                  </tbody>
+                </ReactBootStrap.Table>
+            </Container> */}
         </div>
     )
 }

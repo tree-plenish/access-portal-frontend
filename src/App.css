@@ -160,7 +160,7 @@ a:active {
   line-height: normal;
   color: #212529;
   overflow-y: auto;
-  height: calc(100vh - 7rem);
+  height: calc(100vh - 6rem);
 }
 
 .custom-col-2 {
@@ -170,7 +170,7 @@ a:active {
   line-height: normal;
   color: #212529;
   overflow-y: auto;
-  height: calc(100vh - 7rem);
+  height: calc(100vh - 6rem);
 }
 
 .custom-col-3 {
@@ -180,7 +180,7 @@ a:active {
   line-height: normal;
   color: #212529;
   overflow-y: auto;
-  height: calc(100vh - 7rem);
+  height: calc(100vh - 6rem);
 }
 
 .flex-container {
@@ -324,7 +324,7 @@ a:active {
   justify-content: center;
   align-items: baseline;
   vertical-align: middle;
-  padding: 1em;
+  padding: 0.5em;
   background-color: #5e8b7e;
   color: white;
 }
@@ -345,7 +345,7 @@ a:active {
   box-sizing: border-box;
   display: flex;
   justify-content: center;
-  padding: 1em;
+  padding: 0.5em;
   background-color: #2f5e62;
   color: #fff;
 }
