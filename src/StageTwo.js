@@ -6,6 +6,7 @@ import * as ReactBootStrap from "react-bootstrap";
 import Chart from './Chart';
 import Announcements from './Announcements';
 import ExportTreeRequestsButton from './ExportTreeRequestsButton';
+import Leaderboard from "./Leaderboard";
 
 const StageTwo = ( prevInfo ) => {
 
