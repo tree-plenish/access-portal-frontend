@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import * as ReactBootStrap from 'react-bootstrap';
 import './App.css';
 
-const Leaderboard = () => {
+const Leaderboard = (props) => {
 
     let apiU = 'admin';
     let apiP = 'preeTlenish1#';
@@ -28,16 +28,31 @@ const Leaderboard = () => {
 
     function traverseLeaders(objName) {
         var sortedArrTemp = [];
+        var yourSchoolCount;
         for (const prop in objName) {
             sortedArrTemp.push(objName[prop]);
             sortedArrTemp.sort((a, b) => parseFloat(b.num_orders) - parseFloat(a.num_orders)); // sort by num_orders in descending order
             setSortedArr(sortedArrTemp);
+            if (objName[prop]['name'] === props.schoolName) {
+                yourSchoolCount = objName[prop]['num_orders'];
+            }
         }
         var schoolNamesTemp = [];
         var ordersTemp = [];
+        var schoolNotInTop5 = true;
         for (var i = 0; i < 5; i++) {
             schoolNamesTemp[i] = sortedArrTemp[i].name;
             ordersTemp[i] = sortedArrTemp[i].num_orders;
+            if (sortedArrTemp[i].name === props.schoolName) {
+                schoolNotInTop5 = false;
+            }
+        }
+        if (schoolNotInTop5) {
+            schoolNamesTemp[5] = "Your School";
+            if (yourSchoolCount == undefined) {
+                yourSchoolCount = 0;
+            }
+            ordersTemp[5] = yourSchoolCount;
         }
         setSchoolNames(schoolNamesTemp);
         setOrders(ordersTemp);

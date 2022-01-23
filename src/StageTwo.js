@@ -262,8 +262,8 @@ const StageTwo = ( prevInfo ) => {
                                   <li>Free Trees Left Available: {Math.max(remainingTrees, 0)}</li>
                                   <li>Free Trees You Received: {numFreeTrees}</li>
                                 </ul>
-                                {/* <hr className = "hline"/>
-                                <Leaderboard/> */}
+                                <hr className = "hline"/>
+                                <Leaderboard schoolName = {schoolName}/>
                             </Container>
                         </div>
                         <div className="footer">
