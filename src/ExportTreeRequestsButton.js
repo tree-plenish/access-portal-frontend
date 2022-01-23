@@ -143,7 +143,7 @@ const ExportTreeRequestsButton = (props) => {
                 <td>{refund.name}</td>
                 <td>{refund.email}</td>
                 <td>{refund.phone}</td>
-                <td>{refund.price_refunded.toString()}</td>
+                <td>{refund.num_trees}</td>
             </tr>
         )
       }
@@ -193,7 +193,7 @@ const ExportTreeRequestsButton = (props) => {
                     <th>Name</th>
                     <th>Email</th>
                     <th>Phone</th>
-                    <th>Price Refunded</th>
+                    <th>Trees Refunded</th>
                   </tr>
                   </thead>
                   <tbody>
