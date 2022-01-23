@@ -102,6 +102,7 @@ const Leaderboard = (props) => {
                     {leadTable}
                  </tbody>
             </ReactBootStrap.Table>
+            <p>If the above table is blank, there haven't been any orders placed within the timeframe yet.</p>
         </div>
     )
 }
