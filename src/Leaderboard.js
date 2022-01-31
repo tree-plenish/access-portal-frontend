@@ -75,6 +75,12 @@ const Leaderboard = (props) => {
     }
 
     const renderLeaderboard = (item, idx) => {
+        var styleVar;
+        if (idx == 5) {
+            styleVar = "bold-text";
+        } else {
+            styleVar = "normal-text";
+        }
         return (
         <tr>
             <td>{schoolNames[idx]}</td>

@@ -138,6 +138,14 @@ a:active {
   overflow: auto;
 }
 
+.normal-text {
+  font-style: normal;
+}
+
+.bold-text {
+  font-weight: bold;
+}
+
 .login-text {
   font-size: 1.5em;
 }
