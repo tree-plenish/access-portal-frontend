@@ -82,7 +82,7 @@ const Leaderboard = (props) => {
             styleVar = "normal-text";
         }
         return (
-        <tr>
+        <tr className={styleVar}>
             <td>{schoolNames[idx]}</td>
             <td>{orders[idx]}</td>
         </tr>
