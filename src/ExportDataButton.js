@@ -14,8 +14,6 @@ const ExportDataButton = (props) => {
         { label: "Team ID", key: "teamid" },
         { label: "Name", key: "name" },
         { label: "Email", key: "email" },
-        { label: "Phone", key: "phone" },
-        { label: "Driver's License", key: "drivers_license" }
     ];
 
     return (

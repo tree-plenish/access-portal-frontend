@@ -87,19 +87,9 @@ const ExportTreeRequestsButton = (props) => {
                   specThreePushed = true;
                 }
                 submitTimeTemp[i] = objName[prop]['submit_time'];
-                //addressTemp[i] = toTitleCase(objName[prop]['address']);
-                if (objName[prop]['address'] === true) {
-                  addressTemp[i] = "N/A";
-                } else {
-                  addressTemp[i] = toTitleCase(objName[prop]['address']);
-                }
+                addressTemp[i] = toTitleCase(objName[prop]['address']);
                 emailTemp[i] = objName[prop]['cust_email'];
-                //zipTemp[i] = objName[prop]['cust_zipcode'];
-                if (objName[prop]['cust_zipcode'] === true) {
-                  zipTemp[i] = "Not Entered";
-                } else {
-                  zipTemp[i] = objName[prop]['cust_zipcode'];
-                }
+                zipTemp[i] = objName[prop]['cust_zipcode'];
                 phoneTemp[i] = objName[prop]['cust_phone_num'];
                 if (objName[prop]['pickup']) {
                   pickupTemp[i] = "Yes";

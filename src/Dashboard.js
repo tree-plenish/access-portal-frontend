@@ -257,8 +257,6 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
                 <td>{volunteer.teamid}</td>
                 <td>{volunteer.name}</td>
                 <td>{volunteer.email}</td>
-                <td>{volunteer.phone.toString()}</td>
-                <td>{volunteer.drivers_license.toString()}</td>
             </tr>
         )
     }
@@ -289,8 +287,6 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
                                             <th>Team ID</th>
                                             <th>Name</th>
                                             <th>Email</th>
-                                            <th>Phone</th>
-                                            <th>Driver's License</th>
                                         </tr>
                                         </thead>
                                         <tbody>
