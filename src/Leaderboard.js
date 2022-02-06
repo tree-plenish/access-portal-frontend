@@ -7,7 +7,7 @@ const Leaderboard = (props) => {
     let apiU = 'admin';
     let apiP = 'preeTlenish1#';
 
-    var unixStart = 1642957200; // Sun Jan 23 12:00 pm
+    var unixStart = 1644123625; // Sun Feb 6 12:00 am
     var startDate = new Date(unixStart*1000).toDateString();
     startDate = startDate.substring(4, 10);
     var endDate = new Date((unixStart + (3600*24*14))*1000).toDateString(); // 2 weeks after start date
