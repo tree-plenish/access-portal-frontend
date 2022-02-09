@@ -279,7 +279,6 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
                                         <tr>
                                             <th>Team ID</th>
                                             <th>Name</th>
-                                            <th>Email</th>
                                         </tr>
                                         </thead>
                                         <tbody>

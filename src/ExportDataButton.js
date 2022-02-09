@@ -10,6 +10,9 @@ const ExportDataButton = (props) => {
         csvLink.current.link.click()
     }
 
+    let apiU = 'admin';
+    let apiP = 'preeTlenish1#';
+
     var [finalArr, setFinalArr] = useState([]);
 
     var headers = [
@@ -37,7 +40,12 @@ const ExportDataButton = (props) => {
 
     function getTeams(u) {
         return new Promise(resolve => {
-          fetch(`/volunteers/${u}`)
+            fetch(`/api/volunteers/${u}`, {
+                headers: new Headers({
+                  'Authorization': 'Basic '+btoa(apiU + ":" + apiP),
+                  'Content-Type': 'application/x-www-form-urlencoded'
+                })
+            })
           .then(res => res.json())
           .then(data => {
             traverseVolunteers(JSON.parse(data.vol), JSON.parse(data.team));
