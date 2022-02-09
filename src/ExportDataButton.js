@@ -10,6 +10,8 @@ const ExportDataButton = (props) => {
         csvLink.current.link.click()
     }
 
+    var [finalArr, setFinalArr] = useState([]);
+
     var headers = [
         { label: "Team ID", key: "teamid" },
         { label: "Name", key: "name" },
