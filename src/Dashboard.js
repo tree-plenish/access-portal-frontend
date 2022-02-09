@@ -181,7 +181,7 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
 
       function getVolunteers(u) {
         return new Promise(resolve => {
-          fetch('/api/volunteers', {
+          fetch(`/api/volunteers/${u}`, {
             headers: new Headers({
               'Authorization': 'Basic '+btoa(apiU + ":" + apiP),
               'Content-Type': 'application/x-www-form-urlencoded'
