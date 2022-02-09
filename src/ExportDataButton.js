@@ -34,6 +34,18 @@ const ExportDataButton = (props) => {
         for (var k = 0; k < teamTemp.length; k++) {
             finalArrTemp.push({teamid: teamTemp[k]['teamid'], name: "Team Leader", email: teamTemp[k]['phone']});
         }
+        var teamIDs = finalArrTemp.map(a => a.teamid);
+        teamIDs = teamIDs.filter((x, i, a) => a.indexOf(x) === i); // array with unique team ids
+        var newTeamIDs = Array.from({length: teamIDs.length}, (_, i) => i + 1); // array from [1, 2, ..., teamIDs.length]
+        for (const item in finalArrTemp) {
+            var index = 0;
+            for (var j = 0; j < teamIDs.length; j++) {
+                if (teamIDs[j] == finalArrTemp[item]['teamid']) {
+                    index = j;
+                }
+            }
+            finalArrTemp[item]['teamid'] = newTeamIDs[index]; // replace teamid with corresponding newTeamID value
+        }
         finalArrTemp.sort((a, b) => parseFloat(a.teamid) - parseFloat(b.teamid)); // sort by teamid in ascending order
         setFinalArr(finalArrTemp);
     }

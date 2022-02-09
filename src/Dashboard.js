@@ -84,6 +84,18 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
         for (const prop in objName) {
           volArr.push(objName[prop]);
         }
+        var teamIDs = volArr.map(a => a.teamid);
+        teamIDs = teamIDs.filter((x, i, a) => a.indexOf(x) === i); // array with unique team ids
+        var newTeamIDs = Array.from({length: teamIDs.length}, (_, i) => i + 1); // array from [1, 2, ..., teamIDs.length]
+        for (const item in volArr) {
+            var index = 0;
+            for (var j = 0; j < teamIDs.length; j++) {
+                if (teamIDs[j] == volArr[item]['teamid']) {
+                    index = j;
+                }
+            }
+            volArr[item]['teamid'] = newTeamIDs[index]; // replace teamid with corresponding newTeamID value
+        }
         volArr.sort((a, b) => parseFloat(a.teamid) - parseFloat(b.teamid)); // sort by teamid in ascending order
         setVolTable(volArr.map(renderVolunteers)); // method to make sure the table renders with updated data
         return volArr;
