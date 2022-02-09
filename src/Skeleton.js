@@ -68,7 +68,7 @@ const Skeleton = ({ location }) => {
                     setPage(page + 1)
                     handleFormChange({ username, password })
                 }}/>;
-        } else if (themonth === 11 || themonth === 0 || themonth === 1) { // stage 2 is December - January; add themonth == 11 in mid Dec
+        } else if (themonth === 11 || themonth === 0) { // stage 2 is December - January; add themonth == 11 in mid Dec
             return <StageTwo
                 prevUsername={formValues.username}
                 prevPassword={formValues.password}

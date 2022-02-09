@@ -2,6 +2,7 @@ import React, { useState, Component, useEffect, useRef} from "react";
 import './App.css';
 import Chart from './Chart';
 import Announcements from './Announcements';
+import Leaderboard from './Leaderboard'
 import * as ReactBootStrap from 'react-bootstrap';
 import ExportTreeRequestsButton from './ExportTreeRequestsButton';
 import ExportDataButton from './ExportDataButton';
@@ -26,10 +27,6 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
     const [numTreesReq, setNumTreesReq] = useState();
     const [goalPercent, setGoalPercent] = useState();
     var [volTable, setVolTable] = useState();
-    var [volProps, setVolProps] = useState([
-      { name: "Place", email: "iFeelGodInThisChilis@tn" },
-      { name: "Holder", email: "catchYou@theFlipityFlip" }
-    ]); // satisfy react-csv variable type before array is updated with actual data
     var volArr = [];
     var donationArr = []; // raw donation levels (a, b, c, d)
     var donationNumArr = []; // corresponding numbers (1000, 500, 200, 50)
@@ -88,7 +85,6 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
           volArr.push(objName[prop]);
         }
         volArr.sort((a, b) => parseFloat(a.teamid) - parseFloat(b.teamid)); // sort by teamid in ascending order
-        setVolProps(volArr);
         setVolTable(volArr.map(renderVolunteers)); // method to make sure the table renders with updated data
         return volArr;
       }
@@ -192,10 +188,8 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
             })
           })
           .then(res => res.json())
-          .then(data => JSON.parse(data.vol))
-          .then(jsonObj => traverseVolunteers(jsonObj, u))
-          .then(x => {
-            resolve(x);
+          .then(data => {
+            traverseVolunteers(JSON.parse(data.vol));
           });
         });
       }
@@ -256,7 +250,6 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
             <tr key={{index}}>
                 <td>{volunteer.teamid}</td>
                 <td>{volunteer.name}</td>
-                <td>{volunteer.email}</td>
             </tr>
         )
     }
@@ -293,7 +286,7 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
                                         {volTable}
                                         </tbody>
                                     </ReactBootStrap.Table>
-                                    <ExportDataButton volData={volProps}/>
+                                    <ExportDataButton user = {numUsername}/>
                                 </Container>
                                 <Container className="custom-col-2">
                                     <p className="col-title-text">Tree Requests</p>
@@ -325,6 +318,8 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
                                       <li>Free Trees You Received: {numFreeTrees}</li>
                                     </ul>
                                     <br></br>
+                                    <hr className = "hline"/>
+                                    <Leaderboard />
                                 </Container>
                             </div>
                             <div className="footer">

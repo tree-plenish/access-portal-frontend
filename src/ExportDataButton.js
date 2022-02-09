@@ -13,8 +13,39 @@ const ExportDataButton = (props) => {
     var headers = [
         { label: "Team ID", key: "teamid" },
         { label: "Name", key: "name" },
-        { label: "Email", key: "email" },
+        { label: "Email or Phone", key: "email" },
     ];
+
+    function traverseVolunteers(objNameVol, objNameTeam) {
+        var volunteerTemp = [];
+        for (const prop in objNameVol) {
+            volunteerTemp.push(objNameVol[prop]);
+        }
+        var teamTemp = [];
+        for (const prop in objNameTeam) {
+            teamTemp.push(objNameTeam[prop]);
+        }
+        var finalArrTemp = volunteerTemp;
+        for (var k = 0; k < teamTemp.length; k++) {
+            finalArrTemp.push({teamid: teamTemp[k]['teamid'], name: "Team Leader", email: teamTemp[k]['phone']});
+        }
+        finalArrTemp.sort((a, b) => parseFloat(a.teamid) - parseFloat(b.teamid)); // sort by teamid in ascending order
+        setFinalArr(finalArrTemp);
+    }
+
+    function getTeams(u) {
+        return new Promise(resolve => {
+          fetch(`/volunteers/${u}`)
+          .then(res => res.json())
+          .then(data => {
+            traverseVolunteers(JSON.parse(data.vol), JSON.parse(data.team));
+          });
+        });
+      }
+
+    useEffect(() => {
+        getTeams(props.user);
+      }, [finalArr]);
 
     return (
         <div>
@@ -24,7 +55,7 @@ const ExportDataButton = (props) => {
                 size = "lg"
                 onClick={clickLink}>Download as Excel Sheet</Button>
             <CSVLink
-                data={props.volData}
+                data={finalArr}
                 headers={headers}
                 filename='tree-plenish-volunteers.csv'
                 className='hidden'
