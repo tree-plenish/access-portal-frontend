@@ -9,13 +9,14 @@ const Announcements = () => {
                     <div className="annContainer">
                         <div className="annBox">
                             <h2>Deadlines</h2>
-                            <p>Please submit your event webpage information as soon as possible.</p>
+                            <p>Please submit your shipping addresses through the form below as soon as possible.</p>
+                            <p><a className="link-anim in-line" href="https://docs.google.com/forms/d/e/1FAIpQLSfdjqjpTwUyBJ_5Y8LVCs_ouaRMAEeVV6zg0rf_6WOK8Aowtw/viewform">Click here!</a></p>
                         </div>
                         <div className="annBox">
                             <h2>Reminders</h2>
-                            <p>Please sign up for an Event Marketing Informational Meeting using the Calendly link below.</p>
-                            <p><a className="link-anim in-line" href="https://calendly.com/treeplenish/event-marketing-informational-meeting?month=2022-01">Click here!</a></p>
-                            <p>Follow us on Instagram @treeplenish!</p>
+                            <p>Please sign up for a Volunteering Informational Meeting using the Calendly link below.</p>
+                            <p><a className="link-anim in-line" href="https://calendly.com/treeplenish/volunteering-informational-meeting?month=2022-02">Click here!</a></p>
+                            <p>Your sapling order form closes one month before your event, so make sure to start marketing your event early to get sapling orders in!</p>
                         </div>
                         <div className="annBox">
                         <h2>Questions?</h2>
