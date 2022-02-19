@@ -52,7 +52,7 @@ const ExportDataButton = (props) => {
 
     function getTeams(u) {
         return new Promise(resolve => {
-            fetch(`/api/volunteers/${u}`, {
+            fetch(`/api/dashdata/${u}`, {
                 headers: new Headers({
                   'Authorization': 'Basic '+btoa(apiU + ":" + apiP),
                   'Content-Type': 'application/x-www-form-urlencoded'

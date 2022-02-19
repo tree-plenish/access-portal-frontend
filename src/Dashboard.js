@@ -174,9 +174,9 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
         return text;
     }
 
-    function getSchoolNameAndTreesReq(u) {
+    function getData(u) {
       return new Promise(resolve => {
-        fetch(`/api/school/${u}`, {
+        fetch(`/api/dashdata/${u}`, {
           headers: new Headers({
             'Authorization': 'Basic '+btoa(apiU + ":" + apiP),
             'Content-Type': 'application/x-www-form-urlencoded'
@@ -187,60 +187,14 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
           setSchoolName(toTitleCase(traverseSchoolName(JSON.parse(data.name), u)));
           setNumTreesReq(traverseTreesRequested(JSON.parse(data.numtreesreq), u));
           setTreeGoal(traverseTreeGoal(JSON.parse(data.treegoal), u));
+          traverseVolunteers(JSON.parse(data.vol));
+          traverseSponsors(JSON.parse(data.spon));
+          traverseSponNames(JSON.parse(data.sponinfo));
+          setSpeciesNames(Object.keys(JSON.parse(data.species))); // the species names are the keys
+          setSpeciesVals(Object.values(JSON.parse(data.species))); // the request numbers are the values
         });
       });
     }
-
-      function getVolunteers(u) {
-        return new Promise(resolve => {
-          fetch(`/api/volunteers/${u}`, {
-            headers: new Headers({
-              'Authorization': 'Basic '+btoa(apiU + ":" + apiP),
-              'Content-Type': 'application/x-www-form-urlencoded'
-            })
-          })
-          .then(res => res.json())
-          .then(data => {
-            traverseVolunteers(JSON.parse(data.vol));
-          });
-        });
-      }
-
-      function getSponsors(u) {
-        return new Promise(resolve => {
-          fetch(`/api/spon/${u}`, {
-            headers: new Headers({
-              'Authorization': 'Basic '+btoa(apiU + ":" + apiP),
-              'Content-Type': 'application/x-www-form-urlencoded'
-            })
-          })
-          .then(res => res.json())
-          .then(data => {
-            traverseSponsors(JSON.parse(data.spon));
-            traverseSponNames(JSON.parse(data.sponinfo));
-          });
-        });
-      }
-
-      function getSpecies(u) {
-        return new Promise(resolve => {
-          fetch(`/api/species/${u}`, {
-            headers: new Headers({
-              'Authorization': 'Basic '+btoa(apiU + ":" + apiP),
-              'Content-Type': 'application/x-www-form-urlencoded'
-            })
-          })
-          .then(res => res.json())
-          .then(data => JSON.parse(data.species))
-          .then(x => {
-            resolve(x); // this is a json object with the format {'species1':100, 'species2':200, 'key':value}
-            setSpeciesNames(Object.keys(x)); // the species names are the keys
-            setSpeciesVals(Object.values(x)); // the request numbers are the values
-            //const arrayFormat = Object.keys(x).map(key => ({[key]: x[key]})); // this is an array
-            //setSpecProps(arrayFormat); // array needed for export to CSV button
-          });
-        });
-      }
 
       function calculateGoalPercentage(numReqParam, goalParam) {
         var numerator = Number(numReqParam);
@@ -250,11 +204,8 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
       }
 
     useEffect(() => {
-        getSchoolNameAndTreesReq(numUsername);
+        getData(numUsername);
         calculateGoalPercentage(numTreesReq, treeGoal);
-        getVolunteers(numUsername);
-        getSpecies(numUsername);
-        getSponsors(numUsername);
       }, [numTreesReq, treeGoal]);
 
     const renderVolunteers = (volunteer, index) => {

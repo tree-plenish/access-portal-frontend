@@ -131,9 +131,9 @@ const StageOne = ( prevInfo ) => {
         return text;
     }
 
-    function getSchoolNameAndTreesReq(u) {
+    function getData(u) {
       return new Promise(resolve => {
-        fetch(`/api/school/${u}`, {
+        fetch(`/api/dashdata/${u}`, {
           headers: new Headers({
             'Authorization': 'Basic '+btoa(apiU + ":" + apiP),
             'Content-Type': 'application/x-www-form-urlencoded'
@@ -143,29 +143,14 @@ const StageOne = ( prevInfo ) => {
         .then(data => {
           setSchoolName(toTitleCase(traverseSchoolName(JSON.parse(data.name), u)));
           setNumTreesReq(traverseTreesRequested(JSON.parse(data.numtreesreq), u));
+          traverseSponsors(JSON.parse(data.spon));
+          traverseSponNames(JSON.parse(data.sponinfo));
         });
       });
     }
 
-      function getSponsors(u) {
-        return new Promise(resolve => {
-          fetch(`/api/spon/${u}`, {
-            headers: new Headers({
-              'Authorization': 'Basic '+btoa(apiU + ":" + apiP),
-              'Content-Type': 'application/x-www-form-urlencoded'
-            })
-          })
-          .then(res => res.json())
-          .then(data => {
-            traverseSponsors(JSON.parse(data.spon));
-            traverseSponNames(JSON.parse(data.sponinfo));
-          });
-        });
-      }
-
       useEffect(() => {
-        getSchoolNameAndTreesReq(numUsername);
-        getSponsors(numUsername);
+        getData(numUsername);
       }, []);
 
       const renderNewSponTable = (item, idx) => {
