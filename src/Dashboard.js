@@ -281,7 +281,7 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
                                     </ul>
                                     <br></br>
                                     <hr className = "hline"/>
-                                    <Leaderboard />
+                                    <Leaderboard schoolName = {schoolName}/>
                                 </Container>
                             </div>
                             <div className="footer">
