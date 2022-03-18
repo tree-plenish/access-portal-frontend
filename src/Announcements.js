@@ -14,8 +14,8 @@ const Announcements = () => {
                         </div>
                         <div className="annBox">
                             <h2>Reminders</h2>
-                            <p>Please sign up for a Volunteering Informational Meeting using the Calendly link below.</p>
-                            <p><a className="link-anim in-line" href="https://calendly.com/treeplenish/volunteering-informational-meeting?month=2022-02">Click here!</a></p>
+                            <p>Please sign up for a Day of Event Meeting using the Calendly link below.</p>
+                            <p><a className="link-anim in-line" href="https://calendly.com/treeplenish/day-of-event-informational-meeting?month=2022-03">Click here!</a></p>
                             <p>Your sapling order form closes one month before your event, so make sure to start marketing your event early to get sapling orders in!</p>
                         </div>
                         <div className="annBox">
