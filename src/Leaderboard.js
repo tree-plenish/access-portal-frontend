@@ -7,7 +7,7 @@ const Leaderboard = (props) => {
     let apiU = 'admin';
     let apiP = 'preeTlenish1#';
 
-    var unixStart = 1646542800; // Sun Mar 6 12:00 am
+    var unixStart = 1647748800; // Sun Mar 20 12:00 am
     var startDate = new Date(unixStart*1000).toDateString();
     startDate = startDate.substring(4, 10);
     var endDate = new Date((unixStart + (3600*24*14))*1000).toDateString(); // 2 weeks after start date
@@ -30,7 +30,9 @@ const Leaderboard = (props) => {
         var sortedArrTemp = [];
         var yourSchoolCount;
         for (const prop in objName) {
-            sortedArrTemp.push(objName[prop]);
+            if (objName[prop]['name'] != "Freeport High School") { // filter out school 2098 due to fake order
+                sortedArrTemp.push(objName[prop]);
+            }
             sortedArrTemp.sort((a, b) => parseFloat(b.num_orders) - parseFloat(a.num_orders)); // sort by num_orders in descending order
             setSortedArr(sortedArrTemp);
             if (objName[prop]['name'] === props.schoolName) {
@@ -108,7 +110,6 @@ const Leaderboard = (props) => {
                     {leadTable}
                  </tbody>
             </ReactBootStrap.Table>
-            <p>If the above table is blank, there haven't been any orders placed within the timeframe yet.</p>
         </div>
     )
 }
