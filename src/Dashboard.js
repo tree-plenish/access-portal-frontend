@@ -58,6 +58,8 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
     var [newSponTable, setNewSponTable] = useState();
     const [thereAreSponsors, setThereAreSponsors] = useState(true);
 
+    const [farOutFromEvent, setFarOutFromEvent] = useState(true);
+
     var [message, setMessage] = useState('');
 
     function traverseSchoolName(objName) {
@@ -69,6 +71,23 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
     function traverseTreeGoal(objName) {
       for (const prop in objName) {
         return objName[prop]['tree_goal'];
+      }
+    }
+
+    function findDaysToEvent(objName) {
+      for (const prop in objName) {
+        if (objName[prop]['date'].localeCompare('NULL') != 0) {
+          let eventDate = new Date(objName[prop]['date']);
+          let todaysDate = new Date();
+          let numDays = (eventDate - todaysDate) / 86400000; // 86,400,000 millisec in 1 day
+          if (numDays <= 10) {
+            return false; // don't show excel sheet button
+          } else {
+            return true;
+          }
+        } else { // event date is NULL in database
+          return true;
+        }
       }
     }
 
@@ -187,6 +206,7 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
           setSchoolName(toTitleCase(traverseSchoolName(JSON.parse(data.name), u)));
           setNumTreesReq(traverseTreesRequested(JSON.parse(data.numtreesreq), u));
           setTreeGoal(traverseTreeGoal(JSON.parse(data.treegoal), u));
+          setFarOutFromEvent(findDaysToEvent(JSON.parse(data.treegoal), u));
           traverseVolunteers(JSON.parse(data.vol));
           traverseSponsors(JSON.parse(data.spon));
           traverseSponNames(JSON.parse(data.sponinfo));
@@ -256,7 +276,13 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
                                     <p className="center">total requests received</p>
                                     <p>Progress to Goal of {treeGoal} Trees</p>
                                     <Chart treeGoalPercent={goalPercent} specNames={speciesNames} specValues={speciesVals}/>
-                                    <ExportTreeRequestsButton user = {numUsername}/>
+                                    {farOutFromEvent && <ExportTreeRequestsButton user = {numUsername}/>}
+                                    {!farOutFromEvent &&
+                                    <Container>
+                                      <p>You should've received the final tree request results by now.</p>
+                                      <p>Reach out to this phone number if you haven't.</p>
+                                    </Container>
+                                    }
                                 </Container>
                                 <Container className="custom-col-3">
                                     <p className="col-title-text">Announcements</p>
