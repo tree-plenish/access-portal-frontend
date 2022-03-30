@@ -279,8 +279,7 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
                                     {farOutFromEvent && <ExportTreeRequestsButton user = {numUsername}/>}
                                     {!farOutFromEvent &&
                                     <Container>
-                                      <p>You should've received the final tree request results by now.</p>
-                                      <p>Reach out to this phone number if you haven't.</p>
+                                      <p>Now that your event is a few days away, please use the spreadsheet that we emailed to you. That spreadsheet will have the most up-to-date and accurate information about your event's orders. If you never received it or have any questions, please text (774) 224-9972</p>
                                     </Container>
                                     }
                                 </Container>
