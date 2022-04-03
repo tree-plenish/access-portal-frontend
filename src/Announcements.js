@@ -14,6 +14,7 @@ const Announcements = () => {
                         </div>
                         <div className="annBox">
                             <h2>Reminders</h2>
+                            <p>We will be sending you the raw data from your order form about a week or two after the form closes. Please use this to plan your event as there have been some discrepancies on the downloaded excel sheet.</p>
                             <p>Please sign up for a Day of Event Meeting using the Calendly link below.</p>
                             <p><a className="link-anim in-line" href="https://calendly.com/treeplenish/day-of-event-informational-meeting?month=2022-03">Click here!</a></p>
                             <p>Your sapling order form closes one month before your event, so make sure to start marketing your event early to get sapling orders in!</p>
