@@ -7,28 +7,28 @@ const Leaderboard = (props) => {
     let apiU = 'admin';
     let apiP = 'preeTlenish1#';
 
-    var unixStart = 1648958400; // Sun Apr 3 12:00 am
-    var startDate = new Date(unixStart*1000).toDateString();
+    let unixStart = 1652673600; // Sun May 15 12:00 am
+    let startDate = new Date(unixStart * 1000).toDateString();
     startDate = startDate.substring(4, 10);
-    var endDate = new Date((unixStart + (3600*24*14))*1000).toDateString(); // 2 weeks after start date
+    let endDate = new Date((unixStart + (3600 * 24 * 14)) * 1000).toDateString(); // 2 weeks after start date
     endDate = endDate.substring(4, 10);
 
-    var [schoolNames, setSchoolNames] = useState([]);
-    var [orders, setOrders] = useState([]);
-    var [sortedArr, setSortedArr] = useState([]);
-    var [leadTable, setLeadTable] = useState();
+    const [schoolNames, setSchoolNames] = useState([]);
+    const [orders, setOrders] = useState([]);
+    const [sortedArr, setSortedArr] = useState([]);
+    const [leadTable, setLeadTable] = useState();
 
     function toTitleCase(str) { // function to capitalize first letter of each word
-        var text = str.toLowerCase()
-        .split(' ')
-        .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
-        .join(' ');
+        let text = str.toLowerCase()
+            .split(' ')
+            .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+            .join(' ');
         return text;
     }
 
     function traverseLeaders(objName) {
-        var sortedArrTemp = [];
-        var yourSchoolCount;
+        let sortedArrTemp = [];
+        let yourSchoolCount;
         for (const prop in objName) {
             if (objName[prop]['name'] != "Freeport High School") { // filter out school 2098 due to fake order
                 sortedArrTemp.push(objName[prop]);
@@ -39,10 +39,10 @@ const Leaderboard = (props) => {
                 yourSchoolCount = objName[prop]['num_orders'];
             }
         }
-        var schoolNamesTemp = [];
-        var ordersTemp = [];
-        var schoolNotInTop5 = true;
-        for (var i = 0; i < 5; i++) {
+        let schoolNamesTemp = [];
+        let ordersTemp = [];
+        let schoolNotInTop5 = true;
+        for (let i = 0; i < 5; i++) {
             schoolNamesTemp[i] = sortedArrTemp[i].name;
             ordersTemp[i] = sortedArrTemp[i].num_orders;
             if (sortedArrTemp[i].name === props.schoolName) {
@@ -65,29 +65,29 @@ const Leaderboard = (props) => {
         return new Promise(resolve => {
             fetch(`/api/leaderboard/${unixStart}`, {
                 headers: new Headers({
-                  'Authorization': 'Basic '+btoa(apiU + ":" + apiP),
-                  'Content-Type': 'application/x-www-form-urlencoded'
+                    'Authorization': 'Basic ' + btoa(apiU + ":" + apiP),
+                    'Content-Type': 'application/x-www-form-urlencoded'
                 })
-              })
-            .then(res => res.json())
-            .then(data => {
-                traverseLeaders(JSON.parse(data.leader));
-            });
+            })
+                .then(res => res.json())
+                .then(data => {
+                    traverseLeaders(JSON.parse(data.leader));
+                });
         });
     }
 
     const renderLeaderboard = (item, idx) => {
-        var styleVar;
+        let styleVar;
         if (idx == 5) {
             styleVar = "bold-text";
         } else {
             styleVar = "normal-text";
         }
         return (
-        <tr className={styleVar}>
-            <td>{schoolNames[idx]}</td>
-            <td>{orders[idx]}</td>
-        </tr>
+            <tr className={styleVar}>
+                <td>{schoolNames[idx]}</td>
+                <td>{orders[idx]}</td>
+            </tr>
         )
     }
 
@@ -102,13 +102,13 @@ const Leaderboard = (props) => {
             <ReactBootStrap.Table className="table">
                 <thead>
                     <tr>
-                    <th>School</th>
-                    <th>Tree Orders</th>
+                        <th>School</th>
+                        <th>Tree Orders</th>
                     </tr>
                 </thead>
                 <tbody>
                     {leadTable}
-                 </tbody>
+                </tbody>
             </ReactBootStrap.Table>
         </div>
     )
