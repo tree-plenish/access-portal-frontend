@@ -1,4 +1,4 @@
-import React, { useState, Component, useEffect, useRef} from "react";
+import React, { useState, Component, useEffect, useRef } from "react";
 import './App.css';
 import Chart from './Chart';
 import Announcements from './Announcements';
@@ -8,204 +8,204 @@ import ExportTreeRequestsButton from './ExportTreeRequestsButton';
 import ExportDataButton from './ExportDataButton';
 
 import {
-    Button, Card, CardBody, DropdownMenu, DropdownItem, DropdownToggle, UncontrolledDropdown, Container, Row, Col
+  Button, Card, CardBody, DropdownMenu, DropdownItem, DropdownToggle, UncontrolledDropdown, Container, Row, Col
 } from "reactstrap";
 
 const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
 
-    const [username, setUsername] = useState(prevUsername); // username is a STRING
-    const [password, setPassword] = useState(prevPassword); // username is a STRING
+  const [username, setUsername] = useState(prevUsername); // username is a STRING
+  //const [password, setPassword] = useState(prevPassword); // username is a STRING
 
-    const numUsername = Number(username);
+  const numUsername = Number(username);
 
-    let apiU = 'admin';
-    let apiP = 'preeTlenish1#';
+  let apiU = 'admin';
+  let apiP = 'preeTlenish1#';
 
-    const requestName = `TREE REQUESTS FORM ${username}`; // use ` instead of ' for dynamic strings
-    const [schoolName, setSchoolName] = useState();
-    const [treeGoal, setTreeGoal] = useState();
-    const [numTreesReq, setNumTreesReq] = useState();
-    const [goalPercent, setGoalPercent] = useState();
-    var [volTable, setVolTable] = useState();
-    var volArr = [];
-    var donationArr = []; // raw donation levels (a, b, c, d)
-    var donationNumArr = []; // corresponding numbers (1000, 500, 200, 50)
-    const [numFreeTrees, setNumFreeTrees] = useState();
-    const [remainingTrees, setRemainingTrees] = useState();
-    var [sponTable, setSponTable] = useState();
-    var [sponProps, setSponProps] = useState([
-      { name: "Place", email: "iFeelGodInThisChilis@tn" },
-      { name: "Holder", email: "catchYou@theFlipityFlip" }
-    ]);
-    var sponArr = [];
-    var sponIdArr = [];
-    var sponIdTableArr = [];
-    var [sponIdTable, setSponIdTable] = useState();
-    var [sponIdProps, setSponIdProps] = useState([
-      { name: "Place", email: "iFeelGodInThisChilis@tn" },
-      { name: "Holder", email: "catchYou@theFlipityFlip" }
-    ]);
-    var [specProps, setSpecProps] = useState([
-      { name: "Species", email: "iFeelGodInThisChilis@tn" },
-      { name: "Placeholder", email: "catchYou@theFlipityFlip" }
-    ]);
-    var [speciesNames, setSpeciesNames] = useState(["Place","Holder"]);
-    var [speciesVals, setSpeciesVals] = useState([0,0]);
+  const [schoolName, setSchoolName] = useState();
+  const [treeGoal, setTreeGoal] = useState();
+  const [numTreesReq, setNumTreesReq] = useState();
+  const [goalPercent, setGoalPercent] = useState();
+  const [volTable, setVolTable] = useState();
+  let volArr = [];
+  let donationArr = []; // raw donation levels (a, b, c, d)
+  let donationNumArr = []; // corresponding numbers (1000, 500, 200, 50)
+  const [numFreeTrees, setNumFreeTrees] = useState();
+  const [remainingTrees, setRemainingTrees] = useState();
+  //var [sponTable, setSponTable] = useState();
+  const [sponProps, setSponProps] = useState([
+    { name: "Place", email: "iFeelGodInThisChilis@tn" },
+    { name: "Holder", email: "catchYou@theFlipityFlip" }
+  ]);
+  let sponArr = [];
+  let sponIdArr = [];
+  let sponIdTableArr = [];
+  //var [sponIdTable, setSponIdTable] = useState();
+  const [sponIdProps, setSponIdProps] = useState([
+    { name: "Place", email: "iFeelGodInThisChilis@tn" },
+    { name: "Holder", email: "catchYou@theFlipityFlip" }
+  ]);
+  const [specProps, setSpecProps] = useState([
+    { name: "Species", email: "iFeelGodInThisChilis@tn" },
+    { name: "Placeholder", email: "catchYou@theFlipityFlip" }
+  ]);
+  const [speciesNames, setSpeciesNames] = useState(["Place", "Holder"]);
+  const [speciesVals, setSpeciesVals] = useState([0, 0]);
 
-    // Note: at each index, these 2 arrays line up with each other
-    var donationStringArr = []; // array with donations as strings
-    var sponNamesArr = []; // array with sponsor names
-    var [newSponTable, setNewSponTable] = useState();
-    const [thereAreSponsors, setThereAreSponsors] = useState(true);
+  // Note: at each index, these 2 arrays line up with each other
+  let donationStringArr = []; // array with donations as strings
+  let sponNamesArr = []; // array with sponsor names
+  const [newSponTable, setNewSponTable] = useState();
+  const [thereAreSponsors, setThereAreSponsors] = useState(true);
 
-    const [farOutFromEvent, setFarOutFromEvent] = useState(true);
+  const [farOutFromEvent, setFarOutFromEvent] = useState(true);
 
-    var [message, setMessage] = useState('');
+  const [message, setMessage] = useState('');
 
-    function traverseSchoolName(objName) {
-      for (const prop in objName) {
-        return objName[prop]['name'];
-      }
+  function traverseSchoolName(objName) {
+    for (const prop in objName) {
+      return objName[prop]['name'];
     }
+  }
 
-    function traverseTreeGoal(objName) {
-      for (const prop in objName) {
-        return objName[prop]['tree_goal'];
-      }
+  function traverseTreeGoal(objName) {
+    for (const prop in objName) {
+      return objName[prop]['tree_goal'];
     }
+  }
 
-    function findDaysToEvent(objName) {
-      for (const prop in objName) {
-        if (objName[prop]['date'].localeCompare('NULL') != 0) {
-          let eventDate = new Date(objName[prop]['date']);
-          let todaysDate = new Date();
-          let numDays = (eventDate - todaysDate) / 86400000; // 86,400,000 millisec in 1 day
-          if (numDays <= 10) {
-            return false; // don't show excel sheet button
-          } else {
-            return true;
-          }
-        } else { // event date is NULL in database
+  function findDaysToEvent(objName) {
+    for (const prop in objName) {
+      if (objName[prop]['date'].localeCompare('NULL') != 0) {
+        let eventDate = new Date(objName[prop]['date']);
+        let todaysDate = new Date();
+        let numDays = (eventDate - todaysDate) / 86400000; // 86,400,000 millisec in 1 day
+        if (numDays <= 10) {
+          return false; // don't show excel sheet button
+        } else {
           return true;
         }
+      } else { // event date is NULL in database
+        return true;
       }
     }
+  }
 
-    function traverseTreesRequested(objName) {
+  function traverseTreesRequested(objName) {
+    for (const prop in objName) {
+      setNumFreeTrees(objName[prop]['total_free_trees']);
+      setRemainingTrees(objName[prop]['remaining_free_trees']);
+      return objName[prop]['trees_requested'];
+    }
+  }
+
+  function traverseVolunteers(objName, schoolidnum) {
+    for (const prop in objName) {
+      volArr.push(objName[prop]);
+    }
+    var teamIDs = volArr.map(a => a.teamid);
+    teamIDs = teamIDs.filter((x, i, a) => a.indexOf(x) === i); // array with unique team ids
+    var newTeamIDs = Array.from({ length: teamIDs.length }, (_, i) => i + 1); // array from [1, 2, ..., teamIDs.length]
+    for (const item in volArr) {
+      var index = 0;
+      for (var j = 0; j < teamIDs.length; j++) {
+        if (teamIDs[j] == volArr[item]['teamid']) {
+          index = j;
+        }
+      }
+      volArr[item]['teamid'] = newTeamIDs[index]; // replace teamid with corresponding newTeamID value
+    }
+    volArr.sort((a, b) => parseFloat(a.teamid) - parseFloat(b.teamid)); // sort by teamid in ascending order
+    setVolTable(volArr.map(renderVolunteers)); // method to make sure the table renders with updated data
+    return volArr;
+  }
+
+  function traverseSponsors(objName, schoolidnum) {
+    for (const prop in objName) {
+      donationArr.push(objName[prop]['level_pledged']); // all donations are calculated, whether anonymous or not
+      // only non-anonymous donations are displayed along with sponsor names
+      //if (objName[prop]['anon'] === false) { 
+      switch (objName[prop]['level_pledged']) { // capitalize level name
+        case 'redwood':
+          objName[prop]['level_pledged'] = '1,000';
+          break;
+        case 'maple':
+          objName[prop]['level_pledged'] = '500';
+          break;
+        case 'seedling':
+          objName[prop]['level_pledged'] = '200';
+          break;
+        case 'individual':
+          objName[prop]['level_pledged'] = '50';
+          break;
+      }
+      sponArr.push(objName[prop]);
+      sponIdArr.push(objName[prop]['sponsorid'])
+      donationStringArr.push(objName[prop]['level_pledged']);
+      //}
+    }
+    for (var i = 0; i < donationArr.length; i++) {
+      switch (donationArr[i]) {
+        case 'redwood':
+          donationNumArr.push(1000);
+          break;
+        case 'maple':
+          donationNumArr.push(500);
+          break;
+        case 'seedling':
+          donationNumArr.push(200);
+          break;
+        case 'individual':
+          donationNumArr.push(50);
+          break;
+      }
+    }
+    var sumDonations = donationNumArr.reduce((partial_sum, a) => partial_sum + a, 0);
+    //setNumFreeTrees(Math.floor(sumDonations / 5));
+    setSponProps(sponArr);
+    return sponArr;
+  }
+
+  function traverseSponNames(objName) {
+    for (var i = 0; i < sponIdArr.length; i++) {
       for (const prop in objName) {
-        setNumFreeTrees(objName[prop]['total_free_trees']);
-        setRemainingTrees(objName[prop]['remaining_free_trees']);
-        return objName[prop]['trees_requested'];
+        if (objName[prop]['sponsorid'] === sponIdArr[i]) {
+          //objName[prop]['name'] = toTitleCase(objName[prop]['name']);
+          sponIdTableArr.push(objName[prop]);
+          sponNamesArr.push(toTitleCase(objName[prop]['name']));
+        }
       }
     }
-
-      function traverseVolunteers(objName, schoolidnum) {
-        for (const prop in objName) {
-          volArr.push(objName[prop]);
-        }
-        var teamIDs = volArr.map(a => a.teamid);
-        teamIDs = teamIDs.filter((x, i, a) => a.indexOf(x) === i); // array with unique team ids
-        var newTeamIDs = Array.from({length: teamIDs.length}, (_, i) => i + 1); // array from [1, 2, ..., teamIDs.length]
-        for (const item in volArr) {
-            var index = 0;
-            for (var j = 0; j < teamIDs.length; j++) {
-                if (teamIDs[j] == volArr[item]['teamid']) {
-                    index = j;
-                }
-            }
-            volArr[item]['teamid'] = newTeamIDs[index]; // replace teamid with corresponding newTeamID value
-        }
-        volArr.sort((a, b) => parseFloat(a.teamid) - parseFloat(b.teamid)); // sort by teamid in ascending order
-        setVolTable(volArr.map(renderVolunteers)); // method to make sure the table renders with updated data
-        return volArr;
-      }
-
-      function traverseSponsors(objName, schoolidnum) {
-        for (const prop in objName) {
-            donationArr.push(objName[prop]['level_pledged']); // all donations are calculated, whether anonymous or not
-            // only non-anonymous donations are displayed along with sponsor names
-            //if (objName[prop]['anon'] === false) { 
-              switch (objName[prop]['level_pledged']) { // capitalize level name
-                case 'redwood':
-                  objName[prop]['level_pledged'] = '1,000';
-                  break;
-                case 'maple':
-                  objName[prop]['level_pledged'] = '500';
-                  break;
-                case 'seedling':
-                  objName[prop]['level_pledged'] = '200';
-                  break;
-                case 'individual':
-                  objName[prop]['level_pledged'] = '50';
-                  break;
-              }
-              sponArr.push(objName[prop]);
-              sponIdArr.push(objName[prop]['sponsorid'])
-              donationStringArr.push(objName[prop]['level_pledged']);
-            //}
-        }
-        for (var i = 0; i < donationArr.length; i++) {
-          switch (donationArr[i]) {
-            case 'redwood':
-              donationNumArr.push(1000);
-              break;
-            case 'maple':
-              donationNumArr.push(500);
-              break;
-            case 'seedling':
-              donationNumArr.push(200);
-              break;
-            case 'individual':
-              donationNumArr.push(50);
-              break;
-          }
-        }
-        var sumDonations = donationNumArr.reduce((partial_sum, a) => partial_sum + a, 0);
-        //setNumFreeTrees(Math.floor(sumDonations / 5));
-        setSponProps(sponArr);
-        return sponArr;
-      }
-
-      function traverseSponNames(objName) {
-        for (var i = 0; i < sponIdArr.length; i++) {
-          for (const prop in objName) {
-            if (objName[prop]['sponsorid'] === sponIdArr[i]) {
-              //objName[prop]['name'] = toTitleCase(objName[prop]['name']);
-              sponIdTableArr.push(objName[prop]);
-              sponNamesArr.push(toTitleCase(objName[prop]['name']));
-            }
-          }
-        }
-        setSponIdProps(sponIdTableArr);
-        setNewSponTable(sponNamesArr.map(renderNewSponTable));
-        if (sponNamesArr.length == 0) {
-          setMessage('Sponsors will appear here once they submit their donations.');
-          setThereAreSponsors(false);
-        }
-        return sponIdTableArr;
-      }
-
-    function toTitleCase(str) { // function to capitalize first letter of each word; e.g. 'still woozy' becomes 'Still Woozy'
-        var text = str.toLowerCase()
-        .split(' ')
-        .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
-        .join(' ');
-        return text;
+    setSponIdProps(sponIdTableArr);
+    setNewSponTable(sponNamesArr.map(renderNewSponTable));
+    if (sponNamesArr.length == 0) {
+      setMessage('Sponsors will appear here once they submit their donations.');
+      setThereAreSponsors(false);
     }
+    return sponIdTableArr;
+  }
 
-    function getData(u) {
-      return new Promise(resolve => {
-        fetch(`/api/dashdata/${u}`, {
-          headers: new Headers({
-            'Authorization': 'Basic '+btoa(apiU + ":" + apiP),
-            'Content-Type': 'application/x-www-form-urlencoded'
-          })
+  function toTitleCase(str) { // function to capitalize first letter of each word; e.g. 'still woozy' becomes 'Still Woozy'
+    var text = str.toLowerCase()
+      .split(' ')
+      .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+      .join(' ');
+    return text;
+  }
+
+  function getData(u) {
+    return new Promise(resolve => {
+      fetch(`/api/dashdata/${u}`, {
+        headers: new Headers({
+          'Authorization': 'Basic ' + btoa(apiU + ":" + apiP),
+          'Content-Type': 'application/x-www-form-urlencoded'
         })
+      })
         .then(res => res.json())
         .then(data => {
           setSchoolName(toTitleCase(traverseSchoolName(JSON.parse(data.name), u)));
           setNumTreesReq(traverseTreesRequested(JSON.parse(data.numtreesreq), u));
           setTreeGoal(traverseTreeGoal(JSON.parse(data.treegoal), u));
+          calculateGoalPercentage(traverseTreesRequested(JSON.parse(data.numtreesreq), u), traverseTreeGoal(JSON.parse(data.treegoal), u));
           setFarOutFromEvent(findDaysToEvent(JSON.parse(data.treegoal), u));
           traverseVolunteers(JSON.parse(data.vol));
           traverseSponsors(JSON.parse(data.spon));
@@ -213,109 +213,108 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
           setSpeciesNames(Object.keys(JSON.parse(data.species))); // the species names are the keys
           setSpeciesVals(Object.values(JSON.parse(data.species))); // the request numbers are the values
         });
-      });
-    }
+    });
+  }
 
-      function calculateGoalPercentage(numReqParam, goalParam) {
-        var numerator = Number(numReqParam);
-        var denominator = Number(goalParam);
-        var percent = Math.round(numerator/denominator*100);
-        setGoalPercent(percent);
-      }
+  function calculateGoalPercentage(numReqParam, goalParam) {
+    var numerator = Number(numReqParam);
+    var denominator = Number(goalParam);
+    var percent = Math.round(numerator / denominator * 100);
+    setGoalPercent(percent);
+  }
 
-    useEffect(() => {
-        getData(numUsername);
-        calculateGoalPercentage(numTreesReq, treeGoal);
-      }, [numTreesReq, treeGoal]);
+  useEffect(() => {
+    getData(numUsername);
+  }, []);
 
-    const renderVolunteers = (volunteer, index) => {
-        return(
-            <tr key={{index}}>
-                <td>{volunteer.teamid}</td>
-                <td>{volunteer.name}</td>
-            </tr>
-        )
-    }
-
-    const renderNewSponTable = (item, idx) => {
-      return (
-        <tr>
-          <td>{sponNamesArr[idx]}</td>
-          <td>{donationStringArr[idx]}</td>
-        </tr>
-      )
-    }
-
+  const renderVolunteers = (volunteer, index) => {
     return (
-            <div className="page-container">
-                <div className="content-wrap">
-                    <div className={"bg-light-green view-entire"}>
-                        <div className="w-500 h-500 d-flex align-items-center justify-content-between flex-column">
-                            <div className="title">
-                                <h3>Welcome, {schoolName}!</h3>
-                            </div>
-                            <div className="flex-container w-100">
-                                <Container className="custom-col-1">
-                                    <p className="col-title-text">Volunteers</p>
-                                    <ReactBootStrap.Table className="table">
-                                        <thead>
-                                        <tr>
-                                            <th>Team ID</th>
-                                            <th>Name</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        {volTable}
-                                        </tbody>
-                                    </ReactBootStrap.Table>
-                                    <ExportDataButton user = {numUsername}/>
-                                </Container>
-                                <Container className="custom-col-2">
-                                    <p className="col-title-text">Tree Requests</p>
-                                    <h2 className="center">{numTreesReq}</h2>
-                                    <p className="center">total requests received</p>
-                                    <p>Progress to Goal of {treeGoal} Trees</p>
-                                    <Chart treeGoalPercent={goalPercent} specNames={speciesNames} specValues={speciesVals}/>
-                                    {farOutFromEvent && <ExportTreeRequestsButton user = {numUsername}/>}
-                                    {!farOutFromEvent &&
-                                    <Container>
-                                      <p>Now that your event is a few days away, please use the spreadsheet that we emailed to you. That spreadsheet will have the most up-to-date and accurate information about your event's orders. If you never received it or have any questions, please text (774) 224-9972</p>
-                                    </Container>
-                                    }
-                                </Container>
-                                <Container className="custom-col-3">
-                                    <p className="col-title-text">Announcements</p>
-                                    <Announcements />
-                                    <hr className = "hline"/>
-                                    <p className="col-title-text">Sponsorships</p>
-                                    {thereAreSponsors && <ReactBootStrap.Table className="table">
-                                        <thead>
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Donation Amount ($)</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        {newSponTable}
-                                        </tbody>
-                                    </ReactBootStrap.Table>}
-                                    <p>{message}</p>
-                                    <ul>
-                                      <li>Free Trees Left Available: {Math.max(remainingTrees, 0)}</li>
-                                      <li>Free Trees You Received: {numFreeTrees}</li>
-                                    </ul>
-                                    <br></br>
-                                    <hr className = "hline"/>
-                                    <Leaderboard schoolName = {schoolName}/>
-                                </Container>
-                            </div>
-                            <div className="footer">
-                                Tree-Plenish. Building Sustainable Communities by Leveraging the Power of Youth
-                            </div>
-                        </div>
-                    </div>
-                </div>
+      <tr key={{ index }}>
+        <td>{volunteer.teamid}</td>
+        <td>{volunteer.name}</td>
+      </tr>
+    )
+  }
+
+  const renderNewSponTable = (item, idx) => {
+    return (
+      <tr>
+        <td>{sponNamesArr[idx]}</td>
+        <td>{donationStringArr[idx]}</td>
+      </tr>
+    )
+  }
+
+  return (
+    <div className="page-container">
+      <div className="content-wrap">
+        <div className={"bg-light-green view-entire"}>
+          <div className="w-500 h-500 d-flex align-items-center justify-content-between flex-column">
+            <div className="title">
+              <h3>Welcome, {schoolName}!</h3>
             </div>
-        )
+            <div className="flex-container w-100">
+              <Container className="custom-col-1">
+                <p className="col-title-text">Volunteers</p>
+                <ReactBootStrap.Table className="table">
+                  <thead>
+                    <tr>
+                      <th>Team ID</th>
+                      <th>Name</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {volTable}
+                  </tbody>
+                </ReactBootStrap.Table>
+                <ExportDataButton user={numUsername} />
+              </Container>
+              <Container className="custom-col-2">
+                <p className="col-title-text">Tree Requests</p>
+                <h2 className="center">{numTreesReq}</h2>
+                <p className="center">total requests received</p>
+                <p>Progress to Goal of {treeGoal} Trees</p>
+                <Chart treeGoalPercent={goalPercent} specNames={speciesNames} specValues={speciesVals} />
+                {farOutFromEvent && <ExportTreeRequestsButton user={numUsername} />}
+                {!farOutFromEvent &&
+                  <Container>
+                    <p>Now that your event is a few days away, please use the spreadsheet that we emailed to you. That spreadsheet will have the most up-to-date and accurate information about your event's orders. If you never received it or have any questions, please text (774) 224-9972</p>
+                  </Container>
+                }
+              </Container>
+              <Container className="custom-col-3">
+                <p className="col-title-text">Announcements</p>
+                <Announcements />
+                <hr className="hline" />
+                <p className="col-title-text">Sponsorships</p>
+                {thereAreSponsors && <ReactBootStrap.Table className="table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Donation Amount ($)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {newSponTable}
+                  </tbody>
+                </ReactBootStrap.Table>}
+                <p>{message}</p>
+                <ul>
+                  <li>Free Trees Left Available: {Math.max(remainingTrees, 0)}</li>
+                  <li>Free Trees You Received: {numFreeTrees}</li>
+                </ul>
+                <br></br>
+                <hr className="hline" />
+                <Leaderboard schoolName={schoolName} />
+              </Container>
+            </div>
+            <div className="footer">
+              Tree-Plenish. Building Sustainable Communities by Leveraging the Power of Youth
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
 }
 export default Dashboard;
