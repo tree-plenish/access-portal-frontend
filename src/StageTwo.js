@@ -163,8 +163,8 @@ const StageTwo = (prevInfo) => {
           calculateGoalPercentage(traverseTreesRequested(JSON.parse(data.numtreesreq), u), traverseTreeGoal(JSON.parse(data.treegoal), u));
           traverseSponsors(JSON.parse(data.spon));
           traverseSponNames(JSON.parse(data.sponinfo));
-          setSpeciesNames(Object.keys(JSON.parse(data.species))); // the species names are the keys
-          setSpeciesVals(Object.values(JSON.parse(data.species))); // the request numbers are the values
+          setSpeciesNames(Object.keys(data.species)); // the species names are the keys
+          setSpeciesVals(Object.values(data.species)); // the request numbers are the values
         });
     });
   }

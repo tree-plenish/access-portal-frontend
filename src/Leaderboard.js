@@ -71,7 +71,7 @@ const Leaderboard = (props) => {
             })
                 .then(res => res.json())
                 .then(data => {
-                    traverseLeaders(JSON.parse(data.leader));
+                    traverseLeaders(data.leader);
                 });
         });
     }
