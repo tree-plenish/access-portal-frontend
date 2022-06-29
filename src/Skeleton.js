@@ -61,29 +61,29 @@ const Skeleton = ({ location }) => {
         const themonth = thedate.getMonth(); // Jan is 0, Feb is 1, ..., Dec is 11
 
         if (themonth === 6 || themonth === 7 || themonth === 8 || themonth === 9 || themonth === 10) { // stage 1 is July - November
-            return <StageOne
+            return <StageTwo
                 prevUsername={formValues.username}
                 prevPassword={formValues.password}
-                onDone={( username, password ) => {
+                onDone={(username, password) => {
                     setPage(page + 1)
                     handleFormChange({ username, password })
-                }}/>;
+                }} />;
         } else if (themonth === 11 || themonth === 0) { // stage 2 is December - January; add themonth == 11 in mid Dec
             return <StageTwo
                 prevUsername={formValues.username}
                 prevPassword={formValues.password}
-                onDone={( username, password ) => {
+                onDone={(username, password) => {
                     setPage(page + 1)
                     handleFormChange({ username, password })
-                }}/>;
+                }} />;
         } else { // stage 3 is February - June
-            return <Dashboard
+            return <StageTwo
                 prevUsername={formValues.username}
                 prevPassword={formValues.password}
-                onDone={( username, password ) => {
+                onDone={(username, password) => {
                     setPage(page + 1)
                     handleFormChange({ username, password })
-                }}/>;
+                }} />;
         }
     }
 
@@ -92,7 +92,7 @@ const Skeleton = ({ location }) => {
             {!formValues.username && <Redirect to="/" />}
             <main>
                 {page === 0 &&
-                <WhichStage/>}
+                    <WhichStage />}
             </main>
         </>
     );

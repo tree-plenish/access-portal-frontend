@@ -33,33 +33,33 @@ const Login = () => {
 
     function checkObj(objName, schoolidnum, currentPass) {
         for (const prop in objName) {
-          if (objName[prop]['schoolid'] === schoolidnum) {
-            if (objName[prop]['password'] === currentPass) {
-              return 1;
-            } else {
-              return 0;
+            if (objName[prop]['id'] === schoolidnum) {
+                if (objName[prop]['pwd'] === currentPass) {
+                    return 1;
+                } else {
+                    return 0;
+                }
             }
-          }
         }
-      }
+    }
 
     function apiCall(u, p) {
         return new Promise(resolve => {
-          fetch(`/api/login/${u}`, {
-            headers: new Headers({
-              'Authorization': 'Basic '+btoa(apiU + ":" + apiP),
-              'Content-Type': 'application/x-www-form-urlencoded'
+            fetch(`/api/login/${u}`, {
+                headers: new Headers({
+                    'Authorization': 'Basic ' + btoa(apiU + ":" + apiP),
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                })
             })
-          })
-          .then(res => res.json())
-          .then(data => JSON.parse(data.pass))
-          .then(jsonObj => checkObj(jsonObj, u, p))
-          .then(x => {
-            resolve(x);
-          });
+                .then(res => res.json())
+                .then(data => JSON.parse(data.pass))
+                .then(jsonObj => checkObj(jsonObj, u, p))
+                .then(x => {
+                    resolve(x);
+                });
         });
-      }
-      
+    }
+
     const handleKeyPress = e => {
         if (e.key === "Enter") {
             handleClick();
@@ -76,7 +76,7 @@ const Login = () => {
         if (proceed === 1) {
             history.push({
                 pathname: '/dashboard',
-                state: {username: strUsername, password: strPassword}
+                state: { username: strUsername, password: strPassword }
             });
         } else if (proceed === 0) {
             window.confirm('Incorrect password. Try again.');
@@ -87,65 +87,65 @@ const Login = () => {
 
     return (
         <React.Fragment>
-            <div className = "bg-image view-entire">
-                <div className = "w-100 h-100 d-flex align-items-center justify-content-between flex-column">
-                    <div className = "justify-content-center" style={{ width: '100%', height: '92%'}}>
-                        <div className = "w-100 h-100 d-flex align-items-center">
-                            <Container className = "w-100 shape-container">
-                                <div className = "col px-0">
-                                    <Row className = "align-items-center justify-content-center">
-                                        <Col className = "text-center align-items-center" lg="6">
+            <div className="bg-image view-entire">
+                <div className="w-100 h-100 d-flex align-items-center justify-content-between flex-column">
+                    <div className="justify-content-center" style={{ width: '100%', height: '92%' }}>
+                        <div className="w-100 h-100 d-flex align-items-center">
+                            <Container className="w-100 shape-container">
+                                <div className="col px-0">
+                                    <Row className="align-items-center justify-content-center">
+                                        <Col className="text-center align-items-center" lg="6">
                                             <img
-                                                alt = "..."
-                                                className = "img-fluid img-trans"
+                                                alt="..."
+                                                className="img-fluid img-trans"
                                                 src={tree_plenish_icon}
                                                 style={{ width: "180px", padding: '1em' }}
                                             />
-                                            <h4 className = "lead-example text-white">
+                                            <h4 className="lead-example text-white">
                                                 {message}
                                             </h4>
-                                            <div className = "mt-5">
+                                            <div className="mt-5">
                                                 <FormGroup
                                                     className={classnames({
                                                         focused: usernameFocused
                                                     })}
                                                 >
-                                                <InputGroup className = "input-group-alternative">
-                                                    <Input
-                                                        placeholder = "Username"
-                                                        type = "username"
-                                                        className = "form-control"
-                                                        onFocus={e => setUsernameFocused(true)}
-                                                        onBlur = {e => setUsernameFocused(false)}
-                                                        onChange = {e => setUsername(e.target.value)}
-                                                    />
-                                                </InputGroup>
+                                                    <InputGroup className="input-group-alternative">
+                                                        <Input
+                                                            placeholder="Username"
+                                                            type="username"
+                                                            className="form-control"
+                                                            onFocus={e => setUsernameFocused(true)}
+                                                            onBlur={e => setUsernameFocused(false)}
+                                                            onChange={e => setUsername(e.target.value)}
+                                                        />
+                                                    </InputGroup>
                                                 </FormGroup>
                                                 <FormGroup
                                                     className={classnames({
                                                         focused: passwordFocused
                                                     })}
                                                 >
-                                                <InputGroup className = "input-group-alternative">
-                                                    <Input
-                                                        placeholder = "Password"
-                                                        type = "password"
-                                                        className = "form-control"
-                                                        onFocus={e => setPasswordFocused(true)}
-                                                        onBlur = {e => setPasswordFocused(false)}
-                                                        onChange = {e => setPassword(e.target.value)}
-                                                        onKeyPress = {handleKeyPress}
-                                                    />
-                                                </InputGroup>
+                                                    <InputGroup className="input-group-alternative">
+                                                        <Input
+                                                            placeholder="Password"
+                                                            type="password"
+                                                            className="form-control"
+                                                            onFocus={e => setPasswordFocused(true)}
+                                                            onBlur={e => setPasswordFocused(false)}
+                                                            onChange={e => setPassword(e.target.value)}
+                                                            onKeyPress={handleKeyPress}
+                                                        />
+                                                    </InputGroup>
                                                 </FormGroup>
-                                                <div style={{ padding: '1em'}}>
-                                                <Button
-                                                    className = "btn-login btn-trans"
-                                                    size = "lg-login"
-                                                    onClick={handleClick}
-                                                >
-                                                    <span className="btn-inner--text">Log In</span>
-                                                </Button>{" "}
+                                                <div style={{ padding: '1em' }}>
+                                                    <Button
+                                                        className="btn-login btn-trans"
+                                                        size="lg-login"
+                                                        onClick={handleClick}
+                                                    >
+                                                        <span className="btn-inner--text">Log In</span>
+                                                    </Button>{" "}
                                                 </div>
                                             </div>
                                         </Col>
@@ -155,7 +155,7 @@ const Login = () => {
                         </div>
                     </div>
                     <div style={{ width: '100%', height: '8%' }}>
-                        <Container className = "container-fluid">
+                        <Container className="container-fluid">
                             <p className="text-white text-center pr-sm-1">
                                 Tree-Plenish: Building Sustainable Communities by Leveraging the Power of Youth
                             </p>
