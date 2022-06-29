@@ -42,7 +42,7 @@ const Leaderboard = (props) => {
         let schoolNamesTemp = [];
         let ordersTemp = [];
         let schoolNotInTop5 = true;
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < 3; i++) { // NOTE: Change all 3's to 5 once more data is entered
             schoolNamesTemp[i] = sortedArrTemp[i].name;
             ordersTemp[i] = sortedArrTemp[i].num_orders;
             if (sortedArrTemp[i].name === props.schoolName) {
@@ -50,11 +50,11 @@ const Leaderboard = (props) => {
             }
         }
         if (schoolNotInTop5) {
-            schoolNamesTemp[5] = "Your School";
+            schoolNamesTemp[3] = "Your School";
             if (yourSchoolCount == undefined) {
                 yourSchoolCount = 0;
             }
-            ordersTemp[5] = yourSchoolCount;
+            ordersTemp[3] = yourSchoolCount;
         }
         setSchoolNames(schoolNamesTemp);
         setOrders(ordersTemp);

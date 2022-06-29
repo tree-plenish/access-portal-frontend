@@ -6,12 +6,9 @@ import Leaderboard from './Leaderboard'
 import * as ReactBootStrap from 'react-bootstrap';
 import ExportTreeRequestsButton from './ExportTreeRequestsButton';
 import ExportDataButton from './ExportDataButton';
+import { Container } from "reactstrap";
 
-import {
-  Button, Card, CardBody, DropdownMenu, DropdownItem, DropdownToggle, UncontrolledDropdown, Container, Row, Col
-} from "reactstrap";
-
-const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
+const Dashboard = ({ prevUsername }) => {
 
   let apiU = 'admin';
   let apiP = 'preeTlenish1#';
@@ -232,7 +229,7 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
                 </ul>
                 <br></br>
                 <hr className="hline" />
-                {/* <Leaderboard schoolName={schoolName} /> */}
+                <Leaderboard schoolName={schoolName} />
               </Container>
             </div>
             <div className="footer">
