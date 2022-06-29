@@ -107,23 +107,23 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
     }
   }
 
-  function traverseVolunteers(objName, schoolidnum) {
+  function traverseVolunteers(objName) {
     for (const prop in objName) {
       volArr.push(objName[prop]);
     }
-    var teamIDs = volArr.map(a => a.teamid);
+    let teamIDs = volArr.map(a => a.id);
     teamIDs = teamIDs.filter((x, i, a) => a.indexOf(x) === i); // array with unique team ids
-    var newTeamIDs = Array.from({ length: teamIDs.length }, (_, i) => i + 1); // array from [1, 2, ..., teamIDs.length]
+    let newTeamIDs = Array.from({ length: teamIDs.length }, (_, i) => i + 1); // array from [1, 2, ..., teamIDs.length]
     for (const item in volArr) {
-      var index = 0;
-      for (var j = 0; j < teamIDs.length; j++) {
-        if (teamIDs[j] == volArr[item]['teamid']) {
+      let index = 0;
+      for (let j = 0; j < teamIDs.length; j++) {
+        if (teamIDs[j] == volArr[item]['id']) {
           index = j;
         }
       }
-      volArr[item]['teamid'] = newTeamIDs[index]; // replace teamid with corresponding newTeamID value
+      volArr[item]['id'] = newTeamIDs[index]; // replace teamid with corresponding newTeamID value
     }
-    volArr.sort((a, b) => parseFloat(a.teamid) - parseFloat(b.teamid)); // sort by teamid in ascending order
+    volArr.sort((a, b) => parseFloat(a.id) - parseFloat(b.id)); // sort by teamid in ascending order
     setVolTable(volArr.map(renderVolunteers)); // method to make sure the table renders with updated data
     return volArr;
   }
@@ -157,7 +157,7 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
   const renderVolunteers = (volunteer, index) => {
     return (
       <tr key={{ index }}>
-        <td>{volunteer.teamid}</td>
+        <td>{volunteer.id}</td>
         <td>{volunteer.name}</td>
       </tr>
     )
@@ -232,7 +232,7 @@ const Dashboard = ({ onDone, prevUsername, prevPassword }) => {
                 </ul>
                 <br></br>
                 <hr className="hline" />
-                <Leaderboard schoolName={schoolName} />
+                {/* <Leaderboard schoolName={schoolName} /> */}
               </Container>
             </div>
             <div className="footer">

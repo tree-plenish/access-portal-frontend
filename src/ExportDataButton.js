@@ -16,7 +16,7 @@ const ExportDataButton = (props) => {
     const [finalArr, setFinalArr] = useState([]);
 
     let headers = [
-        { label: "Team ID", key: "teamid" },
+        { label: "Team ID", key: "id" },
         { label: "Name", key: "name" },
         { label: "Email or Phone", key: "email" },
     ];
@@ -32,21 +32,21 @@ const ExportDataButton = (props) => {
         }
         let finalArrTemp = volunteerTemp;
         for (let k = 0; k < teamTemp.length; k++) {
-            finalArrTemp.push({ teamid: teamTemp[k]['teamid'], name: "Team Leader", email: teamTemp[k]['phone'] });
+            finalArrTemp.push({ id: teamTemp[k]['uuid'], name: "Team Leader", email: teamTemp[k]['phone'] });
         }
-        let teamIDs = finalArrTemp.map(a => a.teamid);
+        let teamIDs = finalArrTemp.map(a => a.id);
         teamIDs = teamIDs.filter((x, i, a) => a.indexOf(x) === i); // array with unique team ids
         let newTeamIDs = Array.from({ length: teamIDs.length }, (_, i) => i + 1); // array from [1, 2, ..., teamIDs.length]
         for (const item in finalArrTemp) {
             let index = 0;
             for (let j = 0; j < teamIDs.length; j++) {
-                if (teamIDs[j] == finalArrTemp[item]['teamid']) {
+                if (teamIDs[j] == finalArrTemp[item]['id']) {
                     index = j;
                 }
             }
-            finalArrTemp[item]['teamid'] = newTeamIDs[index]; // replace teamid with corresponding newTeamID value
+            finalArrTemp[item]['id'] = newTeamIDs[index]; // replace teamid with corresponding newTeamID value
         }
-        finalArrTemp.sort((a, b) => parseFloat(a.teamid) - parseFloat(b.teamid)); // sort by teamid in ascending order
+        finalArrTemp.sort((a, b) => parseFloat(a.id) - parseFloat(b.id)); // sort by teamid in ascending order
         setFinalArr(finalArrTemp);
     }
 
