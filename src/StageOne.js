@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Container } from "reactstrap";
 import Announcements from './Announcements';
-import { sponsorshipData } from './Data';
+import { Button } from 'react-bootstrap';
 import * as ReactBootStrap from "react-bootstrap";
 import impactPic from './assets/impact-2020.png';
 
@@ -25,6 +25,13 @@ const StageOne = (prevInfo) => {
   const [thereAreSponsors, setThereAreSponsors] = useState(true);
 
   const [message, setMessage] = useState('');
+
+  // Sponsor Button
+  const [showSponsors, setShowSponsors] = useState(false);
+
+  function hideSponsors() {
+    setShowSponsors(!showSponsors);
+  }
 
   function toTitleCase(str) { // function to capitalize first letter of each word; e.g. 'still woozy' becomes 'Still Woozy'
     var text = str.toLowerCase()
@@ -101,25 +108,32 @@ const StageOne = (prevInfo) => {
               <Container className="custom-col-2">
                 <p className="col-title-text">Sponsorships</p>
                 <h2 className="total-donations">Total Amount Raised: ${totalDonations}</h2>
-                <h3>List of Sponsors</h3>
-                <div>
-                  {thereAreSponsors && <ReactBootStrap.Table className="table">
-                    <thead>
-                      <tr>
-                        <th>Name</th>
-                        <th>Donation Amount ($)</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {newSponTable}
-                    </tbody>
-                  </ReactBootStrap.Table>}
-                </div>
-                <p>{message}</p>
-                <ul>
-                  <li>Free Trees Sponsors Have Funded: {freeTreesSponsors}</li>
-                  <li>Free Trees Given: {numFreeTrees}</li>
-                </ul>
+                <Container className="btn-center">
+                  <Button className="btn-login-opp btn-trans" size="lg" onClick={hideSponsors}>
+                    Show / Hide Sponsors
+                  </Button>
+                </Container>
+                {showSponsors && <div>
+                  <h3>List of Sponsors</h3>
+                  <div>
+                    {thereAreSponsors && <ReactBootStrap.Table className="table">
+                      <thead>
+                        <tr>
+                          <th>Name</th>
+                          <th>Donation Amount ($)</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {newSponTable}
+                      </tbody>
+                    </ReactBootStrap.Table>}
+                  </div>
+                  <p>{message}</p>
+                  <ul>
+                    <li>Free Trees Sponsors Have Funded: {freeTreesSponsors}</li>
+                    <li>Free Trees Given: {numFreeTrees}</li>
+                  </ul>
+                </div>}
               </Container>
               <Container className="custom-col-3">
                 <p className="col-title-text">Our 2020 Impact</p>
