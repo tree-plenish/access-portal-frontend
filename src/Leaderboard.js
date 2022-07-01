@@ -7,7 +7,7 @@ const Leaderboard = (props) => {
     let apiU = 'admin';
     let apiP = 'preeTlenish1#';
 
-    let unixStart = 1652673600; // Sun May 15 12:00 am
+    let unixStart = 1647748800; // Sun Mar 6 12:00 am
     let startDate = new Date(unixStart * 1000).toDateString();
     startDate = startDate.substring(4, 10);
     let endDate = new Date((unixStart + (3600 * 24 * 14)) * 1000).toDateString(); // 2 weeks after start date
@@ -15,7 +15,6 @@ const Leaderboard = (props) => {
 
     const [schoolNames, setSchoolNames] = useState([]);
     const [orders, setOrders] = useState([]);
-    const [sortedArr, setSortedArr] = useState([]);
     const [leadTable, setLeadTable] = useState();
 
     function toTitleCase(str) { // function to capitalize first letter of each word
@@ -33,8 +32,6 @@ const Leaderboard = (props) => {
             if (objName[prop]['name'] != "Freeport High School") { // filter out school 2098 due to fake order
                 sortedArrTemp.push(objName[prop]);
             }
-            sortedArrTemp.sort((a, b) => parseFloat(b.num_orders) - parseFloat(a.num_orders)); // sort by num_orders in descending order
-            setSortedArr(sortedArrTemp);
             if (objName[prop]['name'] === props.schoolName) {
                 yourSchoolCount = objName[prop]['num_orders'];
             }
@@ -43,18 +40,18 @@ const Leaderboard = (props) => {
         let ordersTemp = [];
         let schoolNotInTop5 = true;
         for (let i = 0; i < 3; i++) { // NOTE: Change all 3's to 5 once more data is entered
-            schoolNamesTemp[i] = sortedArrTemp[i].name;
+            schoolNamesTemp[i] = toTitleCase(sortedArrTemp[i].name);
             ordersTemp[i] = sortedArrTemp[i].num_orders;
             if (sortedArrTemp[i].name === props.schoolName) {
                 schoolNotInTop5 = false;
             }
         }
         if (schoolNotInTop5) {
-            schoolNamesTemp[3] = "Your School";
+            schoolNamesTemp[3] = "Your School"; // CHANGE to 5
             if (yourSchoolCount == undefined) {
                 yourSchoolCount = 0;
             }
-            ordersTemp[3] = yourSchoolCount;
+            ordersTemp[3] = yourSchoolCount; // CHANGE to 5
         }
         setSchoolNames(schoolNamesTemp);
         setOrders(ordersTemp);
