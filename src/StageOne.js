@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Container } from "reactstrap";
 import Announcements from './Announcements';
+import ToDo from './ToDo';
 import { Button } from 'react-bootstrap';
 import * as ReactBootStrap from "react-bootstrap";
 import impactPic from './assets/impact-2020.png';
@@ -18,7 +19,6 @@ const StageOne = (prevInfo) => {
   let donationNumArr = []; // corresponding numbers (1000, 500, 200, 50)
   const [totalDonations, setTotalDonations] = useState();
   const [numFreeTrees, setNumFreeTrees] = useState();
-  const [freeTreesSponsors, setFreeTreesSponsors] = useState();
 
   let sponNamesArr = []; // array with sponsor names
   const [newSponTable, setNewSponTable] = useState();
@@ -55,7 +55,6 @@ const StageOne = (prevInfo) => {
     }
     let sumDonations = donationNumArr.reduce((partial_sum, a) => partial_sum + a, 0); // find sum of array
     setTotalDonations(sumDonations);
-    setFreeTreesSponsors(Math.floor(sumDonations / 5));
     setNewSponTable(sponNamesArr.map(renderNewSponTable));
     if (sponNamesArr.length == 0) {
       setMessage('Sponsors will appear here once they submit their donations.');
@@ -130,12 +129,13 @@ const StageOne = (prevInfo) => {
                   </div>
                   <p>{message}</p>
                   <ul>
-                    <li>Free Trees Sponsors Have Funded: {freeTreesSponsors}</li>
                     <li>Free Trees Given: {numFreeTrees}</li>
                   </ul>
                 </div>}
               </Container>
               <Container className="custom-col-3">
+                <p className="col-title-text">To Do List</p>
+                <ToDo stage={1} />
                 <p className="col-title-text">Our 2020 Impact</p>
                 <div className="rot-wrapper">
                   <div className="static-txt">Trees</div>

@@ -21,7 +21,6 @@ const StageTwo = (prevInfo) => {
   let donationNumArr = []; // corresponding numbers (1000, 500, 200, 50)
   const [totalDonations, setTotalDonations] = useState();
   const [numFreeTrees, setNumFreeTrees] = useState();
-  const [freeTreesSponsors, setFreeTreesSponsors] = useState();
 
   let sponNamesArr = []; // array with sponsor names
   const [newSponTable, setNewSponTable] = useState();
@@ -58,7 +57,6 @@ const StageTwo = (prevInfo) => {
     }
     let sumDonations = donationNumArr.reduce((partial_sum, a) => partial_sum + a, 0); // find sum of array
     setTotalDonations(sumDonations);
-    setFreeTreesSponsors(Math.floor(sumDonations / 5));
     setNewSponTable(sponNamesArr.map(renderNewSponTable));
     if (sponNamesArr.length == 0) {
       setMessage('Sponsors will appear here once they submit their donations.');
@@ -149,8 +147,8 @@ const StageTwo = (prevInfo) => {
                 </ReactBootStrap.Table>}
                 <p>{message}</p>
                 <ul>
-                  <li>Free Trees Sponsors Have Funded: {freeTreesSponsors}</li>
                   <li>Free Trees Given: {numFreeTrees}</li>
+                  <li>Free Trees Remaining: {Math.max(numFreeTrees - numTreesReq, 0)}</li>
                 </ul>
                 <hr className="hline" />
                 <Leaderboard schoolName={schoolName} />

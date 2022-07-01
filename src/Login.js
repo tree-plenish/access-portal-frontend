@@ -26,21 +26,26 @@ const Login = () => {
     const [usernameFocused, setUsernameFocused] = useState(null);
     const [password, setPassword] = useState(null);
     const [passwordFocused, setPasswordFocused] = useState(null);
-    var [message, setMessage] = useState('Your dashboard awaits.');
+    const [message, setMessage] = useState('Your dashboard awaits.');
 
     let apiU = 'admin';
     let apiP = 'preeTlenish1#';
 
-    function checkObj(objName, schoolidnum, currentPass) {
-        for (const prop in objName) {
-            if (objName[prop]['id'] === schoolidnum) {
-                if (objName[prop]['pwd'] === currentPass) {
-                    return 1;
+    // returns an array with [1 or 0, flag1, flag2]
+    function checkObj(loginObj, schoolidnum, currentPass, flagObj) {
+        let returnVals = [];
+        for (const prop in loginObj) {
+            if (loginObj[prop]['id'] === schoolidnum) {
+                if (loginObj[prop]['pwd'] === currentPass) {
+                    returnVals.push(1);
                 } else {
-                    return 0;
+                    returnVals.push(0);
                 }
             }
         }
+        returnVals.push(flagObj[0]['created_tree_order']);
+        returnVals.push(flagObj[0]['created_volunteer']);
+        return returnVals;
     }
 
     function apiCall(u, p) {
@@ -52,10 +57,8 @@ const Login = () => {
                 })
             })
                 .then(res => res.json())
-                .then(data => JSON.parse(data.pass))
-                .then(jsonObj => checkObj(jsonObj, u, p))
-                .then(x => {
-                    resolve(x);
+                .then(data => {
+                    resolve(checkObj(JSON.parse(data.pass), u, p, JSON.parse(data.flags)));
                 });
         });
     }
@@ -72,11 +75,14 @@ const Login = () => {
         const currUsername = Number(username);
         const currPassword = Number(password);
         setMessage('Loading... May take up to 30 seconds.');
-        var proceed = await apiCall(currUsername, currPassword); // apiCall function requires numbers, not strings
+        let dataArray = await getData(currUsername, currPassword);
+        let proceed = dataArray[0];
+        let treeReq = dataArray[1];
+        let showVol = dataArray[2];
         if (proceed === 1) {
             history.push({
                 pathname: '/dashboard',
-                state: { username: strUsername, password: strPassword }
+                state: { username: strUsername, password: strPassword, treeRequests: treeReq, volunteers: showVol }
             });
         } else if (proceed === 0) {
             window.confirm('Incorrect password. Try again.');

@@ -2,6 +2,7 @@ import React, { useState, Component, useEffect, useRef } from "react";
 import './App.css';
 import Chart from './Chart';
 import Announcements from './Announcements';
+import ToDo from './ToDo';
 import Leaderboard from './Leaderboard'
 import * as ReactBootStrap from 'react-bootstrap';
 import ExportTreeRequestsButton from './ExportTreeRequestsButton';
@@ -21,7 +22,6 @@ const Dashboard = ({ prevUsername }) => {
   let donationNumArr = []; // corresponding numbers (1000, 500, 200, 50)
   const [totalDonations, setTotalDonations] = useState();
   const [numFreeTrees, setNumFreeTrees] = useState();
-  const [freeTreesSponsors, setFreeTreesSponsors] = useState();
 
   let sponNamesArr = []; // array with sponsor names
   const [newSponTable, setNewSponTable] = useState();
@@ -64,7 +64,6 @@ const Dashboard = ({ prevUsername }) => {
     }
     let sumDonations = donationNumArr.reduce((partial_sum, a) => partial_sum + a, 0); // find sum of array
     setTotalDonations(sumDonations);
-    setFreeTreesSponsors(Math.floor(sumDonations / 5));
     setNewSponTable(sponNamesArr.map(renderNewSponTable));
     if (sponNamesArr.length == 0) {
       setMessage('Sponsors will appear here once they submit their donations.');
@@ -192,6 +191,8 @@ const Dashboard = ({ prevUsername }) => {
                   </tbody>
                 </ReactBootStrap.Table>
                 <ExportDataButton user={numUsername} />
+                <p className="col-title-text">To Do List</p>
+                <ToDo stage={3} />
               </Container>
               <Container className="custom-col-2">
                 <p className="col-title-text">Tree Requests</p>
@@ -224,8 +225,8 @@ const Dashboard = ({ prevUsername }) => {
                 </ReactBootStrap.Table>}
                 <p>{message}</p>
                 <ul>
-                  <li>Free Trees Sponsors Have Funded: {freeTreesSponsors}</li>
                   <li>Free Trees Given: {numFreeTrees}</li>
+                  <li>Free Trees Remaining: {Math.max(numFreeTrees - numTreesReq, 0)}</li>
                 </ul>
                 <br></br>
                 <hr className="hline" />
