@@ -48,7 +48,7 @@ const Login = () => {
         return returnVals;
     }
 
-    function apiCall(u, p) {
+    function getData(u, p) {
         return new Promise(resolve => {
             fetch(`/api/login/${u}`, {
                 headers: new Headers({
