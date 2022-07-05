@@ -185,7 +185,7 @@ a:active {
 }
 
 .custom-col-1 {
-  flex: 1;
+  flex: 2;
   background: #ffffff;
   padding: 6px;
   line-height: normal;
