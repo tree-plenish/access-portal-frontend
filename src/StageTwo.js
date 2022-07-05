@@ -5,6 +5,7 @@ import { Button } from 'react-bootstrap';
 import Chart from './Chart';
 import Announcements from './Announcements';
 import ExportTreeRequestsButton from './ExportTreeRequestsButton';
+import ToDo from './ToDo';
 import Leaderboard from "./Leaderboard";
 
 const StageTwo = (prevInfo) => {
