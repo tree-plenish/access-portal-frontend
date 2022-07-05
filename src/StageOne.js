@@ -4,7 +4,7 @@ import Announcements from './Announcements';
 import ToDo from './ToDo';
 import { Button } from 'react-bootstrap';
 import * as ReactBootStrap from "react-bootstrap";
-import impactPic from './assets/impact-2020.png';
+import impactPic from './assets/impact-2022.png';
 
 const StageOne = (prevInfo) => {
 
@@ -101,15 +101,18 @@ const StageOne = (prevInfo) => {
             </div>
             <div className="flex-container w-100">
               <Container className="custom-col-1">
+                <p className="col-title-text">To Do List</p>
+                <ToDo stage={1} />
                 <p className="col-title-text">Announcements</p>
                 <Announcements />
               </Container>
               <Container className="custom-col-2">
                 <p className="col-title-text">Sponsorships</p>
-                <h2 className="total-donations">Total Amount Raised: ${totalDonations}</h2>
+                <h2 className="center">${totalDonations}</h2>
+                <p className="center">total amount raised</p>
                 <Container className="btn-center">
                   <Button className="btn-login-opp btn-trans" size="lg" onClick={hideSponsors}>
-                    Show / Hide Sponsors
+                    View Sponsor Details
                   </Button>
                 </Container>
                 {showSponsors && <div>
@@ -132,11 +135,8 @@ const StageOne = (prevInfo) => {
                     <li>Free Trees Given: {numFreeTrees}</li>
                   </ul>
                 </div>}
-              </Container>
-              <Container className="custom-col-3">
-                <p className="col-title-text">To Do List</p>
-                <ToDo stage={1} />
-                <p className="col-title-text">Our 2020 Impact</p>
+                <hr className="hline" />
+                <p className="col-title-text">Our 2022 Impact</p>
                 <div className="rot-wrapper">
                   <div className="static-txt">Trees</div>
                   <ul className="dynamic-txts">

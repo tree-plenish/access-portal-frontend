@@ -4,21 +4,20 @@
 This project is deployed with Heroku at this [link](https://access-portal-frontend.herokuapp.com/).
 
 ### Current Status
-The frontend is simply the React app, which makes requests to a RESTful API created with Flask located at [link](http://portalbackend-env.eba-gwppy2gw.us-east-2.elasticbeanstalk.com/).
+The frontend is a React app, which makes requests to an API created with Flask located at [link](http://portalbackend-env.eba-gwppy2gw.us-east-2.elasticbeanstalk.com/).
 Login verification is in place (connected to password table from database).
 
 ![Image of Login](/public/login.png)
-The webpage following the login page is conditionally rendered based on variable called themonth (the current month).
-The assumption is that all schools are at the same stage on a given date.
-
-Stage 3:
-![Image of Dashboard](/public/dashboard-Jul-22.png)
+The webpage following the login page is conditionally rendered based on the flags in the 'scheduler' table in the database for that particular school. This means multiple schools may be in different stages at any given time.
 
 Stage 1:
-![Image of StageOne](/public/stageone-Jul-22.png)
+![Image of StageOne](/public/stage1-Jul-2022.png)
 
 Stage 2:
-![Image of StageTwo](/public/stagetwo-Jul-22.png)
+![Image of StageTwo](/public/stage2-Jul-2022.png)
+
+Stage 3:
+![Image of Dashboard](/public/dashboard-Jul-2022.png)
 
 ## Available Scripts
 

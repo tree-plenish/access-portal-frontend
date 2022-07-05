@@ -5,6 +5,7 @@ import Announcements from './Announcements';
 import ToDo from './ToDo';
 import Leaderboard from './Leaderboard'
 import * as ReactBootStrap from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import ExportTreeRequestsButton from './ExportTreeRequestsButton';
 import ExportDataButton from './ExportDataButton';
 import { Container } from "reactstrap";
@@ -39,8 +40,29 @@ const Dashboard = ({ prevUsername }) => {
   // Volunteers
   const [volTable, setVolTable] = useState();
   let volArr = [];
-
+  const [numVols, setNumVols] = useState();
   const [farOutFromEvent, setFarOutFromEvent] = useState(true);
+
+  // Sponsor Button
+  const [showSponsors, setShowSponsors] = useState(false);
+
+  function hideSponsors() {
+    setShowSponsors(!showSponsors);
+  }
+
+  // Tree Request Button
+  const [showRequests, setShowRequests] = useState(false);
+
+  function hideRequests() {
+    setShowRequests(!showRequests);
+  }
+
+  // Volunteer Button
+  const [showVols, setShowVols] = useState(false);
+
+  function hideVols() {
+    setShowVols(!showVols);
+  }
 
   function toTitleCase(str) { // function to capitalize first letter of each word; e.g. 'still woozy' becomes 'Still Woozy'
     let text = str.toLowerCase()
@@ -104,9 +126,12 @@ const Dashboard = ({ prevUsername }) => {
   }
 
   function traverseVolunteers(objName) {
+    let numVolsTemp = 0;
     for (const prop in objName) {
       volArr.push(objName[prop]);
+      numVolsTemp++;
     }
+    setNumVols(numVolsTemp);
     let teamIDs = volArr.map(a => a.id);
     teamIDs = teamIDs.filter((x, i, a) => a.indexOf(x) === i); // array with unique team ids
     let newTeamIDs = Array.from({ length: teamIDs.length }, (_, i) => i + 1); // array from [1, 2, ..., teamIDs.length]
@@ -178,57 +203,81 @@ const Dashboard = ({ prevUsername }) => {
             </div>
             <div className="flex-container w-100">
               <Container className="custom-col-1">
-                <p className="col-title-text">Volunteers</p>
-                <ReactBootStrap.Table className="table">
-                  <thead>
-                    <tr>
-                      <th>Team ID</th>
-                      <th>Name</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {volTable}
-                  </tbody>
-                </ReactBootStrap.Table>
-                <ExportDataButton user={numUsername} />
                 <p className="col-title-text">To Do List</p>
                 <ToDo stage={3} />
+                <p className="col-title-text">Announcements</p>
+                <Announcements />
               </Container>
               <Container className="custom-col-2">
+                <p className="col-title-text">Volunteers</p>
+                <h2 className="center">{numVols}</h2>
+                <p className="center">total volunteers</p>
+                <Container className="btn-center">
+                  <Button className="btn-login-opp btn-trans" size="lg" onClick={hideVols}>
+                    View Volunteer Details
+                  </Button>
+                </Container>
+                {showVols && <div>
+                  <ReactBootStrap.Table className="table">
+                    <thead>
+                      <tr>
+                        <th>Team ID</th>
+                        <th>Name</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {volTable}
+                    </tbody>
+                  </ReactBootStrap.Table>
+                  <ExportDataButton user={numUsername} />
+                </div>}
+                <hr className="hline" />
                 <p className="col-title-text">Tree Requests</p>
                 <h2 className="center">{numTreesReq}</h2>
                 <p className="center">total requests received</p>
-                <p>Progress to Goal of {treeGoal} Trees</p>
-                <Chart treeGoalPercent={goalPercent} specNames={speciesNames} specValues={speciesVals} />
-                {farOutFromEvent && <ExportTreeRequestsButton user={numUsername} />}
-                {!farOutFromEvent &&
-                  <Container>
-                    <p>Now that your event is a few days away, please use the spreadsheet that we emailed to you. That spreadsheet will have the most up-to-date and accurate information about your event's orders. If you never received it or have any questions, please text (774) 224-9972</p>
-                  </Container>
-                }
-              </Container>
-              <Container className="custom-col-3">
-                <p className="col-title-text">Announcements</p>
-                <Announcements />
+                <Container className="btn-center">
+                  <Button className="btn-login-opp btn-trans" size="lg" onClick={hideRequests}>
+                    View Request Details
+                  </Button>
+                </Container>
+                {showRequests && <div>
+                  <p>Progress to Goal of {treeGoal} Trees</p>
+                  <Chart treeGoalPercent={goalPercent} specNames={speciesNames} specValues={speciesVals} />
+                  {farOutFromEvent && <ExportTreeRequestsButton user={numUsername} />}
+                  {!farOutFromEvent &&
+                    <Container>
+                      <p>You should've received the final tree request results by now.</p>
+                      <p>Reach out to this phone number if you haven't.</p>
+                    </Container>
+                  }
+                </div>}
                 <hr className="hline" />
                 <p className="col-title-text">Sponsorships</p>
-                {thereAreSponsors && <ReactBootStrap.Table className="table">
-                  <thead>
-                    <tr>
-                      <th>Name</th>
-                      <th>Donation Amount ($)</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {newSponTable}
-                  </tbody>
-                </ReactBootStrap.Table>}
-                <p>{message}</p>
-                <ul>
-                  <li>Free Trees Given: {numFreeTrees}</li>
-                  <li>Free Trees Remaining: {Math.max(numFreeTrees - numTreesReq, 0)}</li>
-                </ul>
-                <br></br>
+                <h2 className="center">${totalDonations}</h2>
+                <p className="center">total amount raised</p>
+                <Container className="btn-center">
+                  <Button className="btn-login-opp btn-trans" size="lg" onClick={hideSponsors}>
+                    View Sponsor Details
+                  </Button>
+                </Container>
+                {showSponsors && <div>
+                  {thereAreSponsors && <ReactBootStrap.Table className="table">
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Donation Amount ($)</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {newSponTable}
+                    </tbody>
+                  </ReactBootStrap.Table>}
+                  <p>{message}</p>
+                  <ul>
+                    <li>Free Trees Given: {numFreeTrees}</li>
+                    <li>Free Trees Remaining: {Math.max(numFreeTrees - numTreesReq, 0)}</li>
+                  </ul>
+                </div>}
                 <hr className="hline" />
                 <Leaderboard schoolName={schoolName} />
               </Container>

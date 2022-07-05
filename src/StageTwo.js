@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
-import { sponsorshipData } from './Data';
 import { Container } from "reactstrap";
 import * as ReactBootStrap from "react-bootstrap";
+import { Button } from 'react-bootstrap';
 import Chart from './Chart';
 import Announcements from './Announcements';
 import ExportTreeRequestsButton from './ExportTreeRequestsButton';
@@ -34,6 +33,20 @@ const StageTwo = (prevInfo) => {
   const [goalPercent, setGoalPercent] = useState();
   const [speciesNames, setSpeciesNames] = useState(['Place', 'Holder']);
   const [speciesVals, setSpeciesVals] = useState([100, 200]);
+
+  // Sponsor Button
+  const [showSponsors, setShowSponsors] = useState(false);
+
+  function hideSponsors() {
+    setShowSponsors(!showSponsors);
+  }
+
+  // Tree Request Button
+  const [showRequests, setShowRequests] = useState(false);
+
+  function hideRequests() {
+    setShowRequests(!showRequests);
+  }
 
   function toTitleCase(str) { // function to capitalize first letter of each word; e.g. 'still woozy' becomes 'Still Woozy'
     let text = str.toLowerCase()
@@ -121,35 +134,52 @@ const StageTwo = (prevInfo) => {
             </div>
             <div className="flex-container w-100">
               <Container className="custom-col-1">
+                <p className="col-title-text">To Do List</p>
+                <ToDo stage={2} />
                 <p className="col-title-text">Announcements</p>
                 <Announcements />
               </Container>
               <Container className="custom-col-2">
                 <p className="col-title-text">Tree Requests</p>
                 <h2 className="center">{numTreesReq}</h2>
-                <p className="center">total requests received!</p>
-                <p>Progress to Goal of {treeGoal} Trees</p>
-                <Chart treeGoalPercent={goalPercent} specNames={speciesNames} specValues={speciesVals} />
-                <ExportTreeRequestsButton user={numUsername} />
-              </Container>
-              <Container className="custom-col-3">
+                <p className="center">total requests received</p>
+                <Container className="btn-center">
+                  <Button className="btn-login-opp btn-trans" size="lg" onClick={hideRequests}>
+                    View Request Details
+                  </Button>
+                </Container>
+                {showRequests && <div>
+                  <p>Progress to Goal of {treeGoal} Trees</p>
+                  <Chart treeGoalPercent={goalPercent} specNames={speciesNames} specValues={speciesVals} />
+                  <ExportTreeRequestsButton user={numUsername} />
+                </div>}
+                <hr className="hline" />
                 <p className="col-title-text">Sponsorships</p>
-                {thereAreSponsors && <ReactBootStrap.Table className="table">
-                  <thead>
-                    <tr>
-                      <th>Name</th>
-                      <th>Donation Amount ($)</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {newSponTable}
-                  </tbody>
-                </ReactBootStrap.Table>}
-                <p>{message}</p>
-                <ul>
-                  <li>Free Trees Given: {numFreeTrees}</li>
-                  <li>Free Trees Remaining: {Math.max(numFreeTrees - numTreesReq, 0)}</li>
-                </ul>
+                <h2 className="center">${totalDonations}</h2>
+                <p className="center">total amount raised</p>
+                <Container className="btn-center">
+                  <Button className="btn-login-opp btn-trans" size="lg" onClick={hideSponsors}>
+                    View Sponsor Details
+                  </Button>
+                </Container>
+                {showSponsors && <div>
+                  {thereAreSponsors && <ReactBootStrap.Table className="table">
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Donation Amount ($)</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {newSponTable}
+                    </tbody>
+                  </ReactBootStrap.Table>}
+                  <p>{message}</p>
+                  <ul>
+                    <li>Free Trees Given: {numFreeTrees}</li>
+                    <li>Free Trees Remaining: {Math.max(numFreeTrees - numTreesReq, 0)}</li>
+                  </ul>
+                </div>}
                 <hr className="hline" />
                 <Leaderboard schoolName={schoolName} />
               </Container>
