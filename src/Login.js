@@ -32,6 +32,7 @@ const Login = () => {
     let apiP = 'preeTlenish1#';
 
     // returns an array with [1 or 0, flag1, flag2]
+    // flag information is needed in Skeleton.js
     function checkObj(loginObj, schoolidnum, currentPass, flagObj) {
         let returnVals = [];
         for (const prop in loginObj) {

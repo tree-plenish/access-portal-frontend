@@ -16,7 +16,7 @@ const Dashboard = ({ prevUsername }) => {
   let apiP = 'preeTlenish1#';
 
   const username = prevUsername; // username is a STRING
-  const numUsername = Number(username);
+  const numUsername = Number(username); // use this for calculations
   const [schoolName, setSchoolName] = useState();
 
   // Sponsors

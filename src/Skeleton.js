@@ -55,8 +55,7 @@ const Skeleton = ({ location }) => {
         }));
     };
 
-    console.log(formValues);
-
+    // determines the component to display based on flags in scheduler table
     function WhichStage() {
         if (formValues.treeReq && formValues.vol) {
             return <Dashboard
