@@ -163,7 +163,7 @@ const Login = () => {
                     <div style={{ width: '100%', height: '8%' }}>
                         <Container className="container-fluid">
                             <p className="text-white text-center pr-sm-1">
-                                Tree-Plenish: Building Sustainable Communities by Leveraging the Power of Youth
+                                Tree-Plenish: Empowering youth to create a more sustainable and equitable future through community tree-planting.
                             </p>
                         </Container>
                     </div>

@@ -150,7 +150,7 @@ const StageOne = (prevInfo) => {
               </Container>
             </div>
             <div className="footer">
-              Tree-Plenish. Building Sustainable Communities by Leveraging the Power of Youth
+              Tree-Plenish. Empowering youth to create a more sustainable and equitable future through community tree-planting.
             </div>
           </div>
         </div>
