@@ -145,7 +145,7 @@ const StageOne = (prevInfo) => {
                   </div>
                   <p>{message}</p>
                   <ul>
-                    <li>Free Trees Given: {numFreeTrees}</li>
+                    <li>Free Saplings Given: {numFreeTrees}</li>
                   </ul>
                 </div>}
                 <hr className="hline" />

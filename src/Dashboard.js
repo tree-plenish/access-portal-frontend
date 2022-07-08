@@ -245,16 +245,16 @@ const Dashboard = ({ prevUsername }) => {
                   <ExportDataButton user={numUsername} />
                 </div>}
                 <hr className="hline" />
-                <p className="col-title-text">Tree Requests</p>
+                <p className="col-title-text">Sapling Orders</p>
                 <h2 className="center">{numTreesReq}</h2>
-                <p className="center">total requests received</p>
+                <p className="center">total orders received</p>
                 <Container className="btn-center">
                   <Button className="btn-login-opp btn-trans" size="lg" onClick={hideRequests}>
-                    View Request Details
+                    View Order Details
                   </Button>
                 </Container>
                 {showRequests && <div>
-                  <p>Progress to Goal of {treeGoal} Trees</p>
+                  <p>Progress to Goal of {treeGoal} Saplings</p>
                   <Chart treeGoalPercent={goalPercent} specNames={speciesNames} specValues={speciesVals} />
                   {farOutFromEvent && <ExportTreeRequestsButton user={numUsername} />}
                   {!farOutFromEvent &&
@@ -286,8 +286,8 @@ const Dashboard = ({ prevUsername }) => {
                   </ReactBootStrap.Table>}
                   <p>{message}</p>
                   <ul>
-                    <li>Free Trees Given: {numFreeTrees}</li>
-                    <li>Free Trees Remaining: {Math.max(numFreeTrees - numTreesReq, 0)}</li>
+                    <li>Free Saplings Given: {numFreeTrees}</li>
+                    <li>Free Saplings Remaining: {Math.max(numFreeTrees - numTreesReq, 0)}</li>
                   </ul>
                 </div>}
                 <hr className="hline" />
