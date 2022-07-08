@@ -71,12 +71,12 @@ Displays sponsors and 2022 impact picture.
 ### StageTwo.js
 Displays tree requests and sponsors.
 ### ToDo.js
-Displays To-Do List; different bullet points will appear depending on the stage (1, 2, or 3) the school is in.
-Inputs: stage
+Displays To-Do List; different bullet points will appear depending on the school's flags in the scheduler table.
+Inputs: flags
 Sample call from a different component:   
-`<ToDo stage={3} />`     
+`<ToDo flags={flagList} />`     
 Inside ToDo.js, access the prop value with the notation:    
-`props.stage`
+`props.flags`
 
 ## Excel Sheet - Common Issues
 If Download as Excel Sheet Button outputs.csv file with strange symbols, check logic in ExportDataButton.js for volunteer data issues or ExportTreeRequestsButton.js for tree request data issues. (Most likely an issue with column order).

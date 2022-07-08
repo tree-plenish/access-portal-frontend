@@ -1,23 +1,25 @@
 import React, { useState } from 'react';
 
+// props.flags[0] is submitted_tree_info
+// props.flags[1] is submitted_epf
 const ToDo = (props) => {
 
     return (
         <div className="to-do-center">
             <div className="to-do-left">
-                {(props.stage === 1) && <div>
+                {(!props.flags[0]) && <div>
                     <ul>
                         <li>Submit Tree Species Info Form</li>
                     </ul>
                 </div>}
-                {(props.stage === 2) && <div>
+                {(!props.flags[1]) && <div>
                     <ul>
-                        <li>Start Gathering Volunteer Sign-Ups</li>
+                        <li>Submit EPF Form</li>
                     </ul>
                 </div>}
-                {(props.stage === 3) && <div>
+                {(props.flags[0] && props.flags[1]) && <div>
                     <ul>
-                        <li>Ramp Up Event Marketing</li>
+                        <li>No Forms to Submit</li>
                     </ul>
                 </div>}
             </div>

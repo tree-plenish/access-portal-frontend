@@ -19,6 +19,9 @@ const Dashboard = ({ prevUsername }) => {
   const numUsername = Number(username); // use this for calculations
   const [schoolName, setSchoolName] = useState();
 
+  // To Do List
+  const [flagList, setFlagList] = useState([]);
+
   // Sponsors
   let donationNumArr = []; // corresponding numbers (1000, 500, 200, 50)
   const [totalDonations, setTotalDonations] = useState();
@@ -77,6 +80,15 @@ const Dashboard = ({ prevUsername }) => {
       setNumFreeTrees(objName[prop]['free_trees_given']);
       return objName[prop]['name'];
     }
+  }
+
+  function traverseFlags(objName) {
+    let flagsTemp = [];
+    for (const prop in objName) {
+      flagsTemp.push(objName[prop]['submitted_tree_info']);
+      flagsTemp.push(objName[prop]['submitted_epf']);
+    }
+    setFlagList(flagsTemp);
   }
 
   function traverseSponsors(objName) {
@@ -160,6 +172,7 @@ const Dashboard = ({ prevUsername }) => {
         .then(res => res.json())
         .then(data => {
           setSchoolName(toTitleCase(traverseSchoolName(JSON.parse(data.name), u)));
+          traverseFlags(JSON.parse(data.flags2));
           traverseSponsors(JSON.parse(data.spon));
           setTreeGoal(traverseTreeGoal(JSON.parse(data.treegoal), u));
           setSpeciesNames(Object.keys(data.species)); // the species names are the keys
@@ -204,7 +217,7 @@ const Dashboard = ({ prevUsername }) => {
             <div className="flex-container w-100">
               <Container className="custom-col-1">
                 <p className="col-title-text">To Do List</p>
-                <ToDo stage={3} />
+                <ToDo flags={flagList} />
                 <p className="col-title-text">Announcements</p>
                 <Announcements />
               </Container>
