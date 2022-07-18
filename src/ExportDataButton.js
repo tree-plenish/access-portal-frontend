@@ -19,6 +19,7 @@ const ExportDataButton = (props) => {
         { label: "Team ID", key: "id" },
         { label: "Name", key: "name" },
         { label: "Email or Phone", key: "email" },
+        { label: "Time", key: "time" },
     ];
 
     function traverseVolunteers(objNameVol, objNameTeam) {
@@ -32,7 +33,7 @@ const ExportDataButton = (props) => {
         }
         let finalArrTemp = volunteerTemp;
         for (let k = 0; k < teamTemp.length; k++) {
-            finalArrTemp.push({ id: teamTemp[k]['uuid'], name: "Team Leader", email: teamTemp[k]['phone'] });
+            finalArrTemp.push({ id: teamTemp[k]['uuid'], name: "Team Leader", email: teamTemp[k]['phone'], time: "N/A" });
         }
         let teamIDs = finalArrTemp.map(a => a.id);
         teamIDs = teamIDs.filter((x, i, a) => a.indexOf(x) === i); // array with unique team ids
@@ -67,7 +68,7 @@ const ExportDataButton = (props) => {
 
     useEffect(() => {
         getTeams(props.user);
-    }, [finalArr]);
+    }, []);
 
     return (
         <div>
