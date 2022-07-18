@@ -129,7 +129,6 @@ const StageOne = (prevInfo) => {
                   </Button>
                 </Container>
                 {showSponsors && <div>
-                  <h3>List of Sponsors</h3>
                   <div>
                     {thereAreSponsors && <ReactBootStrap.Table className="table">
                       <thead>

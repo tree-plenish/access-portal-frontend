@@ -14,7 +14,7 @@ const ToDo = (props) => {
                 </div>}
                 {(!props.flags[1]) && <div>
                     <ul>
-                        <li>Submit EPF Form</li>
+                        <li>Submit Event Page Form</li>
                     </ul>
                 </div>}
                 {(props.flags[0] && props.flags[1]) && <div>
