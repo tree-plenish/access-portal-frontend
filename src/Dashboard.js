@@ -122,7 +122,9 @@ const Dashboard = ({ prevUsername }) => {
 
   function findDaysToEvent(objName) {
     for (const prop in objName) {
-      if (objName[prop]['date'].localeCompare('NULL') != 0) {
+      if (objName[prop]['date'] == 'NULL') { // event date is NULL in database
+        return true;
+      } else {
         let eventDate = new Date(objName[prop]['date']);
         let todaysDate = new Date();
         let numDays = (eventDate - todaysDate) / 86400000; // 86,400,000 millisec in 1 day
@@ -131,8 +133,6 @@ const Dashboard = ({ prevUsername }) => {
         } else {
           return true;
         }
-      } else { // event date is NULL in database
-        return true;
       }
     }
   }
