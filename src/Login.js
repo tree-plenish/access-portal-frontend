@@ -44,8 +44,8 @@ const Login = () => {
                 }
             }
         }
-        returnVals.push(flagObj[0]['created_tree_order']);
-        returnVals.push(flagObj[0]['created_volunteer']);
+        returnVals.push(flagObj[0]['tree_order_public']);
+        returnVals.push(flagObj[0]['volunteer_public']);
         return returnVals;
     }
 

@@ -62,7 +62,11 @@ const StageTwo = (prevInfo) => {
 
   function traverseSchoolName(objName) {
     for (const prop in objName) {
-      setNumFreeTrees(objName[prop]['free_trees_given']);
+      if (objName[prop]['free_trees_given'] == null) {
+        setNumFreeTrees(0);
+      } else {
+        setNumFreeTrees(objName[prop]['free_trees_given']);
+      }
       return objName[prop]['name'];
     }
   }
