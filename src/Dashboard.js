@@ -86,19 +86,10 @@ const Dashboard = ({ prevUsername }) => {
     }
   }
 
-  function traverseFlags(objName) {
-    let flagsTemp = [];
-    for (const prop in objName) {
-      flagsTemp.push(objName[prop]['submitted_tree_info']);
-      flagsTemp.push(objName[prop]['submitted_epf']);
-    }
-    setFlagList(flagsTemp);
-  }
-
-  function traverseSponsors(objName) {
-    for (const prop in objName) {
-      donationNumArr.push(objName[prop]['value']); // all donations are calculated, whether anonymous or not
-      sponNamesArr.push(objName[prop]['name']);
+  function traverseSponsors(objNameSpon, objNameFlag) {
+    for (const prop in objNameSpon) {
+      donationNumArr.push(objNameSpon[prop]['value']); // all donations are calculated, whether anonymous or not
+      sponNamesArr.push(objNameSpon[prop]['name']);
     }
     let sumDonations = donationNumArr.reduce((partial_sum, a) => partial_sum + a, 0); // find sum of array
     setTotalDonations(sumDonations);
@@ -107,6 +98,13 @@ const Dashboard = ({ prevUsername }) => {
       setMessage('Sponsors will appear here once they submit their donations.');
       setThereAreSponsors(false);
     }
+    let flagsTemp = [];
+    for (const prop in objNameFlag) {
+      flagsTemp.push(objNameFlag[prop]['submitted_tree_info']);
+      flagsTemp.push(objNameFlag[prop]['submitted_epf']);
+    }
+    flagsTemp.push(sumDonations);
+    setFlagList(flagsTemp);
   }
 
   function calculateGoalPercentage(numReqParam, goalParam) {
@@ -176,8 +174,7 @@ const Dashboard = ({ prevUsername }) => {
         .then(res => res.json())
         .then(data => {
           setSchoolName(toTitleCase(traverseSchoolName(JSON.parse(data.name), u)));
-          traverseFlags(JSON.parse(data.flags2));
-          traverseSponsors(JSON.parse(data.spon));
+          traverseSponsors(JSON.parse(data.spon), JSON.parse(data.flags2));
           setTreeGoal(traverseTreeGoal(JSON.parse(data.treegoal), u));
           setSpeciesNames(Object.keys(data.species)); // the species names are the keys
           setSpeciesVals(Object.values(data.species)); // the request numbers are the values

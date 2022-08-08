@@ -2,28 +2,23 @@ import React from 'react';
 import './App.css';
 
 const Announcements = () => {
+    let thinkificLink = <a className="link-anim in-line" href="https://tree-plenish-event-planning.thinkific.com/">Thinkific.</a>
+    let officeHourLink = <a className="link-anim in-line" href="https://calendly.com/treeplenish/event-marketing-informational-meeting?month=2022-01">this link.</a>
     return (
         <div>
             <div className="annOut">
                 <div className="annBody">
                     <div className="annContainer">
                         <div className="annBox">
-                            <h2>Deadlines</h2>
-                            <p>Please submit your shipping addresses through the form below as soon as possible.</p>
-                            <p><a className="link-anim in-line" href="https://docs.google.com/forms/d/e/1FAIpQLSfdjqjpTwUyBJ_5Y8LVCs_ouaRMAEeVV6zg0rf_6WOK8Aowtw/viewform">Click here!</a></p>
+                            <h2>Resources</h2>
+                            <p>To access videos, resources, and forms, go to {thinkificLink}</p>
+                            <p>For quick questions, text (774) 224-9972.</p>
+                            <p>To speak to someone at Tree-Plenish, attend office hours on Tuesday or Thursday at 8-9 pm using {officeHourLink}</p>
                         </div>
                         <div className="annBox">
                             <h2>Reminders</h2>
-                            <p>We will be sending you the raw data from your order form about a week or two after the form closes. Please use this to plan your event as there have been some discrepancies on the downloaded excel sheet.</p>
-                            <p>Please sign up for a Day of Event Meeting using the Calendly link below.</p>
-                            <p><a className="link-anim in-line" href="https://calendly.com/treeplenish/day-of-event-informational-meeting?month=2022-03">Click here!</a></p>
-                            <p>Your sapling order form closes one month before your event, so make sure to start marketing your event early to get sapling orders in!</p>
-                        </div>
-                        <div className="annBox">
-                        <h2>Questions?</h2>
-                            <p>Text (774) 224-9972 for quick questions.</p>
-                            <p>Sign up for Office Hours (link below) for 1:1 support.</p>
-                            <p><a className="link-anim in-line" href="https://calendly.com/treeplenish/tree-plenish-office-hours">Click here!</a></p>
+                            <p>We have a mandatory meeting with all schools on December 1st at 8 pm ET.</p>
+                            <p>Refer other schools to get $50 in free saplings for your event!</p>
                         </div>
                     </div>
                 </div>
