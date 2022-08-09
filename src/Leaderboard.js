@@ -16,6 +16,7 @@ const Leaderboard = (props) => {
     const [schoolNames, setSchoolNames] = useState([]);
     const [orders, setOrders] = useState([]);
     const [leadTable, setLeadTable] = useState();
+    const [tableUpdated, setTableUpdated] = useState(false);
 
     function toTitleCase(str) { // function to capitalize first letter of each word
         let text = str.toLowerCase()
@@ -56,6 +57,7 @@ const Leaderboard = (props) => {
         setSchoolNames(schoolNamesTemp);
         setOrders(ordersTemp);
         setLeadTable(ordersTemp.map(renderLeaderboard));
+        setTableUpdated(true);
     }
 
     function getLeaders() {
@@ -90,11 +92,11 @@ const Leaderboard = (props) => {
 
     useEffect(() => {
         getLeaders();
-    }, [leadTable]);
+    }, [props.schoolName, tableUpdated]);
 
     return (
         <div className="center">
-            <h2>School Leaderboard</h2>
+            <p className="col-title-text">School Leaderboard</p>
             <p>Schools with the most tree requests between {startDate} and {endDate}.</p>
             <ReactBootStrap.Table className="table">
                 <thead>
