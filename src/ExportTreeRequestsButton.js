@@ -20,6 +20,7 @@ const ExportTreeRequestsButton = (props) => {
     { label: "Name", key: "name" },
     { label: "Email or Phone", key: "email" },
   ]);
+  const [tableFetched, setTableFetched] = useState(false);
 
   function toTitleCase(str) { // function to capitalize first letter of each word; e.g. 'still woozy' becomes 'Still Woozy'
     let text = str.toLowerCase()
@@ -42,6 +43,7 @@ const ExportTreeRequestsButton = (props) => {
       ordersTemp.push(objName[prop]);
     }
     setFinalArr(ordersTemp);
+    setTableFetched(true);
   }
 
   // new function for excel tree species vars
@@ -62,7 +64,7 @@ const ExportTreeRequestsButton = (props) => {
 
   useEffect(() => {
     getTreeOrders(props.user);
-  }, [finalArr]);
+  }, [tableFetched]);
 
   return (
     <div>

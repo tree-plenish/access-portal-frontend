@@ -7,7 +7,7 @@ const Leaderboard = (props) => {
     let apiU = 'admin';
     let apiP = 'preeTlenish1#';
 
-    let unixStart = 1647748800; // Sun Mar 6 12:00 am
+    let unixStart = 900; // Sun Mar 6 12:00 am
     let startDate = new Date(unixStart * 1000).toDateString();
     startDate = startDate.substring(4, 10);
     let endDate = new Date((unixStart + (3600 * 24 * 14)) * 1000).toDateString(); // 2 weeks after start date
@@ -40,7 +40,7 @@ const Leaderboard = (props) => {
         let schoolNamesTemp = [];
         let ordersTemp = [];
         let schoolNotInTop5 = true;
-        for (let i = 0; i < 3; i++) { // NOTE: Change all 3's to 5 once more data is entered
+        for (let i = 0; i < 2; i++) { // NOTE: Change all 3's to 5 once more data is entered
             schoolNamesTemp[i] = toTitleCase(sortedArrTemp[i].name);
             ordersTemp[i] = sortedArrTemp[i].num_orders;
             if (sortedArrTemp[i].name === props.schoolName) {
@@ -48,11 +48,11 @@ const Leaderboard = (props) => {
             }
         }
         if (schoolNotInTop5) {
-            schoolNamesTemp[3] = "Your School"; // CHANGE to 5
+            schoolNamesTemp[2] = "Your School"; // CHANGE to 5
             if (yourSchoolCount == undefined) {
                 yourSchoolCount = 0;
             }
-            ordersTemp[3] = yourSchoolCount; // CHANGE to 5
+            ordersTemp[2] = yourSchoolCount; // CHANGE to 5
         }
         setSchoolNames(schoolNamesTemp);
         setOrders(ordersTemp);
