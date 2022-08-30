@@ -3,7 +3,7 @@ import './App.css';
 
 const Announcements = () => {
     let thinkificLink = <a className="link-anim in-line" href="https://tree-plenish-event-planning.thinkific.com/">Thinkific.</a>
-    let zoomLink = <a className="link-anim in-line" href="https://us05web.zoom.us/j/85979535020?pwd=VFF2WURNRUk0bnVRNEFFRlM2NHZTUT09">Zoom link.</a>
+    let zoomLink = <a className="link-anim in-line" href="https://us06web.zoom.us/j/88064676662?pwd=dURMRytKcjB5WHNuTmN1bUt1aS9YQT09">Zoom link.</a>
     return (
         <div>
             <div className="annOut">
