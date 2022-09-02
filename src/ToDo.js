@@ -3,8 +3,10 @@ import React from "react";
 // props.flags[0] is submitted_tree_info
 // props.flags[1] is submitted_epf
 // props.flags[2] is total $donations by sponsors
-const ToDo = (props) => {
+// props.flags[3] is sponsor form URL
 
+const ToDo = (props) => {
+    let sponFormLink = <a className="in-line" href={props.flags[3]}>form URL.</a>
     return (
         <div className="to-do-center">
             <div className="to-do-left">
@@ -26,11 +28,11 @@ const ToDo = (props) => {
                 </div>}
                 {(props.flags[2] > 0) && <div>
                     <input type="checkbox" onclick="return false" checked />
-                    <label>Raise Sponsorship Money (Optional, but Recommended)</label>
+                    <label>Raise Sponsorship Money using your {sponFormLink} (Optional, but Recommended)</label>
                 </div>}
                 {(props.flags[2] == 0) && <div>
                     <input type="checkbox" onclick="return false" style={{ pointerEvents: 'none' }} />
-                    <label>Raise Sponsorship Money (Optional, but Recommended)</label>
+                    <label>Raise Sponsorship Money using your {sponFormLink} (Optional, but Recommended)</label>
                 </div>}
             </div>
         </div>

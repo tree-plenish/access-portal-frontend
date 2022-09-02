@@ -31,7 +31,10 @@ const Dashboard = ({ prevUsername }) => {
   const [newSponTable, setNewSponTable] = useState();
   const [thereAreSponsors, setThereAreSponsors] = useState(true);
 
+  let sponValidArr = []; // corresponding boolean values
+
   const [message, setMessage] = useState('');
+  const [sponFormLink, setSponFormLink] = useState();
 
   // Tree Requests
   const [treeGoal, setTreeGoal] = useState();
@@ -86,10 +89,15 @@ const Dashboard = ({ prevUsername }) => {
     }
   }
 
-  function traverseSponsors(objNameSpon, objNameFlag) {
+  function traverseSponsors(objNameSpon, objNameFlag, objNameLink) {
     for (const prop in objNameSpon) {
       donationNumArr.push(objNameSpon[prop]['value']); // all donations are calculated, whether anonymous or not
       sponNamesArr.push(objNameSpon[prop]['name']);
+      if (objNameSpon[prop]['is_valid'] === false) {
+        sponValidArr.push('Not Validated');
+      } else {
+        sponValidArr.push('Valid');
+      }
     }
     let sumDonations = donationNumArr.reduce((partial_sum, a) => partial_sum + a, 0); // find sum of array
     setTotalDonations(sumDonations);
@@ -104,6 +112,10 @@ const Dashboard = ({ prevUsername }) => {
       flagsTemp.push(objNameFlag[prop]['submitted_epf']);
     }
     flagsTemp.push(sumDonations);
+    for (const prop in objNameLink) {
+      flagsTemp.push(objNameLink[prop]['sponsor']);
+      setSponFormLink(objNameLink[prop]['sponsor']);
+    }
     setFlagList(flagsTemp);
   }
 
@@ -174,7 +186,7 @@ const Dashboard = ({ prevUsername }) => {
         .then(res => res.json())
         .then(data => {
           setSchoolName(toTitleCase(traverseSchoolName(JSON.parse(data.name), u)));
-          traverseSponsors(JSON.parse(data.spon), JSON.parse(data.flags2));
+          traverseSponsors(JSON.parse(data.spon), JSON.parse(data.flags2), JSON.parse(data.sponlink));
           setTreeGoal(traverseTreeGoal(JSON.parse(data.treegoal), u));
           setSpeciesNames(Object.keys(data.species)); // the species names are the keys
           setSpeciesVals(Object.values(data.species)); // the request numbers are the values
@@ -203,6 +215,7 @@ const Dashboard = ({ prevUsername }) => {
       <tr>
         <td>{sponNamesArr[idx]}</td>
         <td>{donationNumArr[idx]}</td>
+        <td>{sponValidArr[idx]}</td>
       </tr>
     )
   }
@@ -268,6 +281,9 @@ const Dashboard = ({ prevUsername }) => {
                 <p className="col-title-text">Sponsorships</p>
                 <h2 className="center">${totalDonations}</h2>
                 <p className="center">total amount raised</p>
+                <div className="center">
+                  <a href={sponFormLink}>Click here for Sponsorship Form</a>
+                </div>
                 <Container className="btn-center">
                   <Button className="btn-login-opp btn-trans" size="lg" onClick={hideSponsors}>
                     View Sponsor Details
@@ -279,6 +295,7 @@ const Dashboard = ({ prevUsername }) => {
                       <tr>
                         <th>Name</th>
                         <th>Donation Amount ($)</th>
+                        <th>Valid?</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -286,13 +303,14 @@ const Dashboard = ({ prevUsername }) => {
                     </tbody>
                   </ReactBootStrap.Table>}
                   <p>{message}</p>
+                  <p>For sponsorships submitted via check, they will be validated once we receive it.</p>
                   <ul>
                     <li>Free Saplings Given: {numFreeTrees}</li>
                     <li>Free Saplings Remaining: {Math.max(numFreeTrees - numTreesReq, 0)}</li>
                   </ul>
                 </div>}
                 <hr className="hline" />
-                <Leaderboard schoolName={schoolName} />
+                {/* <Leaderboard schoolName={schoolName} /> */}
               </Container>
             </div>
             <div className="footer">

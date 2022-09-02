@@ -32,17 +32,22 @@ const ExportTreeRequestsButton = (props) => {
 
   function traverseTreeOrders(objName) {
     let headersTemp = [];
-    let keys = Object.keys(objName[0]);
-    console.log(keys)
-    for (let i = 0; i < keys.length; i++) {
-      headersTemp.push({ label: keys[i], key: keys[i] });
+    if (objName.length === 0) {
+      headersTemp.push({ label: 'No Orders', key: 'No Orders' });
+      setHeaders1(headersTemp);
+      setFinalArr('No Orders');
+    } else {
+      let keys = Object.keys(objName[0]);
+      for (let i = 0; i < keys.length; i++) {
+        headersTemp.push({ label: keys[i], key: keys[i] });
+      }
+      setHeaders1(headersTemp);
+      let ordersTemp = [];
+      for (const prop in objName) {
+        ordersTemp.push(objName[prop]);
+      }
+      setFinalArr(ordersTemp);
     }
-    setHeaders1(headersTemp);
-    let ordersTemp = [];
-    for (const prop in objName) {
-      ordersTemp.push(objName[prop]);
-    }
-    setFinalArr(ordersTemp);
     setTableFetched(true);
   }
 

@@ -27,7 +27,10 @@ const StageOne = (prevInfo) => {
   const [newSponTable, setNewSponTable] = useState();
   const [thereAreSponsors, setThereAreSponsors] = useState(true);
 
+  let sponValidArr = []; // corresponding boolean values
+
   const [message, setMessage] = useState('');
+  const [sponFormLink, setSponFormLink] = useState();
 
   // Sponsor Button
   const [showSponsors, setShowSponsors] = useState(false);
@@ -55,10 +58,15 @@ const StageOne = (prevInfo) => {
     }
   }
 
-  function traverseSponsors(objNameSpon, objNameFlag) {
+  function traverseSponsors(objNameSpon, objNameFlag, objNameLink) {
     for (const prop in objNameSpon) {
       donationNumArr.push(objNameSpon[prop]['value']); // all donations are calculated, whether anonymous or not
       sponNamesArr.push(objNameSpon[prop]['name']);
+      if (objNameSpon[prop]['is_valid'] === false) {
+        sponValidArr.push('Not Validated');
+      } else {
+        sponValidArr.push('Valid');
+      }
     }
     let sumDonations = donationNumArr.reduce((partial_sum, a) => partial_sum + a, 0); // find sum of array
     setTotalDonations(sumDonations);
@@ -73,6 +81,10 @@ const StageOne = (prevInfo) => {
       flagsTemp.push(objNameFlag[prop]['submitted_epf']);
     }
     flagsTemp.push(sumDonations);
+    for (const prop in objNameLink) {
+      flagsTemp.push(objNameLink[prop]['sponsor']);
+      setSponFormLink(objNameLink[prop]['sponsor']);
+    }
     setFlagList(flagsTemp);
   }
 
@@ -87,7 +99,7 @@ const StageOne = (prevInfo) => {
         .then(res => res.json())
         .then(data => {
           setSchoolName(toTitleCase(traverseSchoolName(JSON.parse(data.name), u)));
-          traverseSponsors(JSON.parse(data.spon), JSON.parse(data.flags2));
+          traverseSponsors(JSON.parse(data.spon), JSON.parse(data.flags2), JSON.parse(data.sponlink));
         });
     });
   }
@@ -101,6 +113,7 @@ const StageOne = (prevInfo) => {
       <tr>
         <td>{sponNamesArr[idx]}</td>
         <td>{donationNumArr[idx]}</td>
+        <td>{sponValidArr[idx]}</td>
       </tr>
     )
   }
@@ -124,6 +137,9 @@ const StageOne = (prevInfo) => {
                 <p className="col-title-text">Sponsorships</p>
                 <h2 className="center">${totalDonations}</h2>
                 <p className="center">total amount raised</p>
+                <div className="center">
+                  <a href={sponFormLink}>Click here for Sponsorship Form</a>
+                </div>
                 <Container className="btn-center">
                   <Button className="btn-login-opp btn-trans" size="lg" onClick={hideSponsors}>
                     View Sponsor Details
@@ -136,6 +152,7 @@ const StageOne = (prevInfo) => {
                         <tr>
                           <th>Name</th>
                           <th>Donation Amount ($)</th>
+                          <th>Valid?</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -144,6 +161,7 @@ const StageOne = (prevInfo) => {
                     </ReactBootStrap.Table>}
                   </div>
                   <p>{message}</p>
+                  <p>For sponsorships submitted via check, they will be validated once we receive it.</p>
                   <ul>
                     <li>Free Saplings Given: {numFreeTrees}</li>
                   </ul>
