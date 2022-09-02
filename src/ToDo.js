@@ -34,6 +34,11 @@ const ToDo = (props) => {
                     <input type="checkbox" onclick="return false" style={{ pointerEvents: 'none' }} />
                     <label>Raise Sponsorship Money using your {sponFormLink} (Optional, but Recommended)</label>
                 </div>}
+                <br></br>
+                <a href="https://treeplenish.typeform.com/to/cPvgB9m3">Logistics Form</a>
+                <br></br>
+                <a href="http://tpeventpageform.org">Event Page Form</a>
+                <br></br>
             </div>
         </div>
     )
