@@ -306,7 +306,7 @@ const Dashboard = ({ prevUsername }) => {
                   <p>For sponsorships submitted via check, they will be validated once we receive it.</p>
                   <ul>
                     <li>Free Saplings Given: {numFreeTrees}</li>
-                    <li>Free Saplings Remaining: {Math.max(numFreeTrees - numTreesReq, 0)}</li>
+                    {/* <li>Free Saplings Remaining: {Math.max(numFreeTrees - numTreesReq, 0)}</li> */}
                   </ul>
                 </div>}
                 <hr className="hline" />
