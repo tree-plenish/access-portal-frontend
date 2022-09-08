@@ -152,6 +152,8 @@ const StageTwo = (prevInfo) => {
     )
   }
 
+  let sponFormLinkTag = <a className="in-line" href={sponFormLink}>{sponFormLink}</a>
+
   return (
     <div className="page-container">
       <div className="content-wrap">
@@ -186,7 +188,7 @@ const StageTwo = (prevInfo) => {
                 <h2 className="center">${totalDonations}</h2>
                 <p className="center">total amount raised</p>
                 <div className="center">
-                  <a href={sponFormLink}>Click here for Sponsorship Form</a>
+                  <p>Send businesses this sponsorship form: {sponFormLinkTag}</p>
                 </div>
                 <Container className="btn-center">
                   <Button className="btn-login-opp btn-trans" size="lg" onClick={hideSponsors}>

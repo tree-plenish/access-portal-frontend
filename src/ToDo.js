@@ -6,7 +6,7 @@ import React from "react";
 // props.flags[3] is sponsor form URL
 
 const ToDo = (props) => {
-    let sponFormLink = <a className="in-line" href={props.flags[3]}>form URL.</a>
+    let sponFormLink = <a className="in-line" href={props.flags[3]}>form.</a>
     return (
         <div className="to-do-center">
             <div className="to-do-left">
@@ -28,11 +28,11 @@ const ToDo = (props) => {
                 </div>}
                 {(props.flags[2] > 0) && <div>
                     <input type="checkbox" onclick="return false" checked />
-                    <label>Raise Sponsorship Money using your {sponFormLink} (Optional, but Recommended)</label>
+                    <label>Raise Sponsorship Money by sending businesses your {sponFormLink} (Optional, but Recommended)</label>
                 </div>}
                 {(props.flags[2] == 0) && <div>
                     <input type="checkbox" onclick="return false" style={{ pointerEvents: 'none' }} />
-                    <label>Raise Sponsorship Money using your {sponFormLink} (Optional, but Recommended)</label>
+                    <label>Raise Sponsorship Money by sending businesses your {sponFormLink} (Optional, but Recommended)</label>
                 </div>}
                 <br></br>
                 <a href="https://treeplenish.typeform.com/to/cPvgB9m3">Logistics Form</a>
