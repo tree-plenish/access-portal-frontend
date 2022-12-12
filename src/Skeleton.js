@@ -4,6 +4,7 @@ import { useHistory, Redirect } from "react-router-dom";
 import Dashboard from './Dashboard';
 import StageOne from './StageOne';
 import StageTwo from './StageTwo';
+import Landing from './Landing';
 
 const Skeleton = ({ location }) => {
 
