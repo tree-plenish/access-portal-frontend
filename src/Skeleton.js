@@ -13,8 +13,8 @@ const Skeleton = ({ location }) => {
     const [formValues, setFormValues] = useState({
         username: (location && location.state && location.state.username) ? location.state.username : null,
         password: (location && location.state && location.state.password) ? location.state.password : null,
-        treeReq: location.state.treeRequests,
-        vol: location.state.volunteers
+        treeReq: (location && location.state) ? location.state.treeRequests : null,
+        vol: (location && location.state) ? location.state.volunteers : null
     });
 
     const [isBackButtonClicked, setIsBackButtonClicked] = useState(false);
@@ -57,7 +57,9 @@ const Skeleton = ({ location }) => {
 
     // determines the component to display based on flags in scheduler table
     function WhichStage() {
-        if (formValues.treeReq && formValues.vol) {
+        if (formValues.username === null) {
+            return <Landing />
+        } else if (formValues.treeReq && formValues.vol) {
             return <Dashboard
                 prevUsername={formValues.username}
                 prevPassword={formValues.password}

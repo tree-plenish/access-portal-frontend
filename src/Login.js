@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
+import { useCookies } from 'react-cookie';
 import './App.css'
 
 import classnames from "classnames";
@@ -27,6 +28,7 @@ const Login = () => {
     const [password, setPassword] = useState(null);
     const [passwordFocused, setPasswordFocused] = useState(null);
     const [message, setMessage] = useState('Your dashboard awaits.');
+    const [cookies, setCookie] = useCookies(['user']);
 
     let apiU = 'admin';
     let apiP = 'preeTlenish1#';
@@ -71,10 +73,25 @@ const Login = () => {
     }
 
     async function handleClick() {
-        const strUsername = username;
-        const strPassword = password;
-        const currUsername = Number(username);
-        const currPassword = Number(password);
+        let strUsername;
+        let strPassword;
+        if ((username !== cookies.School) || !cookies.School) {
+            strUsername = username;
+            strPassword = password;
+            setCookie('School', strUsername, {
+                path: '/',
+                maxAge: 23670000 // expires in 9 months
+            });
+            setCookie('Password', strPassword, {
+                path: '/',
+                maxAge: 23670000
+            });
+        } else {
+            strUsername = cookies.School;
+            strPassword = cookies.Password;
+        }
+        const currUsername = Number(strUsername);
+        const currPassword = Number(strPassword);
         setMessage('Loading... May take up to 30 seconds.');
         let dataArray = await getData(currUsername, currPassword);
         let proceed = dataArray[0];
@@ -118,14 +135,23 @@ const Login = () => {
                                                     })}
                                                 >
                                                     <InputGroup className="input-group-alternative">
-                                                        <Input
+                                                        {cookies.School && <Input
+                                                            placeholder="Username"
+                                                            type="username"
+                                                            className="form-control"
+                                                            defaultValue={cookies.School}
+                                                            onFocus={e => setUsernameFocused(true)}
+                                                            onBlur={e => setUsernameFocused(false)}
+                                                            onChange={e => setUsername(e.target.value)}
+                                                        />}
+                                                        {!cookies.School && <Input
                                                             placeholder="Username"
                                                             type="username"
                                                             className="form-control"
                                                             onFocus={e => setUsernameFocused(true)}
                                                             onBlur={e => setUsernameFocused(false)}
                                                             onChange={e => setUsername(e.target.value)}
-                                                        />
+                                                        />}
                                                     </InputGroup>
                                                 </FormGroup>
                                                 <FormGroup
@@ -134,7 +160,17 @@ const Login = () => {
                                                     })}
                                                 >
                                                     <InputGroup className="input-group-alternative">
-                                                        <Input
+                                                        {cookies.Password && <Input
+                                                            placeholder="Password"
+                                                            type="password"
+                                                            className="form-control"
+                                                            defaultValue={cookies.Password}
+                                                            onFocus={e => setPasswordFocused(true)}
+                                                            onBlur={e => setPasswordFocused(false)}
+                                                            onChange={e => setPassword(e.target.value)}
+                                                            onKeyPress={handleKeyPress}
+                                                        />}
+                                                        {!cookies.Password && <Input
                                                             placeholder="Password"
                                                             type="password"
                                                             className="form-control"
@@ -142,7 +178,7 @@ const Login = () => {
                                                             onBlur={e => setPasswordFocused(false)}
                                                             onChange={e => setPassword(e.target.value)}
                                                             onKeyPress={handleKeyPress}
-                                                        />
+                                                        />}
                                                     </InputGroup>
                                                 </FormGroup>
                                                 <div style={{ padding: '1em' }}>

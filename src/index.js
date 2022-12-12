@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import './index.css';
-import App from './App';
+import { CookiesProvider } from "react-cookie";
 import reportWebVitals from './reportWebVitals';
 
 import Landing from "./Landing.js";
@@ -13,24 +13,26 @@ ReactGA.initialize('UA-191521171-2'); // add your tracking id here.
 ReactGA.pageview(window.location.pathname + window.location.search);
 
 ReactDOM.render(
-    <BrowserRouter>
-        <Switch>
-            <Route path="/" exact render={props => <Landing {...props} />} />
-            <Route
-                path="/dashboard"
-                exact render={props => <Skeleton {...props} />}
-            />
-            <Route
-                path="/stageone"
-                exact render={props => <Skeleton {...props} />}
-            />
-            <Route
-                path="/stagetwo"
-                exact render={props => <Skeleton {...props} />}
-            />
-        </Switch>
-    </BrowserRouter>,
-  document.getElementById('root')
+    <CookiesProvider>
+        <BrowserRouter>
+            <Switch>
+                <Route path="/" exact render={props => <Landing {...props} />} />
+                <Route
+                    path="/dashboard"
+                    exact render={props => <Skeleton {...props} />}
+                />
+                <Route
+                    path="/stageone"
+                    exact render={props => <Skeleton {...props} />}
+                />
+                <Route
+                    path="/stagetwo"
+                    exact render={props => <Skeleton {...props} />}
+                />
+            </Switch>
+        </BrowserRouter>
+    </CookiesProvider>,
+    document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function
