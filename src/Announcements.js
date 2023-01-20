@@ -4,7 +4,7 @@ import './App.css';
 const Announcements = () => {
     let thinkificLink = <a className="link-anim in-line" href="https://tree-plenish-event-planning.thinkific.com/">Thinkific.</a>
     let zoomLink = <a className="link-anim in-line" href="https://us06web.zoom.us/j/88064676662?pwd=dURMRytKcjB5WHNuTmN1bUt1aS9YQT09">Zoom link.</a>
-    let internApplicationLink = <a className="link-anim in-line" href="https://forms.gle/f5yTNUMnsvMna6uh6">Applications</a>
+    let meetingLink = <a className="link-anim in-line" href="https://calendly.com/treeplenish/event-marketing-volunteering-informational-meeting?month=2023-01&date=2023-01-17">link</a>
 
     return (
         <div>
@@ -19,7 +19,7 @@ const Announcements = () => {
                         </div>
                         <div className="annBox">
                             <h2>Reminders</h2>
-                            <p>Want to be part of the Tree-Plenish organization team? Apply to be a an intern on our team this spring! {internApplicationLink} close January 4th.</p>
+                            <p>Sign up for an Event Marketing / Volunteer Informational meeting (week of Jan 23rd) using this {meetingLink} if you haven't already!</p>
                             <p>Download the Tree-Plenish app for easy access to your To-Do list, Event Statistics, Thinkific, and User Dashboard. We will also send important updates through push notifications. Check Thinkific for a quick download link or wherever you buy apps.</p>
                         </div>
                     </div>
