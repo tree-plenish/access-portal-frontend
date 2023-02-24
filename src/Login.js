@@ -75,7 +75,7 @@ const Login = () => {
     async function handleClick() {
         let strUsername;
         let strPassword;
-        if ((username !== cookies.School) || !cookies.School) {
+        if (((username !== null) && username !== cookies.School) || !cookies.School) {
             strUsername = username;
             strPassword = password;
             setCookie('School', strUsername, {
