@@ -272,12 +272,7 @@ const Dashboard = ({ prevUsername }) => {
                 {showRequests && <div>
                   <p>Progress to Goal of {treeGoal} Saplings</p>
                   <Chart treeGoalPercent={goalPercent} specNames={speciesNames} specValues={speciesVals} />
-                  {farOutFromEvent && <ExportTreeRequestsButton user={numUsername} />}
-                  {!farOutFromEvent &&
-                    <Container>
-                      <p>Now that your event is a few days away, please use the spreadsheet that we emailed to you. That spreadsheet will have the most up-to-date and accurate information about your event's orders. If you never received it or have any questions, please text (774) 224-9972.</p>
-                    </Container>
-                  }
+                  <ExportTreeRequestsButton user={numUsername} />
                 </div>}
                 <hr className="hline" />
                 <p className="col-title-text">Sponsorships</p>
