@@ -24,6 +24,7 @@ const StageOne = (prevInfo) => {
   const [numFreeTrees, setNumFreeTrees] = useState();
 
   let sponNamesArr = []; // array with sponsor names
+  let sponEmailArr = [];
   const [newSponTable, setNewSponTable] = useState();
   const [thereAreSponsors, setThereAreSponsors] = useState(true);
 
@@ -62,6 +63,7 @@ const StageOne = (prevInfo) => {
     for (const prop in objNameSpon) {
       donationNumArr.push(objNameSpon[prop]['value']); // all donations are calculated, whether anonymous or not
       sponNamesArr.push(objNameSpon[prop]['name']);
+      sponEmailArr.push(objNameSpon[prop]['email']);
       if (objNameSpon[prop]['is_valid'] === false) {
         sponValidArr.push('Not Validated');
       } else {
@@ -113,6 +115,7 @@ const StageOne = (prevInfo) => {
       <tr>
         <td>{sponNamesArr[idx]}</td>
         <td>{donationNumArr[idx]}</td>
+        <td>{sponEmailArr[idx]}</td>
         <td>{sponValidArr[idx]}</td>
       </tr>
     )
@@ -154,6 +157,7 @@ const StageOne = (prevInfo) => {
                         <tr>
                           <th>Name</th>
                           <th>Donation Amount ($)</th>
+                          <th>Email</th>
                           <th>Valid?</th>
                         </tr>
                       </thead>
