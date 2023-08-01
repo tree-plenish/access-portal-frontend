@@ -25,6 +25,11 @@ There are 2 separate repositories: this one and the other on Heroku.
 * Follow normal procedure for pushing to Tree-Plenish repo.
 * To push to Heroku repo, use `git push heroku master`
 
+View documentation on deploying create-react-app to Heroku [here](https://create-react-app.dev/docs/deployment/#heroku).
+
+The Heroku Buildpack for Create React App only works on Heroku-20 stack or earlier. 
+If the build fails, downgrade to Heroku-20 with this Heroku CLI command: `heroku stack:set heroku-20`
+
 ## Front End / Back End Connection
 The frontend is a React app, which makes requests to an API created with Flask located at [link](http://portalbackend-env.eba-gwppy2gw.us-east-2.elasticbeanstalk.com/).
 
@@ -38,9 +43,12 @@ Inside Heroku environment for access-portal-frontend:
 
 ## Google Analytics
 The `index.html` file in the `build` folder contains the Google Analytics site tag within the `<head></head>` tags.
+Tracking ID located in `index.js`.
 
 ## React Components
 All located in the `src` folder.
+### Architecture Diagram
+![Architecture](/public/Access%20Portal%20Frontend.png)
 ### App.js, index.js, index.css
 Do not delete! create-react-app boilerplate code needed for app to function properly.
 ### Announcements.js
@@ -79,7 +87,7 @@ Inside ToDo.js, access the prop value with the notation:
 `props.flags`
 
 ## Excel Sheet - Common Issues
-If Download as Excel Sheet Button outputs.csv file with strange symbols, check logic in ExportDataButton.js for volunteer data issues or ExportTreeRequestsButton.js for tree request data issues. (Most likely an issue with column order).
+If Download as Excel Sheet Button outputs a .csv file with strange symbols, check logic in ExportDataButton.js for volunteer data issues or ExportTreeRequestsButton.js for tree request data issues. (Most likely an issue with column order).
 
 ## Styling
 Nearly all styling is contained inside `App.css`.
@@ -96,3 +104,7 @@ Code inside React component:
     Sample Text
 </div>
 ```
+
+## Website Components
+The site title, which is shown in the browser tab, is located in `public/index.html`.
+The site icon (tree-plenish png image) is located in the public folder.
