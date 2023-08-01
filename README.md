@@ -49,7 +49,7 @@ Tracking ID located in `index.js`.
 All located in the `src` folder.
 ### Architecture Diagram
 ![Architecture](/public/Access%20Portal%20Frontend.png)
-### App.js, index.js, index.css
+### App.js
 Do not delete! create-react-app boilerplate code needed for app to function properly.
 ### Announcements.js
 Displays text announcements (will be the same text for every school that logs in).
@@ -66,6 +66,9 @@ Displays volunteers, tree requests, sponsors (Stage 3 of event process).
 Contains functionality for Download as Excel Sheet Button so users can download volunteer information as a .csv file.
 ### ExportTreeRequestsButton.js
 Contains functionality for Download as Excel Sheet Button so users can download tree request information as a .csv file.
+### index.js, index.css
+Defines the app's routes and which React components will be served at the appropriate route. 
+The 'treeplenishportal.com' route, aka '/' directs to the Landing page, while the 'treeplenishportal.com/dashboard' route maps to Skeleton.js to determine which stage a school is in.
 ### Landing.js
 Displays Login component upon initial website load.
 ### Leaderboard.js
