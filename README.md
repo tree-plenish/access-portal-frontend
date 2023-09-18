@@ -30,6 +30,9 @@ View documentation on deploying create-react-app to Heroku [here](https://create
 The Heroku Buildpack for Create React App only works on Heroku-20 stack or earlier. 
 If the build fails, downgrade to Heroku-20 with this Heroku CLI command: `heroku stack:set heroku-20`
 
+[Heroku Custom Domain Documentation](https://devcenter.heroku.com/articles/custom-domains#add-a-custom-domain-with-a-subdomain)
+Log in to Google Domains account under tech@tree-plenish.org, click on domain name, then DNS to add CNAME record pointing to Heroku DNS URL.
+
 ## Front End / Back End Connection
 The frontend is a React app, which makes requests to an API created with Flask located at [link](http://portalbackend-env.eba-gwppy2gw.us-east-2.elasticbeanstalk.com/).
 
