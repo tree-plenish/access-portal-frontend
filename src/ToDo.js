@@ -35,7 +35,7 @@ const ToDo = (props) => {
                     <label>Raise Sponsorship Money by sending businesses your {sponFormLink} (Optional, but Recommended)</label>
                 </div>}
                 <br></br>
-                <a href="https://treeplenish.typeform.com/to/cPvgB9m3">Logistics Form</a>
+                <a href="https://treeplenish.typeform.com/to/dWuXsymK">Logistics Form</a>
                 <br></br>
                 <a href="http://tpeventpageform.org">Event Page Form</a>
                 <br></br>
