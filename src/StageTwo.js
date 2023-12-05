@@ -220,7 +220,7 @@ const StageTwo = (prevInfo) => {
                   </ul>
                 </div>}
                 <hr className="hline" />
-                <Leaderboard schoolName={schoolName} />
+                {/* <Leaderboard schoolName={schoolName} /> */}
               </Container>
             </div>
             <div className="footer">
