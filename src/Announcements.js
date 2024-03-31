@@ -6,7 +6,7 @@ const Announcements = () => {
     let zoomLink = <a className="link-anim in-line" href="https://us06web.zoom.us/j/88064676662?pwd=dURMRytKcjB5WHNuTmN1bUt1aS9YQT09">Zoom link.</a>
     let meetingLink = <a className="link-anim in-line" href="https://calendly.com/treeplenish/day-of-event-informational-meeting-1">link</a>
     let shippingLink = <a className="link-anim in-line" href="https://treeplenish.typeform.com/to/UEWeW313">link</a>
-    let logisticsLink = <a className="link-anim in-line" href="https://treeplenish.typeform.com/to/dWuXsymK">link</a>
+    let logisticsLink = <a className="link-anim in-line" href="https://treeplenish.typeform.com/to/dWuXsymK">link!</a>
 
     return (
         <div>
@@ -21,7 +21,7 @@ const Announcements = () => {
                         </div>
                         <div className="annBox">
                             <h2>Reminders</h2>
-                            <p>Fill out the Logistics Form as soon as possible using this {logisticsLink}!</p>
+                            <p>Fill out the Logistics Form as soon as possible using this {logisticsLink}</p>
                             <p>Download the Tree-Plenish app for easy access to your To-Do list, Event Statistics, Thinkific, and User Dashboard. We will also send important updates through push notifications. Check Thinkific for a quick download link or wherever you buy apps.</p>
                         </div>
                     </div>
