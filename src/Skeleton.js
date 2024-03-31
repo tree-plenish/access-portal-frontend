@@ -60,7 +60,7 @@ const Skeleton = ({ location }) => {
     function WhichStage() {
         if (formValues.username === null) {
             return <Landing />
-        } else if (formValues.treeReq && formValues.vol) {
+        } else if (formValues.vol) {
             return <Dashboard
                 prevUsername={formValues.username}
                 prevPassword={formValues.password}
