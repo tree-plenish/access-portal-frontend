@@ -4,7 +4,8 @@
   "private": true,
   "type": "module",
   "engines": {
-    "node": ">=16.0.0"
+    "npm": "6.14.11",
+    "node": "14.15.5"
   },
   "dependencies": {
     "@ramonak/react-progress-bar": "^3.1.0",
@@ -30,11 +31,10 @@
     "react-table": "^7.7.0",
     "reactstrap": "^8.9.0",
     "services": "^0.0.3",
-    "web-vitals": "^1.0.1",
-    "@heroku/static-server": "^1.0.0"
+    "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "start": "static-server",
+    "start": "react-scripts start",
     "start-api": "cd api && venv/Scripts/flask run --no-debugger",
     "build": "react-scripts build",
     "test": "react-scripts test",
